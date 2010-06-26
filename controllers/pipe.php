@@ -8,6 +8,8 @@ class Pipe extends Controller {
 		segment - id / page / offset
 		content - type
 	
+	nennenen
+	
 	*/
 	
 	function _remap($method) {//URLマッピング
