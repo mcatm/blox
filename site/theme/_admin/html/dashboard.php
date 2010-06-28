@@ -12,7 +12,7 @@
 					<ul>
 						<?foreach($post as $k => $v){?><li>
 							<h3><a href="<?=$v['admin_url']?>"><?=$v['title']?></a></h3>
-							<p><?=format_description($v['text'], 140)?></p>
+							<div class="text"><p><?=format_description($v['text'], 140)?></p></div>
 						</li><?}?>
 					</ul>
 				</div><?}?>
@@ -24,7 +24,7 @@
 					<ul>
 						<?foreach($comment as $k => $v){?><li>
 							<h3><?=$v['title']?></h3>
-							<p><?=format_description($v['text'], 140)?></p>
+							<div class="text"><p><?=format_description($v['text'], 140)?></p></div>
 						</li><?}?>
 					</ul>
 				</div><?}?>
@@ -36,7 +36,7 @@
 					<ul>
 						<?foreach($user as $k => $v){?><li>
 							<h3><?=$v['name']?></h3>
-							<p><?=format_description($v['description'], 100)?></p>
+							<div class="text"><p><?=format_description($v['description'], 100)?></p></div>
 						</li><?}?>
 					</ul>
 				</div><?}?>
@@ -48,7 +48,19 @@
 					<ul>
 						<?foreach($weekly as $k => $v){?><li>
 							<h3><?=$v['title']?></h3>
-							<p><?=format_description($v['text'], 140)?></p>
+							<div class="text"><p><?=format_description($v['text'], 140)?></p></div>
+						</li><?}?>
+					</ul>
+				</div><?}?>
+				
+				<?if(isset($mail)){?><div class="block">
+					<div class="title">
+						<h2><a href="<?=base_url()?>admin/mail/">メール</a></h2>
+					</div>
+					<ul>
+						<?foreach($mail as $k => $v){?><li>
+							<h3><?=$v['title']?></h3>
+							<div class="text"><p><?=format_description($v['text'], 140)?></p></div>
 						</li><?}?>
 					</ul>
 				</div><?}?>

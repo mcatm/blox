@@ -22,7 +22,7 @@ html {
 }
 
 body {
-	font-family:"Verdana","ヒラギノ角ゴ Pro W3",'Hiragino Kaku Gothic Pro',"ＭＳ Ｐゴシック","Osaka", sans-serif;
+	font-family:/*"Verdana","ヒラギノ角ゴ Pro W3",'Hiragino Kaku Gothic Pro',"ＭＳ Ｐゴシック","Osaka", */sans-serif;
 	font-size:12px;
 	line-height:1.6;
 	height:100%;

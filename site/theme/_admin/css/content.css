@@ -450,6 +450,41 @@
 	margin:0 0 20px;
 }
 
+#body .preview .main .yahoo_auction {
+	border:1px solid #EEE;
+	border-radius:3px;  
+    -webkit-border-radius:3px;  
+    -moz-border-radius:3px;
+	padding:10px;
+	margin:0 0 20px;
+}
+
+#body .preview .main .yahoo_auction p.img {
+	width:100px;
+	float:left;
+	margin:0 10px 10px 0;
+}
+
+#body .preview .main .yahoo_auction .data {
+	width:328px;
+	float:right;
+}
+
+#body .preview .main .yahoo_auction .data p.artist {
+	font-size:10px;
+	margin:0;
+}
+
+#body .preview .main .yahoo_auction .data h4 {
+	font-size:12px;
+	margin:0 0 20px;
+}
+
+#body .preview .main .yahoo_auction .data .enddate {
+	font-size:10px;
+	color:#888;
+}
+
 /* ----------------------------------------------------------------
 
 	#body > .dashboard
@@ -496,6 +531,16 @@
 #body .dashboard .block li {
 	border-bottom:1px solid #EEE;
 	padding:5px 10px;
+}
+
+#body .dashboard .block li h3 {
+	font-size:12px;
+	padding:8px 0 6px;
+}
+
+#body .dashboard .block li .text {
+	font-size:10px;
+	color:#666;
 }
 
 /* ----------------------------------------------------------------
@@ -641,6 +686,22 @@
 	display:none;
 }
 
+#head .window .profile {
+	display:none;
+}
+
+/* ----------------------------------------------------------------
+
+	#head > .window > .profile
+
+---------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------
+
+	#head > .window > .search
+
+---------------------------------------------------------------- */
+
 #head .window .search .result {
 	float:left;
 	width:620px;
@@ -658,10 +719,6 @@
 	border:0;
 	font-size:20px;
 	padding:5px;
-}
-
-#head .window .profile {
-	display:none;
 }
 
 #head .window .search .result ul {

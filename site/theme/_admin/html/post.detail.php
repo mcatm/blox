@@ -29,21 +29,11 @@
 			<p>count: <?=$access['value']['count']['total']?> (<?=$access['value']['count']['rate']?> per day)</p>
 			<p>last access: <?=$access['update']?></p>
 		</div>
-	</div><?} else {?>このエントリは削除されたか、閲覧出来ない設定になっております<?}?>
+	</div><?} else {?><div id="body">
+		<div class="container preview">
+			<div class="error">このエントリは削除されたか、閲覧出来ない設定になっております</div>
+		</div>
+	</div><?}?>
 	<?$this->load->view('_inc/foot.php')?>
 </body>
-<script type="text/javascript">
-	var post_id = <?=$post[0]['id']?>;
-	$(function(){
-		//メインファイルを設定
-		$('img.btn_file').each(function() {
-			$(this).click(function() {
-				$.ajax({
-					type: 'post',
-					url: base_url + 'request/set/linx/post2file/' + post_id + '/' + $(this).attr('attr') + '/main/b/'
-				});
-			});
-		});
-	});
-</script>
 </html>
