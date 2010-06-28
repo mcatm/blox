@@ -47,6 +47,8 @@ class Pipe extends Controller {
 					$post_id = (int)$this->uri->segment(2);
 					$this->post->get(array(
 						'id'		=> $post_id,
+						'related'	=> true,
+						'neighbor'	=> true,
 						'qty'		=> 1
 					));
 					
