@@ -452,6 +452,54 @@
 
 /* ----------------------------------------------------------------
 
+	#body > .dashboard
+
+---------------------------------------------------------------- */
+
+#body .dashboard {
+	margin-right:-15px;
+	overflow:hidden;
+	_zoom:1;
+}
+
+#body .dashboard .block {
+	width:480px;
+	border:1px solid #EEE;
+	margin:0 15px 10px 0;
+	border-radius:3px;  
+    -webkit-border-radius:3px;  
+    -moz-border-radius:3px;
+	float:left;
+}
+
+#body .dashboard .block .title {
+	border-top:#EEE 3px solid;
+	border-bottom:#EEE 1px solid;
+	padding:5px 10px;
+	background:#EEE;
+	color:#FFF;
+	text-shadow:0 1px 1px #FFF;
+}
+
+#body .dashboard .block .title h2 {
+	font-size:14px;
+}
+
+#body .dashboard .block .title a {
+	color:#555;
+}
+
+#body .dashboard .block ul {
+
+}
+
+#body .dashboard .block li {
+	border-bottom:1px solid #EEE;
+	padding:5px 10px;
+}
+
+/* ----------------------------------------------------------------
+
 	#head
 
 ---------------------------------------------------------------- */
@@ -673,11 +721,13 @@
 	text-decoration:none;
 	color:#004E86;
 	width:65px;
+	text-shadow:0 1px 1px #DDD;
 }
 
 #navi ul.menu li.section h2 a:hover {
 	color:#FFF;
 	text-decoration:none;
+	text-shadow:none;
 }
 
 #navi ul.menu .sub {
