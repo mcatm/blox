@@ -6,3 +6,4 @@ core/logs/*
 site/cache/*
 site/file/*
 site/config.php
+site/js/shadowbox/*
