@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteCond $1 !^(index\.php|site|robots\.txt)
+RewriteRule ^(.*)$ /blox/index.php/$1 [L]

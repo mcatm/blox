@@ -688,6 +688,7 @@
 
 #head .window .profile {
 	display:none;
+	padding:0 0 15px;
 }
 
 /* ----------------------------------------------------------------
@@ -695,6 +696,37 @@
 	#head > .window > .profile
 
 ---------------------------------------------------------------- */
+
+#head .window .profile h2 {
+	font-size:18px;
+	border-bottom:1px solid #EEE;
+	line-height:1.2;
+	padding:10px;
+	margin:0 0 3px;
+}
+
+#head .window .profile .data {
+	width:372px;
+	padding:10px;
+	float:left;
+	border-top:1px solid #EEE;
+}
+
+#head .window .profile .avater {
+	float:right;
+	width:48px;
+	padding:10px 10px 10px 0;
+	border-top:1px solid #EEE;
+}
+
+#head .window .profile .container {
+	width:450px;
+	margin:0 0 0 355px;
+	background:#FFF;
+	border-radius:6px;  
+    -webkit-border-radius:6px;  
+    -moz-border-radius:6px;
+}
 
 /* ----------------------------------------------------------------
 
