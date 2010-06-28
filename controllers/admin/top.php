@@ -5,12 +5,12 @@ class Top extends Controller {
 	function index() {
 		$this->load->library('post');
 		$this->post->get(array(
-			'qty'			=> 2,
+			'qty'			=> 10,
 			'type'			=> 0
 		));
 		
 		$this->post->get(array(
-			'qty'			=> 2,
+			'qty'			=> 10,
 			'type'			=> 1,
 			'label'			=> 'comment'
 		));
