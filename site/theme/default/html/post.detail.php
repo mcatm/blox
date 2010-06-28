@@ -12,13 +12,9 @@
 		<?if(isset($post['tag'])){?><p><?foreach($post[0]['tag'] as $t){?><?=$t['name']?> / <?}?></p><?}?>
 		<hr />
 		<h4>access</h4>
-		<p>count: <?=$access[0]['value']['count']['total']?> (一日あたり<?=$access[0]['value']['count']['rate']?>）</p>
-		<p>last access: <?=$access[0]['update']?></p>
+		<p>count: <?=$access['value']['count']['total']?> (一日あたり<?=$access['value']['count']['rate']?>）</p>
+		<p>last access: <?=$access['update']?></p>
 		
 	</div><?} else {?>このエントリは削除されたか、閲覧出来ない設定になっております<?}?>
 </body>
 </html>
-
-<hr />
-
-<p><?print_r($post)?></p>
