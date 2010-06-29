@@ -64,7 +64,6 @@ class Auth {
 		
 		if (!isset($set['auth'])) $set['auth'] = $this->_set_usertype();//ログインしていない場合も権限付与
 		$CI->data->set_array('me', $set);//出力用データに変換（パスワードやログイン用ハッシュが外に出ないよう）
-		#exit($CI->data->out['me']['auth']['type']);
 		if ($login === true) {//ログイン状態
 			$CI->session->set_userdata(array('login' => true));
 		} else {//未ログイン
@@ -108,6 +107,17 @@ class Auth {
 				return false;
 			}
 		}
+	}
+	
+	function check_auth($action = '') {//権限を確認する（行動を指定しない場合、管理者であればtrueを返す）
+		$CI =& get_instance();
+		$auth = false;
+		if (!empty($action)) {
+			if ($CI->data->out['me']['auth'][$action] || $CI->data->out['me']['auth']['type'] == 'admin') $auth = true;
+		} else {
+			if ($CI->data->out['me']['auth']['type'] == 'admin') $auth = true;
+		}
+		return $auth;
 	}
 	
 	function get_usertype($type = "") {

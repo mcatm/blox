@@ -175,12 +175,12 @@ class BLX_Div {
 		
 		$CI->form_validation->set_rules($this->validation_rule);
 		
-		if ($CI->data->out['me']['auth']['type'] != 'admin') {
+		if (!$CI->auth->check_auth()) {
 			if (isset($CI->data->out['me']['id'])) {
-				if ($CI->input->post('type')=='category' && isset($CI->data->out['me']['auth']['category'])) {
+				if ($CI->input->post('type')=='category' && $CI->auth->check_auth('category')) {
 					$flg_cnt_edit = true;
 				}
-				if ($CI->input->post('type')=='section' && isset($CI->data->out['me']['auth']['section'])) {
+				if ($CI->input->post('type')=='section' && $CI->auth->check_auth('section')) {
 					$flg_cnt_edit = true;
 				}
 			}
@@ -213,7 +213,7 @@ class BLX_Div {
 			}
 		}
 		
-		if (isset($msg_stop) && !isset($CI->data->out['me']['auth']['post']) && $CI->input->post('type') != 1) {
+		if (isset($msg_stop) && !$CI->auth->check_auth('post') && $CI->input->post('type') != 1) {
 			$this->msg = array(
 				'result'	=> 'error',
 				'msg'		=> $msg_stop_post

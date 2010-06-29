@@ -464,9 +464,9 @@ class BLX_Post {
 		
 		$CI->form_validation->set_rules($this->validation_rule);
 		if (isset($CI->data->out['me']['id'])) {
-			if ($id == 0 && !isset($CI->data->out['me']['auth']['post'])) {
+			if ($id == 0 && !$CI->auth->check_auth('post')) {
 				$flg_cnt_post = true;//記事を書く権限がない場合
-			} elseif (isset($CI->data->out['post'][0]['author']) && $CI->data->out['me']['auth']['type'] != 'admin') {//他人のエントリを編集する権限がない場合
+			} elseif (isset($CI->data->out['post'][0]['author']) && $CI->auth->check_auth()) {//他人のエントリを編集する権限がない場合
 				foreach($CI->data->out['post'][0]['author'] as $ka => $va) {
 					if ($va['id'] == $CI->data->out['me']['id']) $flg_cnt_post = true;
 				}
@@ -477,7 +477,7 @@ class BLX_Post {
 		
 		if (!isset($flg_cnt_post)) $msg_stop_post = $CI->lang->line('system_post_error_auth');
 		
-		if (isset($msg_stop_post) && !isset($CI->data->out['me']['auth']['post']) && $CI->input->post('type') != 1) {
+		if (isset($msg_stop_post) && !$CI->auth->check_auth('post') && $CI->input->post('type') != 1) {
 			$this->msg = array(
 				'result'	=> 'error',
 				'msg'		=> $msg_stop_post
@@ -739,7 +739,7 @@ class BLX_Post {
 				if ($c > 0) {//自分の記事の場合
 					$flg_delete = true;
 				} else {
-					$flg_delete = ($CI->data->out['me']['auth']['type'] == 'admin') ? true : false;
+					$flg_delete = ($CI->auth->check_auth()) ? true : false;
 				}
 				
 				$CI->db->flush_cache();

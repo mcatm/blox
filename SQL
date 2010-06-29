@@ -247,10 +247,26 @@ CREATE TABLE IF NOT EXISTS `blx_usertype` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE IF NOT EXISTS `blx_usertype_test` (
+  `usertype_id` int(6) NOT NULL auto_increment,
+  `usertype_name` varchar(255) NOT NULL,
+  `usertype_alias` varchar(255) NOT NULL,
+  `usertype_auth` text NOT NULL COMMENT '権限（,区切り）',
+  `usertype_type` varchar(64) default NULL COMMENT '権限タイプ（admin|contributor|anonymous）',
+  `usertype_app` varchar(64) default NULL COMMENT '外部アプリのデフォルトユーザータイプ',
+  PRIMARY KEY  (`usertype_id`),
+  KEY `usertype_alias` (`usertype_alias`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
+--
+-- テーブルのデータをダンプしています `blx_usertype_test`
+--
 
-INSERT INTO `blx_usertype` (`usertype_id`, `usertype_name`, `usertype_alias`, `usertype_anonymous`, `usertype_administer`, `usertype_auth_view_draft`, `usertype_auth_post`, `usertype_auth_edit_post`, `usertype_auth_delete_others_post`, `usertype_auth_post_comment`, `usertype_auth_admin`, `usertype_auth_add_user`, `usertype_auth_delete_user`, `usertype_auth_invite_user`, `usertype_auth_add_category`, `usertype_auth_add_section`, `usertype_type`) VALUES
-(1, '管理人', 'administer', 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, NULL);
+INSERT INTO `blx_usertype_test` (`usertype_id`, `usertype_name`, `usertype_alias`, `usertype_auth`, `usertype_type`, `usertype_app`) VALUES
+(1, '管理人', 'administer', '', 'admin', NULL),
+(2, 'ゲスト', 'guest', '', 'anonymous', NULL),
+(3, '投稿者', 'contributor', 'post,category', 'contributor', NULL);
+
 
 INSERT INTO `blx_user` (`user_id`, `user_account`, `user_name`, `user_password`, `user_email`, `user_type`, `user_description`, `user_title`, `user_hash`, `user_createdate`, `user_modifydate`, `user_actiondate`) VALUES
 (27, 'admin', 'admin', 'l2uyViG7nxo', 'admin', 1, '', '', NULL, '2010-06-28 18:06:33', '2010-06-28 18:06:33', NULL)

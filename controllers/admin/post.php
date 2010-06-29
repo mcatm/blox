@@ -79,7 +79,7 @@ class Post extends Controller {
 		$this->load->library(array('post', 'user', 'ext'));
 		$this->div->get(array('type' => 'section', 'label' => 'section'));
 		$this->div->get(array('type' => 'category', 'label' => 'category'));
-		$this->user->get(array('qty' => 0, 'auth' => 'usertype_auth_post'));
+		$this->user->get(array('qty' => 0, 'auth' => array('contributor', 'admin')));
 		$this->ext->get(array('stack' => true, 'div' => 'post'));
 		$this->post->clear();
 		$this->setting->set_title($this->lang->line('system_post_add'));

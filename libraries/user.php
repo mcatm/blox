@@ -230,14 +230,14 @@ class BLX_User {
 		
 		if ($id > 0) {//編集
 			$this->get(array('id' => $id));//ユーザーを取得
-			$auth = (isset($CI->data->out['me']['auth']['user'])) ? true : false;//権限設定
+			$auth = ($CI->auth->check_auth('user')) ? true : false;//権限設定
 			$this->validation_rule[] = array(
 				'field'   => 'account',
 				'label'   => 'lang:system_user_label_account',
 				'rules'   => 'trim|alpha_dash|xss_clean'
 			);
 		} else {//新規作成
-			$auth = (isset($CI->data->out['me']['auth']['user'])) ? true : false;//権限設定
+			$auth = ($CI->auth->check_auth('user')) ? true : false;//権限設定
 			$this->validation_rule[] = array(
 				'field'   => 'account',
 				'label'   => 'lang:system_user_label_account',
@@ -262,7 +262,7 @@ class BLX_User {
 		
 		$CI->form_validation->set_rules($this->validation_rule);
 		
-		if ($id != $CI->data->out['me']['id'] && !isset($CI->data->out['me']['auth']['user'])) $msg_stop_post = $CI->lang->line('system_user_error_auth');//他人の情報を編集する権限がない場合
+		if ($id != $CI->data->out['me']['id'] && !$CI->auth->check_auth('user')) $msg_stop_post = $CI->lang->line('system_user_error_auth');//他人の情報を編集する権限がない場合
 		
 		if (isset($msg_stop_post) && $auth !== true) {
 			$this->msg = array(
@@ -381,7 +381,7 @@ class BLX_User {
 		if ($id == 0) return false;
 		
 		$this->get(array('id' => $id));//エントリを取得
-		$auth = (isset($CI->data->out['me']['auth']['user'])) ? true : false;//権限設定
+		$auth = ($CI->auth->check_auth('user')) ? true : false;//権限設定
 		$this->validation_rule = array(
 			array(
 				'field'   => 'pwd',
@@ -402,7 +402,7 @@ class BLX_User {
 		
 		$CI->form_validation->set_rules($this->validation_rule);
 		
-		if ($id != $CI->data->out['me']['id'] && !isset($CI->data->out['me']['auth']['user'])) $msg_stop_post = $CI->lang->line('system_user_error_auth');//他人の情報を編集する権限がない場合
+		if ($id != $CI->data->out['me']['id'] && !$CI->auth->check_auth('user')) $msg_stop_post = $CI->lang->line('system_user_error_auth');//他人の情報を編集する権限がない場合
 		
 		if (isset($msg_stop_post) && $auth !== true) {
 			$this->msg = array(

@@ -117,16 +117,18 @@ class Setting {
 	
 	function init() {
 		$tmp_home = (defined('URL_ALIAS_HOME')) ? URL_ALIAS_HOME : 'home';
-		$default_setting = array(//デフォルトの設定
+		$default_setting = array(//default settings
 			'site_name'					=> 'blox',//サイト名
 			'site_description'			=> '',//要約
 			'site_keyword'				=> '',//キーワード
 			'site_rss'					=> base_url().'rss/',//RSS
 			'site_favicon'				=> ex_url().'favicon.ico',//favicon
-			'theme'						=> 'default',//テーマ
-			'url_alias_category'		=> 'category',//カテゴリのエイリアス
-			'url_alias_post'			=> 'post',//記事のエイリアス
-			'url_alias_tag'				=> 'tag',//タグのエイリアス
+			'theme'						=> 'default',//a default theme
+			'usertype_type'				=> 'admin,contributor,anonymous',//the kind of usertype
+			'authtype'					=> 'post,user,category,section,home,comment,usertype,theme,setting,page,file,install',//authority types
+			'url_alias_category'		=> 'category',//url alias of category
+			'url_alias_post'			=> 'post',//url alias of posts
+			'url_alias_tag'				=> 'tag',//url alias of tags
 			'url_alias_user'			=> 'user',//ユーザーのエイリアス
 			'url_alias_home'			=> $tmp_home,//ホーム画面のエイリアス
 			'url_alias_bookmarklet'		=> 'bookmarklet',//ブックマークレットのエイリアス
@@ -209,10 +211,10 @@ class Setting {
 				),
 				'user_invite'	=> array(
 					'alias' => 'user/invite'
-				)/*,
+				),
 				'usertype'	=> array(
 					'alias'	=> 'usertype'
-				)*/
+				)
 			)
 		),
 		'file'	=> array(
