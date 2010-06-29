@@ -8,8 +8,6 @@ class Pipe extends Controller {
 		segment - id / page / offset
 		content - type
 	
-	nennenen
-	
 	*/
 	
 	function _remap($method) {//URLマッピング
@@ -371,7 +369,7 @@ class Pipe extends Controller {
 			$site_title = (isset($div['name'])) ? $div['name'] : "";
 			$site_description = (isset($div['description'])) ? $div['description'] : "";
 			$this->setting->set_title($site_title, $flg_title);
-			$this->setting->set_description(format_description($site_description, 120));
+			$this->setting->set_description(format_description($site_description, 300));
 		}
 		
 		$this->setting->set('theme', $param['theme']);
