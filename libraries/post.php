@@ -128,7 +128,15 @@ class BLX_Post {
 			
 			if (isset($CI->data->out[$param['label']])) {
 				foreach($CI->data->out[$param['label']] as $k => $v) {//追加データ付与
-					$CI->data->out[$param['label']][$k]['text'] = htmlspecialchars_decode($v['text']);//テキスト
+					//text
+					$text = htmlspecialchars_decode($v['text']);
+					$separator = $CI->setting->get_formattag('page');
+					$CI->data->out[$param['label']][$k]['text'] = $text;
+					$CI->data->out[$param['label']][$k]['paragraph'] = explode($separator, $text);
+					
+					//page
+					$p = ($param['page']) ? (int)$param['page'] - 1 : 0;
+					$CI->data->out[$param['label']][$k]['page'] = $p;
 					
 					//著者グループ
 					$user_linx = $CI->linx->get('post2user', array('a' => $v['id']));

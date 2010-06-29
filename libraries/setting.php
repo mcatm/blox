@@ -29,6 +29,13 @@ class Setting {
 		return ($str) ? explode($delimiter, $str) : array();
 	}
 	
+	function get_formattag($tag, $close = false) {//return a tag for format text
+		$str = $this->get('format_tag_open');
+		if ($close == true) $str .= '/';
+		$str .= $tag;
+		return $str.$this->get('format_tag_close');
+	}
+	
 	function get_theme() {
 		$CI =& get_instance();
 		$CI->load->helper('directory');
@@ -154,6 +161,8 @@ class Setting {
 			'html_tag_not_escape_attr'	=> 'href,target',//aタグの中でエスケープしない要素
 			'doc_help'					=> 'http://blox.pelepop.com/',//ドキュメント
 			'doc_forum'					=> 'http://blox.pelepop.com/forum/',//フォーラム
+			'format_tag_open'			=> '{{',
+			'format_tag_close'			=> '}}',
 			'output_error_open'			=> '<p class="error">',
 			'output_error_close'		=> '</p>',
 			'history_log_level'			=> 3,//編集履歴の深さ

@@ -45,10 +45,16 @@ class Pipe extends Controller {
 				$this->load->library('post');
 				if (is_numeric($this->uri->segment(2))) {//記事詳細
 					$post_id = (int)$this->uri->segment(2);
+					$page = 0;//get page number
+					for ($i = 3; $this->uri->segment($i); $i++) {
+						if (preg_match('/^\?/', $this->uri->segment($i))) $page = trim(substr($this->uri->segment($i), 2));
+					}
 					$this->post->get(array(
 						'id'		=> $post_id,
 						'related'	=> true,
 						'neighbor'	=> true,
+						'pager'		=> false,
+						'page'		=> $page,
 						'qty'		=> 1
 					));
 					
