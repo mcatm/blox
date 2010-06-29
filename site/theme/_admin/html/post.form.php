@@ -8,21 +8,24 @@
 	<?if(isset($post[0]['parent'])){?><input type="hidden" name="parent" value="<?=$post[0]['parent']?>" /><?}?>
 		<div class="container">
 			<div class="postmeta">
-				<p>
+				<div class="row">
 					<label>title : </label>
 					<input type="text" name="title" value="<?=set_value('title', (isset($post[0]['title'])) ? $post[0]['title'] : '')?>" class="query input" />
-				</p>
-				<p><label>status : </label><select name="status">
-					<option value="0"<?=set_select('status', 0)?><?if(isset($post[0]['status']) && $post[0]['status']==0){?> selected="selected"<?}?>>公開</option>
-					<option value="1"<?=set_select('status', 1)?><?if(isset($post[0]['status']) && $post[0]['status']==1){?> selected="selected"<?}?>>指定日投稿</option>
-					<option value="9"<?=set_select('status', 9)?><?if(isset($post[0]['status']) && $post[0]['status']==9){?> selected="selected"<?}?>>下書き</option>
-				</select></p>
+				</div>
 				
-				<p><label>tag : </label>
-				<input type="text" name="tagstr" value="<?=set_value('tagstr', (isset($post[0]['tagstr'])) ? $post[0]['tagstr'] : '')?>" class="query input" id="tag" autocomplete="off" />
-				<div id="suggest"></div>
-				</p>
+				<div class="row">
+					<label>status : </label><select name="status">
+						<option value="0"<?=set_select('status', 0)?><?if(isset($post[0]['status']) && $post[0]['status']==0){?> selected="selected"<?}?>>公開</option>
+						<option value="1"<?=set_select('status', 1)?><?if(isset($post[0]['status']) && $post[0]['status']==1){?> selected="selected"<?}?>>指定日投稿</option>
+						<option value="9"<?=set_select('status', 9)?><?if(isset($post[0]['status']) && $post[0]['status']==9){?> selected="selected"<?}?>>下書き</option>
+					</select>
+				</div>
 				
+				<div class="row">
+					<label>tag : </label>
+					<input type="text" name="tagstr" value="<?=set_value('tagstr', (isset($post[0]['tagstr'])) ? $post[0]['tagstr'] : '')?>" class="query input" id="tag" autocomplete="off" />
+					<div id="suggest"></div>
+				</div>
 			</div>
 			<div class="postbody">
 				<p>
