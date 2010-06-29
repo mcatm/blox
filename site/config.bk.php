@@ -117,7 +117,8 @@ define('FILE_ALLOWED_TYPE',	'gif|jpg|png');
 
 define('DB_TBL_POST',			DB_PREFIX.'post');				//記事
 define('DB_TBL_USER',			DB_PREFIX.'user');				//ユーザー
-define('DB_TBL_USERTYPE',		DB_PREFIX.'usertype');			//ユーザー権限タイプ
+#define('DB_TBL_USERTYPE',		DB_PREFIX.'usertype');			//usertype : auth
+define('DB_TBL_USERTYPE',		DB_PREFIX.'usertype_test');			//usertype : auth
 define('DB_TBL_DIV',			DB_PREFIX.'div');				//サイト区分
 define('DB_TBL_TAG',			DB_PREFIX.'tag');				//タグ
 define('DB_TBL_FILE',			DB_PREFIX.'file');				//ファイル
