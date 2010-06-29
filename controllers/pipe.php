@@ -8,8 +8,6 @@ class Pipe extends Controller {
 		segment - id / page / offset
 		content - type
 	
-	nennenen
-	
 	*/
 	
 	function _remap($method) {//URLマッピング
@@ -45,10 +43,16 @@ class Pipe extends Controller {
 				$this->load->library('post');
 				if (is_numeric($this->uri->segment(2))) {//記事詳細
 					$post_id = (int)$this->uri->segment(2);
+					$page = 0;//get page number
+					for ($i = 3; $this->uri->segment($i); $i++) {
+						if (preg_match('/^\?/', $this->uri->segment($i))) $page = trim(substr($this->uri->segment($i), 2));
+					}
 					$this->post->get(array(
 						'id'		=> $post_id,
 						'related'	=> true,
 						'neighbor'	=> true,
+						'pager'		=> false,
+						'page'		=> $page,
 						'qty'		=> 1
 					));
 					
@@ -365,7 +369,7 @@ class Pipe extends Controller {
 			$site_title = (isset($div['name'])) ? $div['name'] : "";
 			$site_description = (isset($div['description'])) ? $div['description'] : "";
 			$this->setting->set_title($site_title, $flg_title);
-			$this->setting->set_description(format_description($site_description, 120));
+			$this->setting->set_description(format_description($site_description, 300));
 		}
 		
 		$this->setting->set('theme', $param['theme']);

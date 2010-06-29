@@ -5,6 +5,8 @@ if ( ! function_exists( 'format_text' ) ) {
 		$CI =& get_instance();
 		$CI->load->library('typography');
 		
+		$str = str_replace($CI->setting->get_formattag('page'), '', $str);
+		
 		$str = str_replace("\"http", "\"{@http}", $str);//引用符に囲まれたURLをエスケープ
 		
 		$str = strip_tags($str, $CI->setting->get('html_tag_not_escape'));//htmlタグをエスケープ
