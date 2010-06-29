@@ -138,6 +138,15 @@ class BLX_Post {
 					$p = ($param['page']) ? (int)$param['page'] - 1 : 0;
 					$CI->data->out[$param['label']][$k]['page'] = $p;
 					
+					if (count($CI->data->out[$param['label']][$k]['paragraph']) > 1) {
+						$CI->data->out[$param['label']][$k]['pager'] = array(
+							'current'	=> $p + 1,
+							'base_url'	=> trim(self_url(), '/').'/?p',
+							'total'		=> count($CI->data->out[$param['label']][$k]['paragraph'])
+						);
+						//print_r($CI->data->out[$param['label']][$k]['pager']);exit;
+					}
+					
 					//著者グループ
 					$user_linx = $CI->linx->get('post2user', array('a' => $v['id']));
 					$user_where = array();
