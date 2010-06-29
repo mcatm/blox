@@ -12,7 +12,7 @@ class Post extends Controller {
 			'base_url'		=> base_url().'admin/post/offset/',
 			'type'			=> 0
 		);
-		if (isset($this->data->out['me']['auth']['admin'])) $where['auth'] = 9;
+		if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 9;
 		$where = get_filter('admin/post', $where);
 		$this->post->get($where);
 		$this->setting->set_title($this->lang->line('system_label_post_list'));
@@ -25,7 +25,7 @@ class Post extends Controller {
 		$where['id'] = $id;
 		$where['file_main']	= true;
 		$where['file'] = true;
-		if (isset($this->data->out['me']['auth']['view_draft'])) $where['auth'] = 10;//下書き閲覧権限
+		if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 10;//下書き閲覧権限
 		$where['history'] = true;
 		$this->post->get($where);
 		if (isset($this->data->out['post'])) {
@@ -56,7 +56,7 @@ class Post extends Controller {
 		$this->load->library(array('post', 'div', 'user'));
 		$this->div->get(array('type' => 'section', 'label' => 'section'));
 		$this->div->get(array('type' => 'category', 'label' => 'category'));
-		$this->user->get(array('qty' => 0, 'auth' => 'usertype_auth_post'));
+		$this->user->get(array('qty' => 0, 'auth' => array('contributor', 'admin')));
 		
 		$msg = $this->post->set($id);
 		switch ($msg['result']) {
@@ -67,7 +67,7 @@ class Post extends Controller {
 			case 'error':
 			default:
 				$where = array('id' => $id, 'qty' => 1, 'file' => true, 'schedule' => true);
-				if (isset($this->data->out['me']['auth']['admin'])) $where['auth'] = 10;
+				if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 10;
 				if ($id > 0) $this->post->get($where);
 			break;
 		}

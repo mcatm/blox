@@ -39,7 +39,7 @@ class Auth {
 		$this->_destroy_session();
 	}
 	
-	function init($authtype = array()/*, $twitter = false, $access_token = NULL, $access_token_secret = NULL*/) {//コンストラクタ（ログイン状態をチェック）
+	function init($authtype = array()) {//コンストラクタ（ログイン状態をチェック）
 		$CI =& get_instance();
 		$CI->load->library(array('session', 'user'));
 		$CI->session->unset_userdata('login');//ログイン情報を記録したセッションを削除
@@ -63,57 +63,13 @@ class Auth {
 		}
 		
 		if (!isset($set['auth'])) $set['auth'] = $this->_set_usertype();//ログインしていない場合も権限付与
-		
 		$CI->data->set_array('me', $set);//出力用データに変換（パスワードやログイン用ハッシュが外に出ないよう）
-		
+		#exit($CI->data->out['me']['auth']['type']);
 		if ($login === true) {//ログイン状態
 			$CI->session->set_userdata(array('login' => true));
 		} else {//未ログイン
 			$this->_destroy_session();
 		}
-		
-		/*$user_id = 0;
-		#print_r($CI->session->userdata['twitter']);exit;
-		
-		$this->callback_url_login = base_url().TWITTER_LOGIN_URL;
-		$this->callback_url_sync = base_url().TWITTER_SYNC_URL;
-		
-		if (isset($CI->session->userdata['twitter']['access_token'])) $access_token = $CI->session->userdata['twitter']['access_token'];
-		if (isset($CI->session->userdata['twitter']['access_token_secret'])) $access_token_secret = $CI->session->userdata['twitter']['access_token_secret'];
-		
-		if ($CI->session->userdata('id') == true) {
-			$user_id = $CI->session->userdata('id');
-		} elseif ($twitter == true) {//twitterアカウントでログイン
-			$login = $this->oauth($access_token, $access_token_secret);
-			if ($login == true) {
-				$twitter_id = $CI->session->userdata['twitter']['user_id'];
-				$CI->db->where('user_twitter_id', $twitter_id);
-				$user = $CI->user->get($CI->db->get(DB_TBL_USER), array(), 'tmp', true);
-				#exit($user_id);
-				if (count($user) == 0) {
-					$CI->load->helper('date');
-					$now = unix_to_human(now(), TRUE, 'eu');//日付取得
-					$screen_name = $CI->session->userdata['twitter']['screen_name'];
-					$twitter_dat = $CI->twitter->call('users/show', array('id' => $screen_name));
-					foreach ($twitter_dat as $k => $v) {
-						$post = array(
-							'user_type'					=> 0,
-							'user_twitter_id'			=> $v->user->id,
-							'user_twitter_screen_name'	=> $v->user->screen_name,
-							'user_twitter_name'			=> $v->user->name,
-							'user_twitter_img'			=> $v->user->profile_image_url,
-							'user_description'			=> $v->user->description,
-							'user_ext_url'				=> $v->user->url,
-							'user_createdate'			=> $now,
-							'user_modifydate'			=> $now,
-							'user_actiondate'			=> $now
-						);
-						$CI->db->insert(DB_TBL_USER, $post);
-						$user_id = $this->db->insert_id();
-					}
-				}
-			}
-		}*/
 	}
 	
 	function oauth($access_token = NULL, $access_token_secret = NULL, $callback_url = "") {
@@ -156,13 +112,7 @@ class Auth {
 	
 	function get_usertype($type = "") {
 		$CI =& get_instance();
-		if ($type == 'anonymous') {
-			$CI->db->where('usertype_anonymous', 1);
-		} elseif ($type == 'administor') {
-			$CI->db->where('usertype_administor', 1);
-		} elseif ($type != "") {
-			$CI->db->where('usertype_type', $type);
-		}
+		if ($type != "") $CI->db->where('usertype_type', $type);
 		$q = $CI->data->get($CI->db->get(DB_TBL_USERTYPE));
 		if (count($q) > 0) return $q;
 		return false;
@@ -174,7 +124,7 @@ class Auth {
 		if ($type > 0) {
 			$CI->db->where('usertype_id', $type);
 		} else {//基本権限
-			$CI->db->where('usertype_anonymous', 1);
+			$CI->db->where('usertype_type', 'anonymous');
 		}
 		$q = $CI->data->get($CI->db->get(DB_TBL_USERTYPE));
 		if (count($q) > 0) {
@@ -184,17 +134,13 @@ class Auth {
 				'name' => $r['name'],
 				'alias'	=> $r['alias']
 			);
+			
+			$auth['type'] = $r['type'];//権限タイプ（admin|contributor|anonymous）
+			
 			//権限付与
-			if ($r['auth_view_draft'] > 0) $auth['view_draft'] = true;//下書きを読む権限
-			if ($r['auth_post'] > 0) $auth['post'] = true;//記事を投稿する権限
-			if ($r['auth_post_comment'] > 0) $auth['post_comment'] = true;//コメントを投稿する権限
-			if ($r['auth_admin'] > 0) $auth['admin'] = true;//管理画面に入れる権限
-			if ($r['auth_delete_others_post'] > 0) $auth['delete_others_post'] = true;//
-			if ($r['auth_add_user'] > 0) $auth['add_user'] = true;//ユーザーを追加する権限
-			if ($r['auth_delete_user'] > 0) $auth['delete_user'] = true;//ユーザーを削除する権限
-			if ($r['auth_invite_user'] > 0) $auth['invite_user'] = true;//ユーザーを招待する権限
-			if ($r['auth_add_category'] > 0) $auth['add_category'] = true;//カテゴリを追加する権限
-			if ($r['auth_add_section'] > 0) $auth['add_section'] = true;//セクションを追加する権限
+			if (!empty($r['auth'])) {
+				foreach(explode(',', $r['auth']) as $a) $auth[$a] = true;
+			}
 		}
 		return $auth;
 	}

@@ -36,12 +36,12 @@
 <div id="navi">
 	<div class="container clearfix">
 		<ul class="menu clearfix">
-			<?foreach($admin_menu as $menu_sec => $menu_val){?><?if(!isset($menu_val['auth']) || (isset($menu_val['auth']) && isset($me['auth'][$menu_val['auth']]))){?><li class="section">
+			<?foreach($admin_menu as $menu_sec => $menu_val){?><?if(!isset($menu_val['auth']) || $me['auth']['type'] == 'admin' || isset($menu_val['auth']) && isset($me['auth'][$menu_val['auth']])){?><li class="section">
 				<h2><a href="<?=base_url()?>admin/<?=$menu_val['alias']?>/"><?=$this->lang->line('system_label_'.$menu_sec)?></a></h2>
 				<?if(isset($menu_val['sub'])){?><div class="sub clearfix">
 					<div class="corner-left"></div>
 					<ul>
-						<?foreach($menu_val['sub'] as $menu_sub_key => $menu_sub_val){?><?if(!isset($menu_sub_val['auth']) || (isset($menu_sub_val['auth']) && isset($me['auth'][$menu_sub_val['auth']]))){?><li><a href="<?=base_url()?>admin/<?=$menu_sub_val['alias']?>/"><?=$this->lang->line('system_label_'.$menu_sub_key)?></a></li><?}}?>
+						<?foreach($menu_val['sub'] as $menu_sub_key => $menu_sub_val){?><?if(!isset($menu_sub_val['auth']) || $me['auth']['type'] == 'admin' || (isset($menu_sub_val['auth']) && isset($me['auth'][$menu_sub_val['auth']]))){?><li><a href="<?=base_url()?>admin/<?=$menu_sub_val['alias']?>/"><?=$this->lang->line('system_label_'.$menu_sub_key)?></a></li><?}}?>
 					</ul>
 					<div class="corner-right"></div>
 				</div><?}?>

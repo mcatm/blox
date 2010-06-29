@@ -8,7 +8,7 @@
 				<div class="row">
 					<label>usertype : </label>
 					<select name="type">
-						<?foreach($usertype as $type){?><?if (isset($me['auth']['admin']) || $type['administor'] != 1){?><option value="<?=$type['id']?>"<?=set_select('type', $type['id'])?><?if(isset($user[0]['type']) && $type['id'] == $user[0]['type']){?> selected="selected"<?}?>><?=$type['name']?></option><?}?><?}?>
+						<?foreach($usertype as $type){?><?if (isset($me['auth']['admin']) || $type['administer'] != 1){?><option value="<?=$type['id']?>"<?=set_select('type', $type['id'])?><?if(isset($user[0]['type']) && $type['id'] == $user[0]['type']){?> selected="selected"<?}?>><?=$type['name']?></option><?}?><?}?>
 					</select>
 				</div>
 			</div>

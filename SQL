@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `blx_usertype` (
   `usertype_name` varchar(255) NOT NULL,
   `usertype_alias` varchar(255) NOT NULL,
   `usertype_anonymous` tinyint(4) NOT NULL default '0' COMMENT '基本権限',
-  `usertype_administor` tinyint(4) NOT NULL default '0' COMMENT '管理人フラグ',
+  `usertype_administer` tinyint(4) NOT NULL default '0' COMMENT '管理人フラグ',
   `usertype_auth_view_draft` tinyint(4) NOT NULL default '0' COMMENT '非公開記事を読む権限',
   `usertype_auth_post` tinyint(4) NOT NULL default '0' COMMENT '記事を投稿する権限',
   `usertype_auth_edit_post` tinyint(4) NOT NULL default '0' COMMENT '他人の記事を編集する権限',
@@ -242,15 +242,15 @@ CREATE TABLE IF NOT EXISTS `blx_usertype` (
   KEY `usertype_auth_delete_user` (`usertype_auth_delete_user`),
   KEY `usertype_auth_delete_others_post` (`usertype_auth_delete_others_post`),
   KEY `usertype_anonymous` (`usertype_anonymous`),
-  KEY `usertype_administor` (`usertype_administor`),
+  KEY `usertype_administer` (`usertype_administer`),
   KEY `usertype_auth_edit_use` (`usertype_auth_edit_post`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
 
 
-INSERT INTO `blx_usertype` (`usertype_id`, `usertype_name`, `usertype_alias`, `usertype_anonymous`, `usertype_administor`, `usertype_auth_view_draft`, `usertype_auth_post`, `usertype_auth_edit_post`, `usertype_auth_delete_others_post`, `usertype_auth_post_comment`, `usertype_auth_admin`, `usertype_auth_add_user`, `usertype_auth_delete_user`, `usertype_auth_invite_user`, `usertype_auth_add_category`, `usertype_auth_add_section`, `usertype_type`) VALUES
-(1, '管理人', 'administor', 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, NULL);
+INSERT INTO `blx_usertype` (`usertype_id`, `usertype_name`, `usertype_alias`, `usertype_anonymous`, `usertype_administer`, `usertype_auth_view_draft`, `usertype_auth_post`, `usertype_auth_edit_post`, `usertype_auth_delete_others_post`, `usertype_auth_post_comment`, `usertype_auth_admin`, `usertype_auth_add_user`, `usertype_auth_delete_user`, `usertype_auth_invite_user`, `usertype_auth_add_category`, `usertype_auth_add_section`, `usertype_type`) VALUES
+(1, '管理人', 'administer', 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, NULL);
 
 INSERT INTO `blx_user` (`user_id`, `user_account`, `user_name`, `user_password`, `user_email`, `user_type`, `user_description`, `user_title`, `user_hash`, `user_createdate`, `user_modifydate`, `user_actiondate`) VALUES
 (27, 'admin', 'admin', 'l2uyViG7nxo', 'admin', 1, '', '', NULL, '2010-06-28 18:06:33', '2010-06-28 18:06:33', NULL)

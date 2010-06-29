@@ -13,7 +13,7 @@ class Post extends Controller {
 			'uri_segment'	=> 4,
 			'type'			=> 0
 		);
-		if (isset($this->data->out['me']['auth']['admin'])) $where['auth'] = 9;
+		if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 9;
 		$where = get_filter('home/post', $where);
 		$this->post->get($where);
 		$this->setting->set_title($this->setting->get('url_alias_home').' - my '.$this->setting->get('url_alias_post'));
@@ -41,7 +41,7 @@ class Post extends Controller {
 			case 'error':
 			default:
 				$where = array('id' => $id, 'qty' => 1, 'file' => true, 'schedule' => true);
-				if (isset($this->data->out['me']['auth']['admin'])) $where['auth'] = 10;
+				if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 10;
 				if ($id > 0) $this->post->get($where);
 			break;
 		}

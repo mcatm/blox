@@ -25,7 +25,7 @@ class User extends Controller {
 		$where = array();
 		$where['user'] = $id;
 		$where['file_main']	= true;
-		if (isset($this->data->out['me']['auth']['view_draft'])) $where['auth'] = 10;//下書き閲覧権限
+		if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 10;//下書き閲覧権限
 		$this->post->get($where);
 		$this->load->view('user.detail.php');
 	}

@@ -24,7 +24,7 @@ class Div extends Controller {
 		$where['id'] = $id;
 		$where['file_main']	= true;
 		$where['file'] = true;
-		if (isset($this->data->out['me']['auth']['view_draft'])) $where['auth'] = 10;//下書き閲覧権限
+		if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 10;//下書き閲覧権限
 		$where['history'] = true;
 		$this->post->get($where);
 		if (isset($this->data->out['post'])) {

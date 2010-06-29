@@ -175,12 +175,12 @@ class BLX_Div {
 		
 		$CI->form_validation->set_rules($this->validation_rule);
 		
-		if (!isset($CI->data->out['me']['auth']['admin'])) {
+		if ($CI->data->out['me']['auth']['type'] != 'admin') {
 			if (isset($CI->data->out['me']['id'])) {
-				if ($CI->input->post('type')=='category' && isset($CI->data->out['me']['auth']['add_category'])) {
+				if ($CI->input->post('type')=='category' && isset($CI->data->out['me']['auth']['category'])) {
 					$flg_cnt_edit = true;
 				}
-				if ($CI->input->post('type')=='section' && isset($CI->data->out['me']['auth']['add_section'])) {
+				if ($CI->input->post('type')=='section' && isset($CI->data->out['me']['auth']['section'])) {
 					$flg_cnt_edit = true;
 				}
 			}

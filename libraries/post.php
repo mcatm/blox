@@ -466,7 +466,7 @@ class BLX_Post {
 		if (isset($CI->data->out['me']['id'])) {
 			if ($id == 0 && !isset($CI->data->out['me']['auth']['post'])) {
 				$flg_cnt_post = true;//記事を書く権限がない場合
-			} elseif (isset($CI->data->out['post'][0]['author']) && !isset($CI->data->out['me']['auth']['edit_post'])) {//他人のエントリを編集する権限がない場合
+			} elseif (isset($CI->data->out['post'][0]['author']) && $CI->data->out['me']['auth']['type'] != 'admin') {//他人のエントリを編集する権限がない場合
 				foreach($CI->data->out['post'][0]['author'] as $ka => $va) {
 					if ($va['id'] == $CI->data->out['me']['id']) $flg_cnt_post = true;
 				}
@@ -739,7 +739,7 @@ class BLX_Post {
 				if ($c > 0) {//自分の記事の場合
 					$flg_delete = true;
 				} else {
-					$flg_delete = $CI->data->out['me']['auth']['delete_others_post'];
+					$flg_delete = ($CI->data->out['me']['auth']['type'] == 'admin') ? true : false;
 				}
 				
 				$CI->db->flush_cache();

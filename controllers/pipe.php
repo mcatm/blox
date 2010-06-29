@@ -141,7 +141,7 @@ class Pipe extends Controller {
 				$this->load->library(array('post', 'user', 'ext'));
 				$this->div->get(array('type' => 'section', 'label' => 'section'));
 				$this->div->get(array('type' => 'category', 'label' => 'category'));
-				$this->user->get(array('qty' => 0, 'auth' => 'usertype_auth_post'));
+				$this->user->get(array('qty' => 0, 'auth' => 'usertype_contributor'));
 				$this->ext->get(array('stack' => true, 'div' => 'post'));
 				
 				$param = preg_split('/=|&|\?/', $this->uri->segment(3));
@@ -350,7 +350,7 @@ class Pipe extends Controller {
 			if (isset($param['segment']['page']))	$where['page']		= $param['segment']['page'];
 			if (isset($param['id_type']))			$where['id_type']	= $param['id_type'];
 			
-			if (isset($this->data->out['me']['auth']['view_draft'])) $where['auth'] = 10;
+			if ($this->data->out['me']['auth']['type'] == "admin") $where['auth'] = 10;
 			$this->post->get($where);
 			
 			if (isset($this->data->out['post'])) {
