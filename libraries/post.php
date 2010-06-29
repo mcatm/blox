@@ -95,7 +95,7 @@ class BLX_Post {
 			return $count;//カウントを返すだけ
 		}
 		
-		if ($count > 0) {//記事が存在した場合
+		if ($count > 0) {//if the posts exist
 			$CI->pagination->initialize(array(
 				'base_url'		=> $param['base_url'],
 				'total_rows'	=> $count,
@@ -116,7 +116,7 @@ class BLX_Post {
 			
 			$CI->db->flush_cache();
 			
-			//ページ設定
+			//get a status of pages.
 			if ($param['pager']) {
 				$CI->data->set_array('page', array(
 					'total'			=> $CI->pagination->total_rows,
@@ -127,7 +127,7 @@ class BLX_Post {
 			}
 			
 			if (isset($CI->data->out[$param['label']])) {
-				foreach($CI->data->out[$param['label']] as $k => $v) {//追加データ付与
+				foreach($CI->data->out[$param['label']] as $k => $v) {//add extra datas
 					//text
 					$text = htmlspecialchars_decode($v['text']);
 					$separator = $CI->setting->get_formattag('page');
@@ -147,7 +147,7 @@ class BLX_Post {
 						//print_r($CI->data->out[$param['label']][$k]['pager']);exit;
 					}
 					
-					//著者グループ
+					//authors
 					$user_linx = $CI->linx->get('post2user', array('a' => $v['id']));
 					$user_where = array();
 					if (is_array($user_linx)) {
@@ -155,11 +155,11 @@ class BLX_Post {
 						foreach($user_linx as $k2 => $v2) $user_where[] = $v2['b'];
 						$CI->data->out[$param['label']][$k]['author'] = $CI->user->get(array('id' => $user_where, 'stack' => false));
 					} else {
-						$CI->data->out[$param['label']][$k]['author'] = $CI->user->get_anonymous();//著者が設定されていない場合
+						$CI->data->out[$param['label']][$k]['author'] = $CI->user->get_anonymous();//if an author wasn't set.
 					}
 					$CI->data->out[$param['label']][$k]['author_id'] = $user_where;
 					
-					if ($param['file_main']) {//メインファイル
+					if ($param['file_main']) {//main files
 						$CI->load->library('file');
 						$file_segment = explode('|', $CI->setting->get('file_segment'));
 						if (is_array($file_segment)) {
@@ -176,7 +176,7 @@ class BLX_Post {
 						}
 					}
 					
-					if ($param['file']) {//ファイル
+					if ($param['file']) {//files
 						$CI->load->library('file');
 						$file_linx = $CI->linx->get('post2file', array('a' => $v['id']));
 						if (is_array($file_linx)) {
@@ -186,7 +186,7 @@ class BLX_Post {
 						}
 					}
 					
-					if ($param['comment']) {//コメント
+					if ($param['comment']) {//comment
 						$this->get(array(
 							'type'		=> 1,
 							'parent'	=> $v['id'],
@@ -198,7 +198,7 @@ class BLX_Post {
 						}
 					}
 					
-					//セクション／カテゴリ
+					//sections and categories
 					$CI->load->library('div');
 					$div_where = array();
 					$div_linx = $CI->linx->get('post2div', array('a' => $v['id']));
@@ -227,7 +227,7 @@ class BLX_Post {
 					}
 					$CI->data->out[$param['label']][$k]['div_id'] = $div_where;
 					
-					if ($param['tag']) {//タグ
+					if ($param['tag']) {//tags
 						$CI->load->library('tag');
 						$tag_linx = $CI->linx->get('post2tag', array('a' => $v['id']));
 						if (is_array($tag_linx)) {
@@ -244,7 +244,7 @@ class BLX_Post {
 							$CI->data->out[$param['label']][$k]['tag'] = array();
 						}
 						
-						if (isset($param['related']) && !empty($CI->data->out[$param['label']][$k]['tag'])) {//関連エントリ
+						if (isset($param['related']) && !empty($CI->data->out[$param['label']][$k]['tag'])) {//related entries
 							$CI->data->out[$param['label']][$k]['related'] = $CI->tag->_get_related($CI->data->out[$param['label']][$k]['tag'], array(
 								'label' => 'post',
 								'tagstr' => $CI->data->out[$param['label']][$k]['tagstr'],
@@ -255,7 +255,7 @@ class BLX_Post {
 						}
 					}
 					
-					if ($param['ext']) {//拡張
+					if ($param['ext']) {//extra contents
 						$CI->load->helper('array');
 						$ext_link = array();
 						$ext_linx = $CI->linx->get('post2ext', array('a' => $v['id']));
@@ -267,7 +267,7 @@ class BLX_Post {
 						}
 					}
 					
-					if ($param['schedule']) {//スケジューラー
+					if ($param['schedule']) {//schedule
 						$CI->load->helper('date');
 						$sc = array('start', 'end');
 						$sc_flg = true;
@@ -319,15 +319,15 @@ class BLX_Post {
 						}
 					}
 					
-					$CI->data->out[$param['label']][$k]['url'] = $this->_make_permalink($label, $v['id'], $v['alias']);//個別リンク
+					$CI->data->out[$param['label']][$k]['url'] = $this->_make_permalink($label, $v['id'], $v['alias']);//permalink
 					
 					if (defined('ADMIN_MODE') && ADMIN_MODE === true) {
-						$CI->data->out[$param['label']][$k]['admin_url'] = base_url().'admin/post/'.$v['id'].'/';//管理用リンク
-						$CI->data->out[$param['label']][$k]['edit_url'] = base_url().'admin/post/edit/'.$v['id'].'/';//編集用リンク
+						$CI->data->out[$param['label']][$k]['admin_url'] = base_url().'admin/post/'.$v['id'].'/';//url for admin
+						$CI->data->out[$param['label']][$k]['edit_url'] = base_url().'admin/post/edit/'.$v['id'].'/';//url for admin to edit
 					}
 					
-					if ($v['title'] == "") $CI->data->out[$param['label']][$k]['title'] = mb_substr(strip_tags($v['text']), 0, 40, 'utf-8');//タイトルが無い場合の処理
-					if ($param['history']) {//変更履歴
+					if ($v['title'] == "") $CI->data->out[$param['label']][$k]['title'] = mb_substr(strip_tags($v['text']), 0, 40, 'utf-8');//if it don't have a title.
+					if ($param['history']) {//change histories
 						$CI->log->get('history/post/'.$v['id'].'/', array('label' => 'history'));
 						if (isset($CI->data->out['history'])) $CI->data->out[$param['label']][$k]['history'] = $CI->data->out['history'];
 						unset($CI->data->out['history']);
