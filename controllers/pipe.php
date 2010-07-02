@@ -121,6 +121,9 @@ class Pipe extends Controller {
 											
 						$this->log->get_access();
 						
+						$theme = (!empty($this->data->out['div'][0]['theme'])) ? $this->data->out['div'][0]['theme'] : '';
+						$tpl = (!empty($this->data->out['div'][0]['tpl'])) ? $this->data->out['div'][0]['tpl'] : 'list';
+						
 						if (isset($this->data->out['post'])) {
 							$this->data->set_array('div', array(
 								array(
@@ -128,7 +131,8 @@ class Pipe extends Controller {
 									'name'	=> $this->data->out['div'][0]['name'],
 									'description'	=> "",
 									'keyword'		=> "",
-									'tpl'	=> 'list',
+									'theme'			=> $theme,
+									'tpl'	=> $tpl,
 									'title_clear'	=> false
 								)
 							));

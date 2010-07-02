@@ -34,6 +34,16 @@
 					<?=form_error('text')?>
 				</p>
 			</div>
+			<?if(isset($ext) && is_array($ext)) {?><div class="ext clearfix">
+				<div class="postbody">
+					<?foreach($ext as $e){?><p>
+						<label><?=$e['label']?></label>
+						<?if ($e['type'] == 'textarea'){?><textarea name="ext_<?=$e['field']?>" class="input" rows="6"><?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?></textarea>
+						<?} else {?><input type="text" name="ext_<?=$e['field']?>" value="<?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?>" class="query input" />
+						<?}?>
+					</p><?}?>
+				</div>
+			</div><?}?>
 			<div class="file">
 				<div id="file_upload" class="file_upload clearfix">
 					<a id="tab_uploadfile" class="tab selected" attr="upload">Upload</a>
@@ -48,16 +58,6 @@
 				</div>
 				<div class="global file_list tab-target" class="clearfix" id="tab-target-global">
 					<div class="clearfix" id="existing_file"></div>
-				</div>
-			</div>
-			<div class="ext clearfix">
-				<div class="postbody">
-					<?if(isset($ext) && is_array($ext)) {?><?foreach($ext as $e){?><p>
-						<label><?=$e['label']?></label>
-						<?if ($e['type'] == 'textarea'){?><textarea name="ext_<?=$e['field']?>" class="input" rows="6"><?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?></textarea>
-						<?} else {?><input type="text" name="ext_<?=$e['field']?>" value="<?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?>" class="query input" />
-						<?}?>
-					</p><?}}?>
 				</div>
 			</div>
 			<div class="advance clearfix">

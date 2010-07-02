@@ -530,7 +530,7 @@ class BLX_Post {
 					$author = set_value('author[]');
 					if (empty($author) && $CI->input->post('author')) $author[] = $CI->input->post('author');
 					if (isset($author) && is_array($author) & !empty($author)) {
-						foreach($div as $ak => $av) {
+						foreach($author as $ak => $av) {
 							$set = array(
 								'a'		=> $id,
 								'b'		=> $av
