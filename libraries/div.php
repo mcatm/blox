@@ -46,6 +46,7 @@ class BLX_Div {
 		} else {
 			$CI->db->where('(div_alias NOT LIKE "[%")');
 		}
+		if (isset($param['alias'])) $CI->db->where('div_alias', $param['alias']);
 		if (isset($param['query'])) $CI->db->where('(div_name LIKE "%'.$param['query'].'%" OR div_alias LIKE "%'.$param['query'].'%")');
 		$CI->db->stop_cache();
 		

@@ -218,36 +218,8 @@ CREATE TABLE IF NOT EXISTS `blx_user` (
 -- テーブルの構造 `blx_usertype`
 --
 
+
 CREATE TABLE IF NOT EXISTS `blx_usertype` (
-  `usertype_id` int(6) NOT NULL auto_increment,
-  `usertype_name` varchar(255) NOT NULL,
-  `usertype_alias` varchar(255) NOT NULL,
-  `usertype_anonymous` tinyint(4) NOT NULL default '0' COMMENT '基本権限',
-  `usertype_administer` tinyint(4) NOT NULL default '0' COMMENT '管理人フラグ',
-  `usertype_auth_view_draft` tinyint(4) NOT NULL default '0' COMMENT '非公開記事を読む権限',
-  `usertype_auth_post` tinyint(4) NOT NULL default '0' COMMENT '記事を投稿する権限',
-  `usertype_auth_edit_post` tinyint(4) NOT NULL default '0' COMMENT '他人の記事を編集する権限',
-  `usertype_auth_delete_others_post` tinyint(4) NOT NULL default '0' COMMENT '他のユーザーの記事を削除する権限',
-  `usertype_auth_post_comment` tinyint(4) NOT NULL default '0' COMMENT 'コメントを投稿する権限',
-  `usertype_auth_admin` tinyint(4) NOT NULL default '0' COMMENT '管理画面に入室する権限',
-  `usertype_auth_add_user` tinyint(4) NOT NULL default '0' COMMENT 'ユーザーを追加する権限',
-  `usertype_auth_delete_user` tinyint(4) NOT NULL default '0' COMMENT 'ユーザーを削除出来る権限',
-  `usertype_auth_invite_user` tinyint(4) NOT NULL default '0' COMMENT 'ユーザーを招待する権限',
-  `usertype_auth_add_category` tinyint(4) NOT NULL default '0' COMMENT 'カテゴリを追加する権限',
-  `usertype_auth_add_section` tinyint(4) NOT NULL default '0' COMMENT 'セクションを追加する権限',
-  `usertype_type` varchar(64) default NULL COMMENT '外部アプリのデフォルトユーザー',
-  PRIMARY KEY  (`usertype_id`),
-  KEY `usertype_alias` (`usertype_alias`,`usertype_auth_view_draft`),
-  KEY `usertype_auth_post` (`usertype_auth_post`,`usertype_auth_post_comment`,`usertype_auth_admin`,`usertype_auth_add_user`,`usertype_auth_invite_user`,`usertype_auth_add_category`,`usertype_auth_add_section`),
-  KEY `usertype_auth_delete_user` (`usertype_auth_delete_user`),
-  KEY `usertype_auth_delete_others_post` (`usertype_auth_delete_others_post`),
-  KEY `usertype_anonymous` (`usertype_anonymous`),
-  KEY `usertype_administer` (`usertype_administer`),
-  KEY `usertype_auth_edit_use` (`usertype_auth_edit_post`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
-
-CREATE TABLE IF NOT EXISTS `blx_usertype_test` (
   `usertype_id` int(6) NOT NULL auto_increment,
   `usertype_name` varchar(255) NOT NULL,
   `usertype_alias` varchar(255) NOT NULL,
@@ -256,13 +228,13 @@ CREATE TABLE IF NOT EXISTS `blx_usertype_test` (
   `usertype_app` varchar(64) default NULL COMMENT '外部アプリのデフォルトユーザータイプ',
   PRIMARY KEY  (`usertype_id`),
   KEY `usertype_alias` (`usertype_alias`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 --
--- テーブルのデータをダンプしています `blx_usertype_test`
+-- テーブルのデータをダンプしています `blx_usertype`
 --
 
-INSERT INTO `blx_usertype_test` (`usertype_id`, `usertype_name`, `usertype_alias`, `usertype_auth`, `usertype_type`, `usertype_app`) VALUES
+INSERT INTO `blx_usertype` (`usertype_id`, `usertype_name`, `usertype_alias`, `usertype_auth`, `usertype_type`, `usertype_app`) VALUES
 (1, '管理人', 'administer', '', 'admin', NULL),
 (2, 'ゲスト', 'guest', '', 'anonymous', NULL),
 (3, '投稿者', 'contributor', 'post,category', 'contributor', NULL);

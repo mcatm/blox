@@ -113,7 +113,7 @@ class Auth {
 		$CI =& get_instance();
 		$auth = false;
 		if (!empty($action)) {
-			if ($CI->data->out['me']['auth'][$action] || $CI->data->out['me']['auth']['type'] == 'admin') $auth = true;
+			if (isset($CI->data->out['me']['auth'][$action]) || $CI->data->out['me']['auth']['type'] == 'admin') $auth = true;
 		} else {
 			if ($CI->data->out['me']['auth']['type'] == 'admin') $auth = true;
 		}

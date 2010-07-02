@@ -40,10 +40,12 @@ class Blox {
 		$CI =& get_instance();
 		$CI->load->helper('directory');
 		$this->trigger = $CI->config->item('blox_trigger');//トリガー取得
+		#print_r($this->trigger);exit;
 		
 		if (isset($this->trigger) && is_array($this->trigger)) {//Lib : コアの拡張
 			foreach($this->trigger as $k=>$v) {
 				$p = LIB_FOLDER.'/lib/'.$k.'.php';
+				#print $p.'<br />';
 				if (is_file($p)) {
 					require_once($p);
 					$path = explode('.', $k);
