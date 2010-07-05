@@ -160,7 +160,7 @@ class Setting {
 			'code_google_analytics'		=> '',//google Analytics用
 			//'email_admin'				=> '',管理者E-Mailアドレス
 			'html_tag_not_escape'		=> '<a><br><blockquote>',//エスケープしないhtmlタグ
-			'html_tag_not_escape_attr'	=> 'href,target',//aタグの中でエスケープしない要素
+			'html_tag_not_escape_attr'	=> 'href,target,class',//aタグの中でエスケープしない要素
 			'doc_help'					=> 'http://blox.pelepop.com/',//ドキュメント
 			'doc_forum'					=> 'http://blox.pelepop.com/forum/',//フォーラム
 			'format_tag_open'			=> '{{',
