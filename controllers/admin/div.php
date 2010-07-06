@@ -73,8 +73,9 @@ class Div extends Controller {
 	}
 	
 	function add() {
-		$this->load->library(array('div'));
+		$this->load->library(array('div', 'ext'));
 		$this->data->set_array('theme', $this->setting->get_theme());
+		$this->ext->get(array('stack' => true, 'div' => 'div'));
 		$this->div->clear();
 		$this->setting->set_title($this->lang->line('system_div_add'));
 		$this->load->view('div.form.php');

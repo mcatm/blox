@@ -66,6 +66,9 @@ $route['rss']				= "feed";
 $route['login/(:any)']		= "login/$1";
 $route['login']				= "login";
 
+$route['redirect/(:any)']		= "redirect/$1";
+$route['redirect']				= "redirect";
+
 $route['download/(:any)']	= "download/$1";
 
 $route['logout/(:any)']		= "logout/$1";

@@ -118,25 +118,27 @@ class Pipe extends Controller {
 							'pager'		=> true,
 							'offset'	=> $offset
 						));
-											
+						
 						$this->log->get_access();
 						
 						$theme = (!empty($this->data->out['div'][0]['theme'])) ? $this->data->out['div'][0]['theme'] : '';
 						$tpl = (!empty($this->data->out['div'][0]['tpl'])) ? $this->data->out['div'][0]['tpl'] : 'list';
+						$description = (!empty($this->data->out['div'][0]['description'])) ? $this->data->out['div'][0]['description'] : '';
+						$keyword = (!empty($this->data->out['div'][0]['tag'])) ? $this->data->out['div'][0]['tag'] : '';
 						
-						if (isset($this->data->out['post'])) {
+						#if (isset($this->data->out['post'])) {
 							$this->data->set_array('div', array(
 								array(
-									'type'	=> 'post',
-									'name'	=> $this->data->out['div'][0]['name'],
-									'description'	=> "",
-									'keyword'		=> "",
+									'type'			=> 'post',
+									'name'			=> $this->data->out['div'][0]['name'],
+									'description'	=> $description,
+									'keyword'		=> $keyword,
 									'theme'			=> $theme,
-									'tpl'	=> $tpl,
+									'tpl'			=> $tpl,
 									'title_clear'	=> false
 								)
 							));
-						}
+						#}
 						$this->_view(array());
 					} else {
 						show_404();
@@ -293,12 +295,8 @@ class Pipe extends Controller {
 					} elseif ($this->data->out['div'][0]['type'] == 'mail') {//分類がメールの場合
 						$this->load->library('mail');
 						$theme = $this->setting->get('theme');
-						#exit('UUU');
-						$msg = $this->mail->set();
 						
-						#$s = set_value('content[tel][]');
-						#print_r($s);
-						#exit();
+						$msg = $this->mail->set();
 						
 						$param = array(
 							'segment' => $segment
@@ -374,6 +372,8 @@ class Pipe extends Controller {
 			$site_description = (isset($div['description'])) ? $div['description'] : "";
 			$this->setting->set_title($site_title, $flg_title);
 			$this->setting->set_description(format_description($site_description, 300));
+			$keyword = (isset($div['keyword'])) ? $div['keyword'] : array();
+			$this->setting->set_keyword($keyword, true);
 		}
 		
 		$this->setting->set('theme', $param['theme']);

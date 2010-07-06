@@ -3,14 +3,12 @@
 	
 	$ct_key = $this->input->post('key');
 	
-	#$div[0]['content'] = array();
-	
 	$this->div->get(array(
 		'label'	=> 'div_option',
 		'where'	=> '(div_type != "")'
 	));
 	
-	$div_option = $this->data->out['div_option'];
+	$div_option = (isset($this->data->out['div_option'])) ? $this->data->out['div_option'] : array();
 	unset($this->data->out['div']);
 }?>
 <div class="content_form clearfix">
@@ -29,7 +27,7 @@
 		<select name="content[<?=$ct_key?>][param][div]">
 			<option value="">----</option>
 			<option value="this"<?if(!isset($div)){?> selected="selected"<?}?>>this</option>
-			<?foreach($div_option as $opt){?><option value="<?=$opt['id']?>"<?if (isset($div[0]['content'][$ct_key]['param']['div']) && $div[0]['content'][$ct_key]['param']['div'] == $opt['id']) print ' selected="selected"'?>>[<?=$opt['type']?>] <?=$opt['title']?></option><?}?>
+			<?if(!empty($div_option)){?><?foreach($div_option as $opt){?><option value="<?=$opt['id']?>"<?if (isset($div[0]['content'][$ct_key]['param']['div']) && $div[0]['content'][$ct_key]['param']['div'] == $opt['id']) print ' selected="selected"'?>>[<?=$opt['type']?>] <?=$opt['title']?></option><?}}?>
 		</select></p>
 		
 		<p><label>label : </label>

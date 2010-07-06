@@ -12,15 +12,18 @@ class BLX_Div {
 		$param = array(//デフォルトの設定
 			'array'		=> 'content',
 			'base_url'	=> base_url(),
+			'ext'		=> true,
 			'id'		=> 0,
 			'label'		=> 'div',
 			'num_links'	=> 4,
 			'offset'	=> 0,
 			'order'		=> 'desc',
 			'pager'		=> true,
+			'related'	=> 3,
 			'qty'		=> 20,
 			'sort'		=> 'order',
 			'stack'		=> true,
+			'tag'		=> true,
 			'uri_segment'	=> 2,
 			'where'		=> ""
 		);
@@ -91,6 +94,48 @@ class BLX_Div {
 					break;
 				}
 				$CI->data->out[$param['label']][$k]['url'] = trim(str_replace(array('@top/', $CI->setting->get_alias()), '', $tmp_url), '/').'/';
+				
+				if ($param['tag']) {//tags
+					$CI->load->library('tag');
+					$tag_linx = $CI->linx->get('div2tag', array('a' => $v['id']));
+					if (is_array($tag_linx)) {
+						$tag_where = array();
+						foreach($tag_linx as $k2 => $v2) $tag_where[] = $v2['b'];
+						$CI->data->out[$param['label']][$k]['tag'] = $CI->tag->get(array(
+							'id' => $tag_where,
+							'stack' => false,
+							'pager' => false
+						));
+						
+						$CI->data->out[$param['label']][$k]['tagstr'] = $CI->tag->_merge_tag($CI->data->out[$param['label']][$k]['tag']);
+					} else {
+						$CI->data->out[$param['label']][$k]['tag'] = array();
+					}
+					
+					if (isset($param['related']) && !empty($CI->data->out[$param['label']][$k]['tag'])) {//related entries
+						$CI->data->out[$param['label']][$k]['related'] = $CI->tag->_get_related($CI->data->out[$param['label']][$k]['tag'], array(
+							'label' => 'div',
+							'tagstr' => $CI->data->out[$param['label']][$k]['tagstr'],
+							#'content' => htmlspecialchars($v['title']).'/'.htmlspecialchars($v['text']),
+							'qty'	=> $param['related'],
+							'id'	=> $v['id']
+						));
+						
+						#print_r($CI->data->out[$param['label']][$k]['related']);exit;
+					}
+				}
+				
+				if ($param['ext']) {//extra contents
+					$CI->load->helper('array');
+					$ext_link = array();
+					$ext_linx = $CI->linx->get('div2ext', array('a' => $v['id']));
+					if (!empty($ext_linx) && is_array($ext_linx)) {
+						foreach ($ext_linx as $ex) {
+							$ex_value = decompress_array($ex['param']);
+							if (!empty($ex_value) && is_array($ex_value)) $CI->data->out[$param['label']][$k][$ex['status']] = $ex_value['value'];
+						}
+					}
+				}
 			}
 			
 			if ($param['pager']) {
@@ -263,6 +308,10 @@ class BLX_Div {
 				if (isset($id)) $this->msg['id'] = $id;
 				
 				$CI->log->set_history('div', $id, $arr);//ヒストリーログを残す
+				
+				//タグ登録
+				$CI->load->library('tag');
+				$CI->tag->set($CI->input->post('tagstr'), 'div2tag', $id);
 				
 				if (isset($flg_update)) {
 					if ($content) {

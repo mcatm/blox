@@ -17,6 +17,13 @@
 				<input type="text" name="name" value="<?=set_value('name', (isset($div[0]['name'])) ? $div[0]['name'] : '')?>" class="query input" /></p>
 				<p><label>alias : </label>
 				<input type="text" name="alias" value="<?=set_value('alias', (isset($div[0]['alias'])) ? $div[0]['alias'] : '')?>" class="query input" /></p>
+				
+				<div class="row">
+					<label>tag : </label>
+					<input type="text" name="tagstr" value="<?=set_value('tagstr', (isset($div[0]['tagstr'])) ? $div[0]['tagstr'] : '')?>" class="query input" id="tag" autocomplete="off" />
+					<div id="suggest"></div>
+				</div>
+				
 				<p><label>type : </label>
 				<select name="type">
 					<option value=""<?if(set_value('type') == "" || (isset($div[0]['type']) && $div[0]['type']=="")){?> selected="selected"<?}?>>---</option>
@@ -43,6 +50,18 @@
 			<div class="postbody">
 				<p><label>description : </label><textarea name="description" class="input" rows="12"><?=set_value('description', (isset($div[0]['description'])) ? $div[0]['description'] : '')?></textarea></p>
 			</div>
+			
+			<?if(isset($ext) && is_array($ext)) {?><div class="ext clearfix">
+				<div class="postbody">
+					<?foreach($ext as $e){?><p>
+						<label><?=$e['label']?></label>
+						<?if ($e['type'] == 'textarea'){?><textarea name="ext_<?=$e['field']?>" class="input" rows="6"><?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?></textarea>
+						<?} else {?><input type="text" name="ext_<?=$e['field']?>" value="<?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?>" class="query input" />
+						<?}?>
+					</p><?}?>
+				</div>
+			</div><?}?>
+			
 			<div class="advance clearfix">
 				<div class="trigger">content</div>
 				<div id="content_form">
@@ -56,12 +75,22 @@
 	<?$this->load->view('_inc/foot.php')?>
 </body>
 <script type="text/javascript" src="<?=ex_url()?>js/jquery/upload.js"></script>
+<script type="text/javascript" src="<?=ex_url()?>js/suggest.js"></script>
 <script type="text/javascript">
 	var post = [];
 	var cnt_key = <?if(isset($div[0]['content'])){?><?=count($div[0]['content'])?><?} else {?>0<?}?>;
 	open_advance = <?if(!empty($post[0]['div_id'])){?>true<?}else{?>false<?}?>;
 	
 	$(function(){
+		$.getJSON('<?=base_url()?>request/get/tag/', function(json) {
+			new Suggest.LocalMulti(
+				'tag',		//入力のエレメントID
+				'suggest',	//補完候補を表示するエリアのID
+				json,		//補完候補の検索対象となる配列
+				{dispMax: 10, interval: 1000, delim:',', prefix:true}// オプション
+			);
+		});
+		
 		//ファイルアップロード
 		if ($('#btn_uploadfile').length > 0) {
 			new AjaxUpload($('#btn_uploadfile'), {

@@ -226,6 +226,9 @@ class BLX_Tag {
 						$tag[$k]['appearance'] = $c;
 						$param['total_pie'] += ($c + 1);
 					}
+				} else {
+					$tag[$k]['appearance'] = 0;
+					$tag[$k]['total_pie'] = 1;
 				}
 				
 				foreach ($tag as $k => $t) {

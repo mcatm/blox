@@ -93,10 +93,21 @@ class Setting {
 		$this->set('rss', $rss);
 	}
 	
-	function set_keyword($arr = array()) {//キーワードを設定
+	function set_keyword($arr = array(), $tagrow = false) {//キーワードを設定
+		#print_r($arr);exit;
 		$CI =& get_instance();
-		$site_keyword = $this->get('site_keyword').', ';
-		$this->set('keyword', $site_keyword.implode(', ', $arr));
+		$tag = array();
+		if (!empty($arr)) {
+			if ($tagrow) {//タグの出力をそのままぶっ込んだ場合
+				foreach($arr as $v) {
+					$tag[] = $v['name'];
+				}
+			} else {
+				$tag = $arr;
+			}
+		}
+		$site_keyword = trim($this->get('site_keyword'), ',').', ';
+		$this->set('keyword', trim(trim($site_keyword.implode(', ', $tag), ',')));
 	}
 	
 	function _get_user_setting($p = NULL, $stack = false) {
