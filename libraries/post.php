@@ -78,10 +78,12 @@ class BLX_Post {
 		if (isset($param['type'])) $CI->db->where('post_type', $param['type']);//記事タイプ
 		if ($param['query'] != "") $CI->db->like('post_meta', $param['query']);//検索キー
 		
-		$auth_where = '(post_status <= '.$param['auth'];
-		if (!empty($CI->data->out['me']['id']) && defined('ADMIN_MODE') && !isset($param['div'])) $auth_where .= ' OR linx_b = '.$CI->data->out['me']['id'];
-		$auth_where .= ')';
-		$CI->db->where($auth_where);
+		if ($param['auth'] !== 'cron') {
+			$auth_where = '(post_status <= '.$param['auth'];
+			if (!empty($CI->data->out['me']['id']) && defined('ADMIN_MODE') && !isset($param['div'])) $auth_where .= ' OR linx_b = '.$CI->data->out['me']['id'];
+			$auth_where .= ')';
+			$CI->db->where($auth_where);
+		}
 		// ---------------------- 条件定義ココまで
 		
 		$CI->db->stop_cache();

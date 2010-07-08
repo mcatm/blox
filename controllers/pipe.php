@@ -11,8 +11,6 @@ class Pipe extends Controller {
 	*/
 	
 	function _remap($method) {//URLマッピング
-		#print $method;
-		
 		$this->load->library('div');
 		
 		switch($method) {
@@ -32,6 +30,7 @@ class Pipe extends Controller {
 					$this->post->get(array(
 						'offset'	=> $offset,
 						'uri_segment'	=> 1,
+						'type'		=> 0,
 						'pager'		=> true
 					));
 				}

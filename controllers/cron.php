@@ -4,11 +4,15 @@ class Cron extends Controller {
 
 	function index() {//cronjob（15〜20分毎に）
 		//指定日投稿
+		#define('DEBUG_MODE', true);
+		
 		$this->load->library(array('post'));
 		$this->load->helper('date');
 		$post = $this->post->get(array(
-			'where'	=> 'post_createdate < "'.now().'" AND post_status = 1',
+			'where'	=> 'post_createdate < "'.now().'"',
+			'status'	=> 1,
 			'order'	=> 'asc',
+			'auth'	=> 'cron',
 			'pager'	=> false,
 			'stack'	=> false
 		));

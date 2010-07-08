@@ -7,3 +7,4 @@ site/cache/*
 site/file/*
 site/config.php
 site/js/shadowbox/*
+site/blox/lib/*

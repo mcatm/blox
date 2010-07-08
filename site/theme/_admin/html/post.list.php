@@ -28,7 +28,7 @@
 						</tr>
 						<tr class="status<?=$v['status']?> post_id<?=$v['id']?>">
 							<td class="createdate"><a href="<?=base_url()?>admin/<?=$post_type?>/filter/sort/createdate/desc/"><?=$v['createdate']?></a></td>
-							<td class="author"><?foreach($v['author'] as $a){?><a href="<?=base_url()?>admin/post/filter/where/user/<?=$a['id']?>"><?=$a['name']?></a> <?}?></td>
+							<td class="author"><?foreach($v['author'] as $a){?><a href="<?=base_url()?>admin/<?=$post_type?>/filter/where/user/<?=$a['id']?>"><?=$a['name']?></a> <?}?></td>
 							<td><?=$this->setting->get_status($v['status'])?></td>
 							<td class="tool">
 								<a href="<?=$v['admin_url']?>" class="btn detail" title="detail"><?=$this->lang->line('system_post_detail')?></a>

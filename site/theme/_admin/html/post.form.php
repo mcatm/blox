@@ -92,8 +92,19 @@
 						<div class="postauthor">
 							<?if($this->setting->get('flg_set_author')){?><div class="row"><label>author : </label>
 							<ul>
-							<?foreach($user as $ku => $vu){?><li><input type="checkbox" name="author[]" value="<?=$vu['id']?>"<?if (isset($post[0]['author_id']) && in_array($vu['id'], $post[0]['author_id'])) print ' checked="checked"'?> /> <?=$vu['name']?></li><?}?>
-							</ul></div><?}?>
+							<?$contributor = array();
+							foreach($user as $ku => $vu){?><li><input type="checkbox" name="author[]" value="<?=$vu['id']?>"<?if (isset($post[0]['author_id']) && in_array($vu['id'], $post[0]['author_id'])) print ' checked="checked"'?> /> <?=$vu['name']?></li>
+							<?$contributor[]=$vu['id'];}?>
+							</ul></div>
+							
+							<?if(isset($post[0]['author'])){?><ul>
+							<?foreach($post[0]['author'] as $ku=>$vu){
+								if(!in_array($vu['id'], $contributor)) {?>
+							<li><input type="checkbox" name="author[]" value="<?=$vu['id']?>" checked="checked"' /> <?=$vu['name']?></li>
+							<?}}?>
+							</ul><?}?>
+							
+							<?}?>
 						</div>
 					</div>
 				</div>

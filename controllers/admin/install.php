@@ -8,7 +8,7 @@ class Install extends Controller {
 	}
 	
 	function twitter() {
-		$this->load->library('blox/twitter');
+		$this->load->library('ext/twitter');
 		if ($auth = $this->auth->oauth(NULL, NULL, base_url().'admin/install/twitter/')) {
 			foreach($auth as $k => $v) {
 				$this->setting->store('twitter_'.$k, $v);

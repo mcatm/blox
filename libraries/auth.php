@@ -86,7 +86,7 @@ class Auth {
 			$oauth_tokens = $CI->session->userdata('twitter');
 			if ($oauth_tokens !== FALSE) $tokens = $oauth_tokens;
 			
-			$CI->load->library('blox/twitter');
+			$CI->load->library('ext/twitter');
 			
 			if ($callback_url == "") $callback_url = $CI->setting->get('oauth_callback_url');
 			

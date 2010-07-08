@@ -218,7 +218,6 @@ CREATE TABLE IF NOT EXISTS `blx_user` (
 -- テーブルの構造 `blx_usertype`
 --
 
-
 CREATE TABLE IF NOT EXISTS `blx_usertype` (
   `usertype_id` int(6) NOT NULL auto_increment,
   `usertype_name` varchar(255) NOT NULL,

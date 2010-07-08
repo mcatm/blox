@@ -510,7 +510,7 @@ class BLX_User {
 		$a = $CI->auth->get_usertype('anonymous');
 		return array(
 			0 => array(
-				'id'	=> 0,
+				'id'	=> $a[0]['id'],
 				'name'	=> $a[0]['name']
 			)
 		);

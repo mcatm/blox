@@ -1,4 +1,4 @@
-#!/usr/local/bin/php5
+#!/usr/bin/php
 <?php
 /*
 |--------------------------------------------------------------
@@ -44,13 +44,11 @@
 |    "electromute" (http://codeigniter.com/forums/member/71433/) -- Idea for [--server] commandline option (12/25/2008)
 |
 */
-	require_once('./config.php');
+	define('CRON_PATH', '/Web/www/blox/');
+	require_once(CRON_PATH.'site/config.php');
 	
-	define('CRON_CI_INDEX', INDEX_PAGE);   // Your CodeIgniter main index.php file
+	define('CRON_CI_INDEX', CRON_PATH.INDEX_PAGE);   // Your CodeIgniter main index.php file
     define('CRON', TRUE);   // Test for this in your controllers if you only want them accessible via cron
-	
-	print CRON_CI_INDEX;exit;
-
 
 # Parse the command line
     $script = array_shift($argv);

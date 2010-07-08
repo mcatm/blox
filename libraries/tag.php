@@ -220,15 +220,15 @@ class BLX_Tag {
 			
 			$dat = $CI->output->get_cache($path);
 			if (!$dat) {
-				if ($param['content'] != "") {
-					foreach ($tag as $k => $t) {
+				foreach ($tag as $k => $t) {
+					if ($param['content'] != "") {
 						$c = preg_match_all('('.$t['name'].')', $param['content'], $mt);
 						$tag[$k]['appearance'] = $c;
 						$param['total_pie'] += ($c + 1);
+					} else {
+						$tag[$k]['appearance'] = 0;
+						$tag[$k]['total_pie'] = 1;
 					}
-				} else {
-					$tag[$k]['appearance'] = 0;
-					$tag[$k]['total_pie'] = 1;
 				}
 				
 				foreach ($tag as $k => $t) {
