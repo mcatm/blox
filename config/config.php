@@ -233,6 +233,7 @@ $config['encryption_key'] = ENCRYPT_KEY;
 | 'time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
+
 $config['sess_cookie_name']		= DB_PREFIX.'session';
 $config['sess_expiration']		= 7200;
 $config['sess_encrypt_cookie']	= TRUE;

@@ -1,6 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 function init() {
+	if (defined('CRON')) return false;
 	$CI =& get_instance();
 	$CI->setting->init();//設定読込
 	$CI->auth->init();//ログインデータ読込

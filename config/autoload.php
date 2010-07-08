@@ -39,7 +39,11 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'setting', 'data', 'div', 'auth', 'log', 'linx', 'blox');
+if (defined('CRON')) {
+	$autoload['libraries'] = array('data', 'setting', 'linx', 'database');
+} else {
+	$autoload['libraries'] = array('database', 'setting', 'data', 'div', 'auth', 'log', 'linx', 'blox');
+}
 
 
 /*
