@@ -227,7 +227,7 @@ class BLX_Tag {
 						$param['total_pie'] += ($c + 1);
 					} else {
 						$tag[$k]['appearance'] = 0;
-						$tag[$k]['total_pie'] = 1;
+						$param['total_pie'] = 1;
 					}
 				}
 				
