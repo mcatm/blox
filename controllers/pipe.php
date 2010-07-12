@@ -57,7 +57,7 @@ class Pipe extends Controller {
 					
 					$this->log->get_access('access/'.$this->setting->get('url_alias_post').'/'.$this->uri->segment(2));
 					
-					if ($this->data->out['post']) {
+					if (isset($this->data->out['post'])) {
 						$this->data->set_array('div', array(
 							array(
 								'type'	=> 'post',

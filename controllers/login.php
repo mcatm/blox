@@ -7,15 +7,14 @@ class Login extends Controller {
 			$redirect = ($this->input->post('redirect')) ? $this->input->post('redirect') : base_url();
 			header('location:'.$redirect);
 		} else {
-			exit('ログイン失敗');
+			$this->load->view('login');
+			#exit('ログイン失敗');
 		}
 	}
 	
 	function confirm($key, $token) {
 		$this->load->library('user');
 		$this->user->confirm($key, $token);
-		
-		
 	}
 	
 	function twitter() {//Twitterでログイン
