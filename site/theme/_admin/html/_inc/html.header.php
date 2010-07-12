@@ -12,6 +12,7 @@
 <?if (isset($setting['favicon'])){?><link rel="shortcut icon" href="<?=$setting['favicon']?>" /><?}?>
 
 <script type="text/javascript" src="<?=ex_url()?>js/jquery.js"></script>
+<script type="text/javascript" src="<?=ex_url()?>js/jquery/editor.js"></script>
 <script type="text/javascript" src="<?=ex_url()?>js/jquery/smoothscroll.js"></script>
 <script type="text/javascript" src="<?=theme_url()?>js/navi.js"></script>
 <script type="text/javascript">
@@ -19,7 +20,7 @@
 	var base_url = "<?=base_url()?>";
 	
 	$(function() {
-		
+		$('textarea.editor').Editor();
 	});
 	
 	//-->

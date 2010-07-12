@@ -5,12 +5,12 @@ class Top extends Controller {
 	function index() {
 		$this->load->library(array('post', 'mail'));
 		$this->post->get(array(
-			'qty'			=> 10,
+			'qty'			=> 2,
 			'type'			=> 0
 		));
 		
 		$this->post->get(array(
-			'qty'			=> 10,
+			'qty'			=> 2,
 			'type'			=> 1,
 			'label'			=> 'comment'
 		));
@@ -21,7 +21,7 @@ class Top extends Controller {
 		));
 		
 		$this->post->ondate(array(
-			'qty'			=> 10,
+			'qty'			=> 2,
 			'label'			=> 'weekly',
 			'schedule'		=> true,
 			'startdate'		=> 0,
@@ -30,7 +30,7 @@ class Top extends Controller {
 		
 		$this->mail->get(array(
 			'label'			=> 'mail',
-			'qty'			=> 3
+			'qty'			=> 2
 		));
 		
 		$this->setting->set_title('');

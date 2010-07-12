@@ -30,7 +30,7 @@
 			<div class="postbody">
 				<p>
 					<label>text : </label>
-					<textarea name="text" class="input elastic" rows="12"><?=set_value('text', (isset($post[0]['text'])) ? $post[0]['text'] : '')?></textarea>
+					<textarea name="text" class="input elastic editor" id="edit_text" rows="4"><?=set_value('text', (isset($post[0]['text'])) ? $post[0]['text'] : '')?></textarea>
 					<?=form_error('text')?>
 				</p>
 			</div>

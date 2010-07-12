@@ -936,10 +936,60 @@
 	color:#FFFFFF;
 	background-color:#000;
 }
+
 #suggest div.over{ /* マウスオーバ時のスタイル */
 	background-color:#000;
 }
 
+/* -------------------------------------------------------------
+
+	body > #editor-util
+
+------------------------------------------------------------- */
+
+#editor-util {
+	margin:0;
+}
+
+#editor-util a {
+	font-size:10px;
+	text-indent:-9999px;
+	display:block;
+	border-top:1px solid #CCC;
+	/*border-bottom:1px solid #AAA;*/
+	border-left:1px solid #CCC;
+	float:left;
+}
+
+#editor-util a.a {
+	width:60px;
+	height:20px;
+	background:#EEE url(../img/btn/editor.link.gif) no-repeat 50% 50%;
+}
+
+#editor-util a.blockquote {
+	width:60px;
+	height:20px;
+	background:#EEE url(../img/btn/editor.quote.gif) no-repeat 50% 50%;
+}
+
+#editor-util a.strong {
+	width:60px;
+	height:20px;
+	background:#EEE url(../img/btn/editor.strong.gif) no-repeat 50% 50%;
+	border-right:1px solid #AAA;
+}
+
+#editor-util a.youtube {
+	width:60px;
+	height:20px;
+	background:#EEE url(../img/btn/editor.youtube.gif) no-repeat 50% 50%;
+	/*border-right:1px solid #AAA;*/
+}
+
+#editor-util a:hover {
+	background-color:#CCC;
+}
 
 /* ----------------------------------------------------------------
 
