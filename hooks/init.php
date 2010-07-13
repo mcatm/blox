@@ -19,10 +19,12 @@ function init() {
 		define('SSL_MODE', true);//SSLモード
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth('home')) {
 			$CI->session->set_userdata('referer', self_url());//set a referer
-			print $CI->uri->segment(1);
-			if ($CI->uri->segment(1) != 'login') header('location:'.base_url().'login');//閲覧権限のない場合、ログイン画面へ遷移
+			if ($CI->uri->segment(1) != 'login') {
+				header('location:'.base_url().'login');//閲覧権限のない場合、ログイン画面へ遷移
+				exit;
+			}
 		}
-		$CI->setting->set('theme', 'home');
+		#$CI->setting->set('theme', 'home');
 	} else {
 		$CI->log->set_access();//アクセス解析
 	}

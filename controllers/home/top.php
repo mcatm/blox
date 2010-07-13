@@ -2,8 +2,15 @@
 
 class Top extends Controller {
 
-	function index() {//RSS出力
-		exit('UUU');
+	function index() {//ダッシュボード
+		$this->load->library(array('post'));
+		
+		$this->post->get(array(
+			'user'	=> $this->data->out['me']['id'],
+			'qty'	=> 4
+		));
+		
+		$this->load->view('home/top.php');
 	}
 	
 	function Top() {

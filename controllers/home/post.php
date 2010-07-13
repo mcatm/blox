@@ -17,7 +17,7 @@ class Post extends Controller {
 		$where = get_filter('home/post', $where);
 		$this->post->get($where);
 		$this->setting->set_title($this->setting->get('url_alias_home').' - my '.$this->setting->get('url_alias_post'));
-		$this->load->view('post.list.php');
+		$this->load->view('home/post.list.php');
 	}
 	
 	function filter($type = "", $param_1 = "", $param_2 = "") {
@@ -46,7 +46,7 @@ class Post extends Controller {
 			break;
 		}
 		$this->setting->set_title($this->lang->line('system_post_edit').' '.$this->lang->line('system_label_post'));
-		$this->load->view('post.form.php');
+		$this->load->view('home/post.form.php');
 	}
 	
 	function add() {
