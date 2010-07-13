@@ -116,18 +116,13 @@
 </body>
 <script type="text/javascript" src="<?=ex_url()?>js/jquery/upload.js"></script>
 <script type="text/javascript" src="<?=ex_url()?>js/suggest.js"></script>
-<script type="text/javascript" src="<?=ex_url()?>js/jquery/editor.js"></script>
 <script type="text/javascript" src="<?=ex_url()?>js/jquery/elastic.js"></script>
 <script type="text/javascript">
-	var base_url = "<?=base_url()?>";
-	
 	var post = [];
 	<?if(isset($post[0])){?>var post_id = <?=$post[0]['id']?>;<?}?>
 	open_advance = <?if(!empty($post[0]['div_id'])){?>true<?}else{?>false<?}?>;
 	
 	$(function(){
-		$('textarea.editor').Editor();
-		
 		//ファイルアップロード
 		if ($('#btn_uploadfile').length > 0) {
 			new AjaxUpload($('#btn_uploadfile'), {
