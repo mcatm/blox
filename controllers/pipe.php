@@ -238,6 +238,16 @@ class Pipe extends Controller {
 			
 			default:
 				/*
+				extensionから確認
+				*/
+				#print '2: get extensions<br />';
+				#print_r($this->setting->get('extension_loaded'));
+				if (in_array($method, $this->setting->get('extension_loaded'))) {
+					$this->extension->$method->controller($method);
+					exit;
+				}
+				
+				/*
 				デフォルトでは一番最初に出てきた数字がID、
 				/page/の次に出てきた数字がPAGE。
 				ただし、$this->setting->get('url_segment_identifier_id')の次のsegmentがID

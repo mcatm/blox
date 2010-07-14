@@ -26,7 +26,7 @@ class BLX_Post {
 			'offset'		=> 0,
 			'order'			=> 'desc',
 			'pager'			=> true,
-			'qty'			=> $CI->data->out['setting']['post_max_qty_per_page'],
+			'qty'			=> $CI->setting->get('post_max_qty_per_page'),
 			'query'			=> "",
 			'schedule'		=> false,
 			'sort'			=> 'createdate',

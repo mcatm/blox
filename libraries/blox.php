@@ -40,12 +40,27 @@ class Blox {
 		$CI =& get_instance();
 		$CI->load->helper('directory');
 		$this->trigger = $CI->config->item('blox_trigger');//トリガー取得
-		#print_r($this->trigger);exit;
 		
-		if (isset($this->trigger) && is_array($this->trigger)) {//Lib : コアの拡張
+		//extension : コアの拡張
+		$extension_arr = directory_map(LIB_FOLDER.'/extension');
+		$loaded_extension = array();
+		if (!empty($extension_arr)) {
+			$CI->load->library('extension');
+			foreach ($extension_arr as $k=>$v) {
+				if (is_file(LIB_FOLDER.'/extension/'.$k.'/core.php')) {
+					require_once(LIB_FOLDER.'/extension/'.$k.'/core.php');
+					$CI->extension->$k = new $k;
+					$loaded_extension[] = $k;
+				}
+			}
+		}
+		$CI->setting->set('extension_loaded', $loaded_extension);
+		#print '1: set extensions<br />';
+		#print_r($CI->setting->get('extension_loaded'));
+		
+		if (isset($this->trigger) && is_array($this->trigger)) {//Lib : 追加機能
 			foreach($this->trigger as $k=>$v) {
 				$p = LIB_FOLDER.'/lib/'.$k.'.php';
-				#print $p.'<br />';
 				if (is_file($p)) {
 					require_once($p);
 					$path = explode('.', $k);
