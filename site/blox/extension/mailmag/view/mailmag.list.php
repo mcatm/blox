@@ -7,7 +7,7 @@
 			<div class="list">
 				<div class="head round">
 					<h2><a href="<?=base_url()?>admin/ex/mailmag/"><?=$this->lang->line('system_label_mail')?></a></h2>
-					<div class="add"><a id="trigger_tool_filter">+ FILTER</a></div>
+					<div class="add"><a href="<?=base_url()?>admin/ex/mailmag/add/">+ ADD</a> | <a id="trigger_tool_filter">+ FILTER</a></div>
 					<div class="tool">
 						<div id="target_tool_filter" class="filter <?if(!isset($this->session->userdata['filter']['admin/mail']) || count($this->session->userdata['filter']['admin/mailmag']) == 0){?> hide<?}?>">
 							<div class="sort">
@@ -18,17 +18,17 @@
 						</div>
 					</div>
 				</div>
-				<?if(!empty($mail)){?><form action="<?=base_url()?>admin/mail/delete/" method="post" id="form_list" name="form_list">
+				<?if(!empty($mailmag)){?><form action="<?=base_url()?>admin/mail/delete/" method="post" id="form_list" name="form_list">
 					<table>
-						<?foreach($mail as $k => $v){?><tr class="mail_id<?=$v['id']?>">
+						<?foreach($mailmag as $k => $v){?><tr class="mail_id<?=$v['id']?>">
 							<td rowspan="2" style="text-align:center;"><input type="checkbox" name="id[]" value="<?=$v['id']?>" /></td>
-							<td colspan="5"><h3><a href="<?=base_url()?>admin/mail/detail/<?=$v['id']?>/"><?=$v['status_a']?></a></h3></td>
+							<td colspan="5"><h3><a href="<?=base_url()?>admin/ex/mailmag/edit/<?=$v['id']?>/"><?=$v['status_a']?></a></h3></td>
 						</tr>
 						<tr class="mail_id<?=$v['id']?>">
 							<td class="createdate"><?=$v['createdate']?></td>
-							<td><a href="<?=base_url()?>admin/mail/filter/where/div/<?=$v['div']?>"><?=$v['div']?></a></td>
+							<td></td>
 							<td><?=$v['status_b']?></td>
-							<td><?if(!empty($v['value'])){?><a href="mailto:<?=$v['value']['email']?>"><?=$v['value']['email']?></a><?}?></td>
+							<td><a href="<?=base_url()?>admin/ex/mailmag/send/<?=$v['id']?>/test/">Test</a></td>
 							<td class="tool">
 								<a href="<?=base_url()?>admin/mail/detail/<?=$v['id']?>/" class="btn detail" title="detail"><?=$this->lang->line('system_post_detail')?></a>
 								<a id="btn_delete" attr="<?=$v['id']?>" class="btn delete" title="delete" attr="<?=$v['id']?>"><?=$this->lang->line('system_post_delete')?></a>

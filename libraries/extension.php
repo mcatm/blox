@@ -2,6 +2,8 @@
 
 class Extension {
 	
+	var $extension_name = "";
+	
 	function controller($ext, $mode = '') {
 		$CI =& get_instance();
 		$EX =& $CI->extension->$ext;
@@ -27,6 +29,21 @@ class Extension {
 		}
 		
 		show_404();
+	}
+	
+	function init($ext) {
+		$config_path = LIB_FOLDER.'/extension/'.$ext.'/config.php';
+		$cfg_prefix = 'extension_'.$ext.'_';
+		if (is_file($config_path)) {
+			$CI =& get_instance();
+			require_once($config_path);
+			
+			if (!empty($config)) {
+				foreach ($config as $k => $v) {
+					$CI->setting->set($cfg_prefix.$k, $v);
+				}
+			}
+		}
 	}
 	
 	function Extension() {

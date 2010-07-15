@@ -93,9 +93,8 @@ class BLX_Log extends CI_Log {
 			if (isset($CI->data->out[$param['label']])) {
 				foreach($CI->data->out[$param['label']] as $k => $v) {
 					//暗号化
+					#print_r(decompress_array($v['value']));exit();
 					$CI->data->out[$param['label']][$k]['value'] = (isset($param['encrypt'])) ? decompress_array($CI->encrypt->decode($v['value'])) : decompress_array($v['value']);
-					#header('Content-type:text/html; charset:utf8');
-					#print_r($CI->encrypt->decode($v['value']));exit;
 				}
 			}
 		}

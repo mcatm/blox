@@ -41,6 +41,7 @@ $platforms = array (
 					'bsdi'				=> 'BSDi',
 					'openbsd'			=> 'OpenBSD',
 					'gnu'				=> 'GNU/Linux',
+					'nintendo wii'		=> 'Nintendo Wii',
 					'unix'				=> 'Unknown Unix OS'
 				);
 
@@ -92,6 +93,7 @@ $mobiles = array(
 					'nokia'				=> "Nokia",
 					'palm'				=> "Palm",
 					'iphone'			=> "Apple iPhone",
+					'ipad'				=> "Apple iPad",
 					'ipod'				=> "Apple iPod Touch",
 					'sony'				=> "Sony Ericsson",
 					'ericsson'			=> "Sony Ericsson",

@@ -256,6 +256,9 @@ class Setting {
 				)*/
 			)
 		),
+		'extension'	=> array(
+			'alias'	=> 'ex'
+		),
 		'site'	=> array(
 			'alias'	=> 'site',
 			'sub'	=> array(

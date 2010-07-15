@@ -27,7 +27,7 @@ class BLX_Mail {
 		
 		$param = array_merge($param, $user_param);
 		
-		$path = 'mail';
+		$path = 'mail/';
 		if (isset($param['div'])) $path .= '/'.$param['div'];
 		
 		$CI->log->get($path, $param);
@@ -171,6 +171,19 @@ class BLX_Mail {
 		foreach($id as $v) {
 			
 		}
+	}
+	
+	function check_mobile($address) {
+		$CI =& get_instance();
+		$CI->load->config('domainname');
+		
+		$add = explode('@', $address);
+		$mobile = $CI->config->item('domain_mobile');
+		
+		if (in_array($add[1], $mobile)) {
+			return true;
+		}
+		return false;
 	}
 	
 	function BLX_Mail() {

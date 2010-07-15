@@ -6,6 +6,43 @@ function init() {
 	$CI->setting->init();//設定読込
 	$CI->auth->init();//ログインデータ読込
 	
+	//ユーザーエージェント取得
+	if ($CI->setting->get('switch_useragent')) {
+		$CI->load->library('user_agent');
+		
+		if ($CI->agent->is_mobile()) {//mobile
+			switch($CI->agent->mobile()) {
+				case 'Apple iPhone':
+					$ua = 'iphone';
+				break;
+				
+				default:
+					$ua = 'mobile';
+				break;
+			}
+		} else {
+			switch($CI->agent->mobile()) {
+				case 'Nintendo Wii':
+					$ua = 'wii';
+				break;
+				
+				default:
+					$ua = 'pc';
+				break;
+			}
+		}
+		
+		$CI->setting->set('user_agent', $ua);
+		if ($CI->setting->get('switch_useragent_'.$ua)) {
+			if ($CI->uri->segment(1) != $CI->setting->get('switch_useragent_'.$ua)) {
+				$redirect = base_url().$CI->setting->get('switch_useragent_'.$ua).'/';
+				$redirect .= ($CI->uri->uri_string() != "") ? trim($CI->uri->uri_string(), '/').'/' : "";
+				header('location:'.$redirect);
+				exit;
+			}
+		}
+	}
+	
 	if (defined('ADMIN_MODE') && ADMIN_MODE === true) {//管理画面
 		define('SSL_MODE', true);//SSLモード
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth()) {

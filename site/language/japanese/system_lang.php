@@ -16,6 +16,7 @@ $lang['system_label_user_list']		= '会員一覧';
 $lang['system_label_user_new']		= '会員追加';
 $lang['system_label_user_invite']	= '招待';
 $lang['system_label_usertype']		= 'ユーザータイプ';
+$lang['system_label_extension']		= '拡張機能';
 $lang['system_label_file']			= 'ファイル';
 $lang['system_label_file_upload']	= 'アップロード';
 $lang['system_label_file_list']		= 'ファイル一覧';

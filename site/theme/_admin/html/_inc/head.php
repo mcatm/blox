@@ -44,6 +44,12 @@
 						<?foreach($menu_val['sub'] as $menu_sub_key => $menu_sub_val){?><?if(!isset($menu_sub_val['auth']) || $me['auth']['type'] == 'admin' || (isset($menu_sub_val['auth']) && isset($me['auth'][$menu_sub_val['auth']]))){?><li><a href="<?=base_url()?>admin/<?=$menu_sub_val['alias']?>/"><?=$this->lang->line('system_label_'.$menu_sub_key)?></a></li><?}}?>
 					</ul>
 					<div class="corner-right"></div>
+				</div><?} elseif ($menu_sec == 'extension' && $this->setting->get('extension_loaded')) {?><div class="sub clearfix">
+					<div class="corner-left"></div>
+					<ul>
+						<?foreach($this->setting->get('extension_loaded') as $menu_ex_val) {?><li><a href="<?=base_url()?>admin/ex/<?=$menu_ex_val?>/"><?=$menu_ex_val?></a></li><?}?>
+					</ul>
+					<div class="corner-right"></div>
 				</div><?}?>
 			</li><?}}?>
 		</ul>
