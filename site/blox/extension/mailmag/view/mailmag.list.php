@@ -6,7 +6,7 @@
 		<div class="container">
 			<div class="list">
 				<div class="head round">
-					<h2><a href="<?=base_url()?>admin/ex/mailmag/"><?=$this->lang->line('system_label_mail')?></a></h2>
+					<h2><a href="<?=base_url()?>admin/ex/mailmag/"><?=$this->lang->line('mailmag_label')?></a></h2>
 					<div class="add"><a href="<?=base_url()?>admin/ex/mailmag/add/">+ ADD</a> | <a id="trigger_tool_filter">+ FILTER</a></div>
 					<div class="tool">
 						<div id="target_tool_filter" class="filter <?if(!isset($this->session->userdata['filter']['admin/mail']) || count($this->session->userdata['filter']['admin/mailmag']) == 0){?> hide<?}?>">

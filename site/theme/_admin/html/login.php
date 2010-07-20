@@ -4,7 +4,7 @@
 	<div id="login">
 		<?if ($this->session->userdata('login') !== true) {?><form method="post" action="<?=base_url()?>login/" class="round">
 			<?/*input type="hidden" name="redirect" value="<?if(isset($_SERVER['HTTP_REFERER'])){?><?=$_SERVER['HTTP_REFERER']?><?}else{?><?=base_url()?>admin/<?}?>" /*/?>
-			<input type="hidden" name="redirect" value="<?=base_url()?>admin/" />
+			<input type="hidden" name="redirect" value="<?=$redirect?>" />
 			<p><label>email : </label><input type="text" name="email" class="query" /></p>
 			<p><label>password : </label><input type="password" name="pwd" class="query" /></p>
 			<p><input type="submit" value="login" /></p>

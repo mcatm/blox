@@ -117,6 +117,9 @@ form input, textarea {
 	border-style:solid;
 	border-width:1px;
 	padding:3px 4px;
+	outline:none;
+	/*resize:none;*/
+	/*overflow:auto;*/
 }
 
 /*--------------------------------------

@@ -3,6 +3,7 @@
 class Extension {
 	
 	var $extension_name = "";
+	var $admin_menu = array();
 	
 	function controller($ext, $mode = '') {
 		$CI =& get_instance();
@@ -16,6 +17,7 @@ class Extension {
 				case 'admin';
 					$EX->controller = new Ex_Admin_Controller;
 					$method = ($CI->uri->segment(4)) ? $CI->uri->segment(4) : "index";
+					if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
 				break;
 				
 				default:
@@ -32,18 +34,22 @@ class Extension {
 	}
 	
 	function init($ext) {
+		$CI =& get_instance();
 		$config_path = LIB_FOLDER.'/extension/'.$ext.'/config.php';
 		$cfg_prefix = 'extension_'.$ext.'_';
 		if (is_file($config_path)) {
-			$CI =& get_instance();
 			require_once($config_path);
 			
 			if (!empty($config)) {
 				foreach ($config as $k => $v) {
 					$CI->setting->set($cfg_prefix.$k, $v);
 				}
+				
+				if (!empty($admin_menu)) $this->admin_menu = $admin_menu;
 			}
 		}
+		
+		if (is_file(EX_FOLDER.'/language/'.$CI->config->item('language').'/'.$ext.'_lang.php')) $CI->lang->load($ext);//拡張言語ファイル読込
 	}
 	
 	function Extension() {

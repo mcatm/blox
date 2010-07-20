@@ -93,6 +93,49 @@ class Mailmag extends Extension {
 	function send($id, $type = "") {
 		$CI =& get_instance();
 		
+		#exit($CI->setting->get('extension_mailmag_charset'));
+		
+		$maillist = $this->get_user($type);
+		
+		print_r($maillist);
+		print '<hr />';
+		
+		$this->get(array('id' => $id));
+		#print_r();exit;
+		
+		if (isset($maillist) && !empty($maillist) && isset($CI->data->out['mailmag'][0])) {
+			$CI->load->library('email');
+			
+			$title = ($type == 'test') ? '[テスト配信]' : "";
+			$title .= $CI->data->out['mailmag'][0]['value']['title'];
+			$title	= mb_convert_encoding($title, $CI->setting->get('extension_mailmag_charset'), $CI->config->item('charset'));
+			$text	= mb_convert_encoding($CI->data->out['mailmag'][0]['value']['text'], $CI->setting->get('extension_mailmag_charset'), $CI->config->item('charset'));
+			
+			$config['wrapchars']		= 400;
+			$config['bcc_batch_mode']	= true;
+			$config['bcc_batch_size']	= 100;
+			$config['charset']			= $CI->setting->get('extension_mailmag_charset');
+			$CI->email->initialize($config);
+			
+			$CI->email->from($CI->setting->get('extension_mailmag_master_email'), $CI->setting->get('extension_mailmag_master_name'));
+			$CI->email->to($CI->setting->get('extension_mailmag_master_email'), $CI->setting->get('extension_mailmag_master_name'));
+			$CI->email->bcc($maillist);
+			
+			$CI->email->subject($title);
+			$CI->email->message($text);
+			
+			$CI->email->send();
+			
+			print $CI->email->print_debugger().'<hr />';
+			exit('success');
+		}
+		
+		exit('error');
+	}
+	
+	function get_user($type = "") {
+		$CI =& get_instance();
+		
 		if ($type == 'test') {//テスト配信
 			$maillist = explode(',', $CI->setting->get('extension_mailmag_maillist_test'));
 		} elseif ($type != 'all') {//PCもしくは携帯に配信
@@ -109,32 +152,7 @@ class Mailmag extends Extension {
 			
 			$maillist = array_merge($maillist_pc, $maillist_mb);
 		}
-		print_r($maillist);
-		
-		$this->get(array('id' => $id));
-		#print_r();exit;
-		
-		if (isset($maillist) && !empty($maillist) && isset($CI->data->out['mailmag'][0])) {
-			$CI->load->library('email');
-			
-			$config['wrapchars'] = 400;
-			$config['bcc_batch_mode'] = true;
-			$config['bcc_batch_size'] = 100;
-			$CI->email->initialize($config);
-			
-			$CI->email->from($CI->setting->get('extension_mailmag_master_email'), $CI->setting->get('extension_mailmag_master_name'));
-			$CI->email->to($CI->setting->get('extension_mailmag_master_email'), $CI->setting->get('extension_mailmag_master_name'));
-			$CI->email->bcc($maillist);
-			
-			$CI->email->subject($CI->data->out['mailmag'][0]['value']['title']);
-			$CI->email->message($CI->data->out['mailmag'][0]['value']['text']);
-			
-			$CI->email->send();
-			
-			exit('success');
-		}
-		
-		exit('error');
+		return $maillist;
 	}
 	
 	function Mailmag() {

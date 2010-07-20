@@ -66,13 +66,24 @@ class EX_Admin_Controller {
 	
 	function send() {
 		$CI =& get_instance();
-		#exit($CI->uri->segment(5));
+		
 		$id = $CI->uri->segment(5);
 		$type = $CI->uri->segment(6);
 		
 		$CI->extension->mailmag->send($id, $type);
 		
 		header('location:'.base_url().'admin/ex/mailmag/');
+	}
+	
+	function user() {
+		$CI =& get_instance();
+		$type = ($CI->uri->segment(5)) ? $CI->uri->segment(5) : 'all';
+		
+		$CI->data->out['maillist'] = $CI->extension->mailmag->get_user($type);
+		
+		$CI->load->view('mailmag.user.php');
+		var_dump($CI->data->out['maillist']);
+		exit();
 	}
 	
 	function sync() {

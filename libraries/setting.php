@@ -288,7 +288,6 @@ class Setting {
 			'auth'	=> 'add_section'
 		)*/
 	);
-	
 }
 
 ?>

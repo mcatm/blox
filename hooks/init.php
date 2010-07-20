@@ -45,19 +45,22 @@ function init() {
 	
 	if (defined('ADMIN_MODE') && ADMIN_MODE === true) {//管理画面
 		define('SSL_MODE', true);//SSLモード
-		if (!$CI->session->userdata('login') || !$CI->auth->check_auth()) {
-			$CI->session->set_userdata('referer', self_url());//set a referer
-			if ($CI->uri->segment(2) != 'login') header('location:'.base_url().'admin/login');//管理者権限のない場合、ログイン画面へ遷移
-		}
-		$CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();//管理メニュー取得
 		$CI->setting->set('theme', '_admin');
 		$CI->setting->set('site_name', 'blox admin');
+		if (!$CI->session->userdata('login') || !$CI->auth->check_auth()) {
+			if ($CI->uri->segment(2) != 'login') {
+				$CI->data->out['redirect'] = self_url();
+				print($CI->load->view('login.php', $CI->data->out, true));
+				exit;
+			}
+		}
+		if (!isset($CI->data->out['admin_menu'])) $CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();//管理メニュー取得
 	} elseif (defined('HOME_MODE') && HOME_MODE === true) {
 		define('SSL_MODE', true);//SSLモード
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth('home')) {
-			$CI->session->set_userdata('referer', self_url());//set a referer
 			if ($CI->uri->segment(1) != 'login') {
-				header('location:'.base_url().'login');//閲覧権限のない場合、ログイン画面へ遷移
+				$CI->data->out['redirect'] = self_url();
+				print($CI->load->view('login.php', $CI->data->out, true));
 				exit;
 			}
 		}
@@ -66,7 +69,6 @@ function init() {
 		$CI->log->set_access();//アクセス解析
 	}
 	
-	#print $CI->session->userdata('referer');
 	$CI->blox->action('c:'.substr($CI->uri->uri_string(), 1));
 	
 	if (defined('SSL_MODE') && SSL_MODE === true) {//SSLモード
