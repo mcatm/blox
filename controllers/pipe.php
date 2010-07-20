@@ -28,11 +28,17 @@ class Pipe extends Controller {
 					
 					$this->load->library('post');
 					$this->post->get(array(
-						'offset'	=> $offset,
+						'offset'		=> $offset,
 						'uri_segment'	=> 1,
-						'type'		=> 0,
-						'pager'		=> true
+						#'type'			=> 0,
+						'pager'			=> true
 					));
+				} else {
+					print_r($this->data->out['div']);
+					$param = array(
+							'segment' => $segment,
+							'offset'	=> $segment['offset']
+						);
 				}
 				
 				$this->_view();
