@@ -17,9 +17,8 @@ class Pipe extends Controller {
 			case 'index':
 			case 'top':
 				$this->div->get(array('where' => 'div_alias = "'.$this->setting->get_alias().'@top"'));
+				$offset = ($this->uri->segment(1)) ? $this->uri->segment(1) : 0;
 				if (empty($this->data->out['div'])) {
-					$offset = ($this->uri->segment(1)) ? $this->uri->segment(1) : 0;
-					
 					$this->data->set_array('div', array(
 						array(
 							'type'	=> 'top'
@@ -30,18 +29,21 @@ class Pipe extends Controller {
 					$this->post->get(array(
 						'offset'		=> $offset,
 						'uri_segment'	=> 1,
-						#'type'			=> 0,
+						'type'			=> 0,
 						'pager'			=> true
 					));
 				} else {
-					print_r($this->data->out['div']);
-					$param = array(
+					#print_r($this->data->out['div']);
+					/*$param = array(
 							'segment' => $segment,
 							'offset'	=> $segment['offset']
-						);
+						);*/
 				}
 				
-				$this->_view();
+				$this->_view(array(
+					'title_clear'		=> true,
+					'offset'			=> $offset
+				));
 			break;
 			
 			case $this->setting->get('url_alias_post')://記事
@@ -144,7 +146,9 @@ class Pipe extends Controller {
 								)
 							));
 						#}
-						$this->_view(array());
+						$this->_view(array(
+							'title_clear'		=> true
+						));
 					} else {
 						show_404();
 					}
@@ -345,7 +349,7 @@ class Pipe extends Controller {
 		$div = (isset($this->data->out['div'][0])) ? $this->data->out['div'][0] : array();
 		
 		$param['theme']	= (!empty($div['theme'])) ? $div['theme'] : $this->setting->get('theme');//テーマの確定
-		if (!isset($param['tpl'])) $param['tpl']	= $this->_get_tpl($div, $param);//テンプレートの確定
+		if (!isset($param['tpl'])) $param['tpl'] = $this->_get_tpl($div, $param);//テンプレートの確定
 		
 		if (isset($div['content']) && is_array($div['content'])) {
 			foreach ($div['content'] as $c) {
@@ -355,7 +359,7 @@ class Pipe extends Controller {
 				$this->$c['type']->get($p);
 			}
 		}
-		
+		#print_r($this->data->out['post']);exit;
 		if (isset($param['detail']) && isset($param['segment']['id'])) {//詳細の場合
 			$post_id = $param['segment']['id'];
 			//記事一件を取得
@@ -383,9 +387,10 @@ class Pipe extends Controller {
 			}
 		} else {
 			$flg_title = (isset($param['category']) || !isset($param['title_clear'])) ? false : true;
+			#$flg_title = true;
 			$site_title = (isset($div['name'])) ? $div['name'] : "";
-			$site_description = (isset($div['description'])) ? $div['description'] : "";
 			$this->setting->set_title($site_title, $flg_title);
+			$site_description = (isset($div['description'])) ? $div['description'] : "";
 			$this->setting->set_description(format_description($site_description, 300));
 			$keyword = (isset($div['keyword'])) ? $div['keyword'] : array();
 			$this->setting->set_keyword($keyword, true);

@@ -3,11 +3,14 @@
 <body>
 	<?$this->load->view('_inc/head.php')?>
 	<?if(isset($post)){?><ul>
-		<?foreach($post as $k => $v){?><li>
+		<?foreach($post as $k => $v){?>
+		<?if($v['type'] == 0){?><li>
 			<h3><a href="<?=$v['url']?>"><?=$v['title']?></a></h3>
 			<p><?=$v['text']?></p>
 			<p><?=$v['alias']?></p>
-		</li><?}?>
+		</li><?} elseif ($v['type'] == 1) {?><li>
+			<?=format_text($v['text'])?>
+		</li><?}}?>
 	</ul>
 	<p class="pager"><?=$page['pager']?></p><?}?>
 </body>
