@@ -7,7 +7,7 @@
 			<div class="postmeta">
 				<div class="row">
 					<label>name : </label>
-					<input type="text" name="name" value="<?=set_value('name', (isset($user[0]['title'])) ? $user[0]['name'] : '')?>" class="query" />
+					<input type="text" name="name" value="<?=set_value('name', (isset($user[0]['name'])) ? $user[0]['name'] : '')?>" class="query" />
 					<?=form_error('name')?>
 				</div>
 				<?if(!isset($user[0]['id'])){?><div class="row">

@@ -17,7 +17,7 @@
 		
 		<h4>comment</h4>
 		
-		<?foreach($post[0]['comment'] as $c){?><div><?=$c['text']?></div><?}?>
+		<?foreach($post[0]['comment'] as $c){?><div><?=$c['author'][0]['name']?> : <?=$c['text']?></div><?}?>
 		
 		<form action="<?=base_url()?>request/set/comment/" method="post" />
 			<input type="hidden" name="parent" value="<?=$post[0]['id']?>" />

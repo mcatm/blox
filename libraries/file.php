@@ -172,6 +172,92 @@ class BLX_File {//ファイル管理クラス
 		}
 	}
 	
+	/*
+	if (!empty($file)) {
+		if ($filename != $filename_org) {//サムネイル作成
+			$CI->load->library('image_lib');
+			$CI->image_lib->make_thumb($cache_dir.$filename_org, $cache_dir.$filename, $w, $trim);
+		}
+	}
+	*/
+	
+	function set_extfile($url = "") {//アップロード
+		if ($url != "") {
+			$CI =& get_instance();
+			$CI->load->helper(array('date', 'file', 'directory'));
+			$now = now();
+			
+			$file = @file_get_contents($url);
+			
+			$filepath = pathinfo($url);
+			
+			//tmpフォルダがない場合は作成
+			$this->_mkdir(FILE_FOLDER_TMP);
+			$tmppath = FILE_FOLDER_TMP.'/'.$filepath['basename'];
+			write_file($tmppath, $file);//オリジナルファイル書き込み
+			chmod($tmppath, 0777);
+			
+			#exit();
+			
+			$ext = strtolower('.'.$filepath['extension']);
+			$fileinfo = @get_file_info($tmppath);
+			
+			#print_r($fileinfo);exit;
+			
+			if ($this->_check_filetype($ext)) {
+			
+				//画像をDBに登録する
+				$set = array(
+					'file_name'				=> $filepath['basename'],
+					'file_ext'				=> $ext,
+					'file_size'				=> $fileinfo['size'],
+					'file_mime'				=> get_mime_by_extension(strtolower($filepath['basename'])),
+					'file_type'				=> $this->_get_filetype_from_ext($ext),
+					'file_createdate'		=> $now,
+					'file_modifydate'		=> $now
+				);
+				
+				if ($set['file_type'] == 'image') {
+					$imgsize = @getimagesize($tmppath);
+					$set['file_width']		= $imgsize[0];
+					$set['file_height']	= $imgsize[1];
+				}
+				
+				#print_r($set);
+				#exit;
+				
+				$CI->db->insert(DB_TBL_FILE, $set);
+				$file_id = $CI->db->insert_id();
+				
+				if (is_file($tmppath)) {
+					$path = $this->_make_path($file_id, FILE_FOLDER);
+					$new_path = $path['full'].$file_id.$ext;
+					
+					//フォルダがない場合は作成
+					$this->_mkdir($path['folder']['base'].'/'.$path['folder']['1']);
+					$this->_mkdir($path['folder']['base'].'/'.$path['folder']['1'].'/'.$path['folder']['2']);
+					
+					$up_flg = copy($tmppath, $new_path);
+					chmod($new_path, 0777);
+				} else {
+					$up_flg = false;
+				}
+				
+				if (!$up_flg) {//画像がアップロードされなかった場合、DBから一件削除する
+					$CI->db->where('file_id', $file_id);
+					$CI->db->delete(DB_TBL_FILE, 1);
+					$file_id = false;
+				}
+			} else {
+				$file_id = false;
+			}
+			
+			unlink($tmppath);//_tmpからファイルを削除
+			
+			return $file_id;
+		}
+	}
+	
 	function delete($id = array()) {
 		$CI =& get_instance();
 		

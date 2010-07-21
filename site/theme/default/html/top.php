@@ -9,6 +9,7 @@
 			<p><?=$v['text']?></p>
 			<p><?=$v['alias']?></p>
 		</li><?} elseif ($v['type'] == 1) {?><li>
+			<?=$v['author'][0]['name']?> : 
 			<?=format_text($v['text'])?>
 		</li><?}}?>
 	</ul>

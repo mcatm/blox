@@ -18,6 +18,7 @@ class Pipe extends Controller {
 			case 'top':
 				$this->div->get(array('where' => 'div_alias = "'.$this->setting->get_alias().'@top"'));
 				$offset = ($this->uri->segment(1)) ? $this->uri->segment(1) : 0;
+				
 				if (empty($this->data->out['div'])) {
 					$this->data->set_array('div', array(
 						array(
@@ -32,18 +33,16 @@ class Pipe extends Controller {
 						'type'			=> 0,
 						'pager'			=> true
 					));
+					
+					$param = array();
 				} else {
-					#print_r($this->data->out['div']);
-					/*$param = array(
-							'segment' => $segment,
-							'offset'	=> $segment['offset']
-						);*/
+					$param = array(
+						'title_clear'		=> true
+					);
 				}
 				
-				$this->_view(array(
-					'title_clear'		=> true,
-					'offset'			=> $offset
-				));
+				$param['offset'] = $offset;
+				$this->_view($param);
 			break;
 			
 			case $this->setting->get('url_alias_post')://記事
