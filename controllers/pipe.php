@@ -18,6 +18,7 @@ class Pipe extends Controller {
 			case 'top':
 				$this->div->get(array('where' => 'div_alias = "'.$this->setting->get_alias().'@top"'));
 				$offset = ($this->uri->segment(1)) ? $this->uri->segment(1) : 0;
+				#exit($offset);
 				
 				if (empty($this->data->out['div'])) {
 					$this->data->set_array('div', array(
@@ -36,6 +37,8 @@ class Pipe extends Controller {
 					
 					$param = array();
 				} else {
+					#print_r($this->data->out['div']);
+					$this->data->out['div'][0]['content'][0]['param']['uri_segment'] = 1;
 					$param = array(
 						'title_clear'		=> true
 					);
