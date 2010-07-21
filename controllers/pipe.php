@@ -57,6 +57,7 @@ class Pipe extends Controller {
 					$this->post->get(array(
 						'id'		=> $post_id,
 						'related'	=> true,
+						'comment'	=> true,
 						'neighbor'	=> true,
 						'pager'		=> false,
 						'page'		=> $page,
@@ -68,8 +69,8 @@ class Pipe extends Controller {
 					if (isset($this->data->out['post'])) {
 						$this->data->set_array('div', array(
 							array(
-								'type'	=> 'post',
-								'name'	=> $this->data->out['post'][0]['title'],
+								'type'			=> 'post',
+								'name'			=> $this->data->out['post'][0]['title'],
 								'description'	=> $this->data->out['post'][0]['text'],
 								'keyword'		=> $this->data->out['post'][0]['tag'],
 								'title_clear'	=> false
@@ -102,7 +103,7 @@ class Pipe extends Controller {
 								'title_clear'	=> false
 							)
 						));
-						$this->_view(array());//記事詳細
+						$this->_view(array());
 					} else {
 						show_404();
 					}
