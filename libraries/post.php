@@ -90,6 +90,8 @@ class BLX_Post {
 		
 		$count = $CI->db->count_all_results(DB_TBL_POST, false);
 		
+		if ($param['qty'] == 0) $param['qty'] = $count;//qtyが0の場合は、全てを選択
+		
 		if (defined("DEBUG_MODE")) print $CI->db->last_query();
 		
 		if (isset($param['count'])) {
@@ -739,7 +741,7 @@ class BLX_Post {
 		return $this->msg;
 	}
 	
-	function delete($id = array()) {
+	function delete($id = array(), $flg_delete = false) {
 		$CI =& get_instance();
 		
 		if (!empty($id) && is_array($id)) {
@@ -751,16 +753,18 @@ class BLX_Post {
 		
 		if (is_array($post_id)) {
 			foreach ($post_id as $id) {
-				//記事件数を取得
-				$c = $this->count(array(
-					'user' => $CI->data->out['me']['id'],
-					'id' => $CI->input->post('id')
-				));
-				
-				if ($c > 0) {//自分の記事の場合
-					$flg_delete = true;
-				} else {
-					$flg_delete = ($CI->auth->check_auth()) ? true : false;
+				if ($flg_delete == false) {
+					//記事件数を取得
+					$c = $this->count(array(
+						'user' => $CI->data->out['me']['id'],
+						'id' => $CI->input->post('id')
+					));
+					
+					if ($c > 0) {//自分の記事の場合
+						$flg_delete = true;
+					} else {
+						$flg_delete = ($CI->auth->check_auth()) ? true : false;
+					}
 				}
 				
 				$CI->db->flush_cache();

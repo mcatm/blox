@@ -434,6 +434,54 @@ class BLX_User {
 		return $this->msg;
 	}
 	
+	function delete($id = array()) {
+		$CI =& get_instance();
+		$CI->load->library('post');
+		
+		if ($CI->auth->check_auth('user')) {
+			if (!empty($id) && is_array($id)) {
+				$user_id = $id;
+			} else {
+				if ($CI->input->post('id[]')) $user_id = $CI->input->post('id[]');
+				if ($CI->input->post('id')) $user_id[] = $CI->input->post('id');
+			}
+			
+			if (is_array($user_id)) {
+				foreach ($user_id as $id) {
+					$CI->db->flush_cache();
+					
+					//関連記事の唯一の作者だった場合、削除
+					$CI->post->get(array(
+						'qty'	=> 0,
+						'user'	=> $id
+					));
+					
+					if (isset($CI->data->out['post'])) {
+						foreach ($CI->data->out['post'] as $p) {
+							if (count($p['author']) == 1) {
+								$CI->post->delete(array($p['id']), true);
+								$CI->db->flush_cache();
+							}
+						}
+					}
+					
+					$CI->db->where('user_id', $id);
+					$CI->db->delete(DB_TBL_USER);
+					
+					//過去の履歴を削除
+					$path = 'history/user/'.$id.'/';
+					$history = $CI->log->get($path, array('stack' => false, 'qty' => 0));
+					if (!empty($history)) {
+						foreach ($history as $h) $del_id[] = $h['id'];
+						$CI->log->delete($del_id);
+					}
+					
+					$CI->linx->unlink('user', $id);//リンクを削除
+				}
+			}
+		}
+	}
+	
 	function invite() {
 		$CI =& get_instance();
 		
@@ -485,8 +533,6 @@ class BLX_User {
 		$hash = sha1($key.$token);
 		
 		print_r($CI->log->get('user/invite', array('value' => $hash, 'stack' => false)));
-		
-		
 	}
 	
 	function clear() {//新規作成用

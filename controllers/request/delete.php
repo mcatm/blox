@@ -13,6 +13,15 @@ class Delete extends Controller {
 		$this->post->delete();
 	}
 	
+	function user($user_param = array('redirect_success' => '', 'redirect_error' => '')) {
+		$this->load->library('user');
+		
+		$param = array();
+		$param = array_merge($param, $user_param);
+		
+		$this->user->delete();
+	}
+	
 	function linx($type, $a, $b) {
 		$this->load->library('linx');
 		

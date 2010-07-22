@@ -36,7 +36,7 @@ if ( ! function_exists( 'self_url' ) ) {
 if ( ! function_exists( 'extimg_url' ) ) {
 	function extimg_url($url, $w = 0, $trim = "") {
 		$CI =& get_instance();
-		$expire_cache = 2 * 30 * 24 * 60 * 60;
+		$expire_cache = 7 * 24 * 60 * 60;
 		$time = time();
 		
 		$cache_dir = FILE_FOLDER.'/_cache/';
@@ -58,7 +58,7 @@ if ( ! function_exists( 'extimg_url' ) ) {
 			
 			$dirinfo = get_dir_file_info($cache_dir);
 			
-			if (!empty($dirinfo)) {//2ヶ月以上前のファイルは削除
+			if (!empty($dirinfo)) {//一週間以上前のファイルは削除
 				foreach($dirinfo as $i) {
 					if (($time - $i['date']) > $expire_cache) unlink($i['server_path']);
 				}

@@ -18,26 +18,72 @@
 						</div>
 					</div>
 				</div>
-				<?if(isset($user)){?><table>
-					<?foreach($user as $k => $v){?><tr>
-						<td rowspan="2" style="text-align:center;"><input type="checkbox" /></td>
-						<td rowspan="2" style="text-align:center;"><?if(isset($v['file_main'])){?><img src="<?=img_url($v['file_main'][0]['id'], 80, true)?>" /><?}?></td>
-						<td colspan="3" class="author"><h3><a href="<?=base_url()?>admin/user/detail/<?=$v['id']?>/"><?=$v['name']?></a></h3></td>
-					</tr>
-					<tr>
-						<td class="createdate"><a href="<?=base_url()?>admin/user/filter/sort/createdate/desc/"><?=$v['createdate']?></a></td>
-						<td class="usertype"><?if(!empty($v['usertype'])){?><a href="<?=base_url()?>admin/user/filter/where/type/<?=$v['type']?>"><?=$v['usertype']['name']?></a><?}?></td>
-						<td class="tool">
-							<a href="<?=base_url()?>admin/user/detail/<?=$v['id']?>/" class="detail btn"><?=$this->lang->line('system_post_detail')?></a>
-							<a href="<?=base_url()?>admin/user/edit/<?=$v['id']?>/" class="edit btn"><?=$this->lang->line('system_post_edit')?></a>
-						</td>
-					</tr><?}?>
-				</table>
-				<div class="pager"><?=$page['pager']?></div>
-				<?}?>
+				<?if(isset($user)){?><form action="<?=base_url()?>admin/user/delete/" method="post" id="form_list" name="form_list">
+					<table>
+						<?foreach($user as $k => $v){?><tr class="user_id<?=$v['id']?>">
+							<td rowspan="2" style="text-align:center;"><input type="checkbox" name="id[]" value="<?=$v['id']?>" /></td>
+							<td rowspan="2" style="text-align:center;"><?if(isset($v['file_main'])){?><img src="<?=img_url($v['file_main'][0]['id'], 80, true)?>" /><?}?></td>
+							<td colspan="3" class="author"><h3><a href="<?=base_url()?>admin/user/detail/<?=$v['id']?>/"><?=$v['name']?></a></h3></td>
+						</tr>
+						<tr class="user_id<?=$v['id']?>">
+							<td class="createdate"><a href="<?=base_url()?>admin/user/filter/sort/createdate/desc/"><?=$v['createdate']?></a></td>
+							<td class="usertype"><?if(!empty($v['usertype'])){?><a href="<?=base_url()?>admin/user/filter/where/type/<?=$v['type']?>"><?=$v['usertype']['name']?></a><?}?></td>
+							<td class="tool">
+								<a href="<?=base_url()?>admin/user/detail/<?=$v['id']?>/" class="detail btn"><?=$this->lang->line('system_post_detail')?></a>
+								<a href="<?=base_url()?>admin/user/edit/<?=$v['id']?>/" class="edit btn"><?=$this->lang->line('system_post_edit')?></a>
+								<a id="btn_delete" attr="<?=$v['id']?>" class="btn delete" title="delete" attr="<?=$v['id']?>"><?=$this->lang->line('system_post_delete')?></a>
+							</td>
+						</tr><?}?>
+					</table>
+					<div id="list_footer" class="clearfix">
+						<div class="tool">
+							<a id="btn-select-all">select all</a> / 
+							<a id="btn-deselect-all">deselect all</a> / 
+							<a id="btn-delete">delete</a>
+						</div>
+						<div class="pager"><?=$page['pager']?></div>
+					</div>
+				</form><?}?>
 			</div>
 		</div>
 	</div>
 	<?$this->load->view('_inc/foot.php')?>
 </body>
+<script type="text/javascript">
+	$(function() {
+		$('td.tool .delete').each(function() {
+			$(this).click(function() {
+				user_id = $(this).attr('attr');
+				flg_del = confirm ('削除してもよろしいですか？');
+				if (flg_del) {
+					$.ajax({
+						url: '<?=base_url()?>request/delete/user/',
+						type: 'post',
+						data: {
+							id: user_id
+						}
+					});
+					$('.user_id' + user_id).fadeOut('slow');
+				}
+			});
+		});
+		
+		$('#btn-delete').click(function() {
+			if($('#form_list :checked').length > 0) {
+				flg_del = confirm ('ユーザーを削除します。よろしいですか？');
+				if (flg_del) {
+					document.form_list.submit();
+				}
+			}
+		});
+		
+		$('#btn-select-all').click(function() {
+			$(':checkbox').attr('checked', 'checked');
+		});
+		
+		$('#btn-deselect-all').click(function() {
+			$(':checkbox').removeAttr('checked');
+		});
+	});
+</script>
 </html>

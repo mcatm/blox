@@ -32,7 +32,6 @@
 							<td><?=$this->setting->get_status($v['status'])?></td>
 							<td class="tool">
 								<a href="<?=$v['admin_url']?>" class="btn detail" title="detail"><?=$this->lang->line('system_post_detail')?></a>
-								<?#=$this->lang->line('system_post_preview')?>
 								<a href="<?=$v['edit_url']?>" class="btn edit" title="edit"><?=$this->lang->line('system_post_edit')?></a>
 								<a id="btn_delete" attr="<?=$v['id']?>" class="btn delete" title="delete" attr="<?=$v['id']?>"><?=$this->lang->line('system_post_delete')?></a>
 								<div class="clear"></div>

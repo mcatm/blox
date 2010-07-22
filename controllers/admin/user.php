@@ -55,6 +55,15 @@ class User extends Controller {
 		$this->load->view('user.form.php');
 	}
 	
+	function delete() {
+		$this->load->library('user');
+		foreach ($this->input->post('id') as $k => $v) {
+			$id[] = $v;
+		}
+		$this->user->delete($id);
+		header('location:'.base_url().'admin/user/');
+	}
+	
 	function invite() {
 		$this->load->library('user');
 		
@@ -121,6 +130,10 @@ class User extends Controller {
 			
 			case 'edit':
 				$this->edit($this->uri->segment(4));
+			break;
+			
+			case 'delete':
+				$this->delete();
 			break;
 			
 			case 'invite':
