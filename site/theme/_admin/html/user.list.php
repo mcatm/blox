@@ -21,7 +21,7 @@
 				<?if(isset($user)){?><form action="<?=base_url()?>admin/user/delete/" method="post" id="form_list" name="form_list">
 					<table>
 						<?foreach($user as $k => $v){?><tr class="user_id<?=$v['id']?>">
-							<td rowspan="2" style="text-align:center;"><input type="checkbox" name="id[]" value="<?=$v['id']?>" /></td>
+							<td rowspan="2" style="text-align:center;"><?if($this->data->out['me']['id'] != $v['id']){?><input type="checkbox" name="id[]" value="<?=$v['id']?>" /><?}?></td>
 							<td rowspan="2" style="text-align:center;"><?if(isset($v['file_main'])){?><img src="<?=img_url($v['file_main'][0]['id'], 80, true)?>" /><?}?></td>
 							<td colspan="3" class="author"><h3><a href="<?=base_url()?>admin/user/detail/<?=$v['id']?>/"><?=$v['name']?></a></h3></td>
 						</tr>
@@ -31,7 +31,7 @@
 							<td class="tool">
 								<a href="<?=base_url()?>admin/user/detail/<?=$v['id']?>/" class="detail btn"><?=$this->lang->line('system_post_detail')?></a>
 								<a href="<?=base_url()?>admin/user/edit/<?=$v['id']?>/" class="edit btn"><?=$this->lang->line('system_post_edit')?></a>
-								<a id="btn_delete" attr="<?=$v['id']?>" class="btn delete" title="delete" attr="<?=$v['id']?>"><?=$this->lang->line('system_post_delete')?></a>
+								<?if($this->data->out['me']['id'] != $v['id']){?><a id="btn_delete" attr="<?=$v['id']?>" class="btn delete" title="delete" attr="<?=$v['id']?>"><?=$this->lang->line('system_post_delete')?></a><?}?>
 							</td>
 						</tr><?}?>
 					</table>
