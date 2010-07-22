@@ -9,3 +9,4 @@ site/config.php
 site/js/shadowbox/*
 site/blox/lib/*
 site/upload/*
+site/blox/extension/*
