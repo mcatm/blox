@@ -68,8 +68,12 @@ if ( ! function_exists( 'format_text' ) ) {
 
 if ( ! function_exists( 'format_description' ) ) {
 	function format_description($str, $limit = 0, $tail = "...") {
+		$CI =& get_instance();
+		$regex = '/'.$CI->setting->get('format_tag_open').'(.*)'.$CI->setting->get('format_tag_close').'?/';
+		
 		$str = strip_tags($str);
-		$str = preg_replace("((http|https)(://[[:alnum:]\S\$\+\?\.=_%,:@!#~*-/&]+))", "", $str);
+		
+		$str = preg_replace(array("((http|https)(://[[:alnum:]\S\$\+\?\.=_%,:@!#~*-/&]+))", $regex), "", $str);
 		if ($limit > 0) {
 			if (mb_strlen($str, 'UTF-8') > $limit) $str = mb_substr($str, 0, $limit, 'UTF-8').$tail;//文字数
 		}
