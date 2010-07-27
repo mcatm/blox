@@ -44,7 +44,7 @@ class Pipe extends Controller {
 					);
 				}
 				
-				$param['offset'] = $offset;
+				$param['segment']['offset'] = $offset;
 				$this->_view($param);
 			break;
 			
@@ -280,7 +280,8 @@ class Pipe extends Controller {
 				
 				for ($i=1; $this->uri->segment($i); $i++) {
 					if ($this->uri->segment($i)) {
-						if (is_numeric($this->uri->segment($i)) && !isset($segment['id'])) {
+						#print $this->uri->segment($i).'/';
+						if (is_numeric($this->uri->segment($i)) && !isset($segment['id']) && empty($flg_next_seg)) {
 							$segment['id']		= $this->uri->segment($i);
 							$flg_end_method		= true;
 						} else {
@@ -306,6 +307,7 @@ class Pipe extends Controller {
 				}
 				
 				$this->div->get(array('where' => 'div_alias = "'.$this->setting->get_alias($method).'"'));
+				#print_r($segment);#exit;
 				
 				if (isset($this->data->out['div'])) {
 					if ($this->data->out['div'][0]['type'] == 'post') {//分類が記事詳細の場合
@@ -357,7 +359,7 @@ class Pipe extends Controller {
 		if (isset($div['content']) && is_array($div['content'])) {
 			foreach ($div['content'] as $c) {
 				$this->load->library($c['type']);
-				$c['param']['offset'] = (isset($param['offset'])) ? $param['offset'] : 0;
+				$c['param']['offset'] = (isset($param['segment']['offset'])) ? $param['segment']['offset'] : 0;
 				$p = (isset($c['param']) && is_array($c['param']) && !empty($c['param'])) ? $c['param'] : array();
 				$this->$c['type']->get($p);
 			}
