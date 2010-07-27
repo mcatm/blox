@@ -40,6 +40,25 @@ class BLX_Loader extends CI_Loader {
 		
 		$theme_path = '_rss/'.$view;
 		
+		if (!is_file($this->_ci_view_path.$theme_path)) show_404();
+		
+		return $this->_ci_load(array(
+			'_ci_view'		=> $theme_path,
+			'_ci_vars'		=> $this->_ci_object_to_array($vars),
+			'_ci_return'	=> $return
+		));
+	}
+	
+	function api($view, $format = 'xml', $vars = array(), $return = FALSE) {
+		$CI =& get_instance();
+		$this->_ci_view_path = THEME_FOLDER.'/';
+		
+		if (count($vars) == 0) $vars = $CI->data->out;//Output自動呼び出し
+		
+		$theme_path = '_api/'.$format.'/'.$view;
+		
+		#if (!is_file($this->_ci_view_path.$theme_path)) show_404();
+		
 		return $this->_ci_load(array(
 			'_ci_view'		=> $theme_path,
 			'_ci_vars'		=> $this->_ci_object_to_array($vars),

@@ -19,8 +19,9 @@ class Get extends Controller {
 		
 		if ($this->input->post('q') != "") {
 			$param['query'] = $this->input->post('q');
-			$this->post->get($param);
 		}
+		
+		$this->post->get($param);
 		
 		if (!isset($this->data->out['post'])) $this->data->out['post'] = array();
 		$this->output->ajax($this->data->out['post'], $param);
@@ -88,5 +89,7 @@ class Get extends Controller {
 	
 	function Get() {
 		parent::Controller();
+		
+		if (!preg_match('(^'.base_url().')', $this->agent->referrer())) exit;//外部からの参照はNG
 	}
 }

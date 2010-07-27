@@ -202,11 +202,11 @@ class Pipe extends Controller {
 				$offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 				
 				$this->post->get(array(
-					'query'		=> $query,
-					'base_url'	=> base_url().'search/'.$this->uri->segment(2).'/',
-					'offset'	=> $offset,
+					'query'			=> $query,
+					'base_url'		=> base_url().'search/'.$this->uri->segment(2).'/',
+					'offset'		=> $offset,
 					'uri_segment'	=> 3,
-					'pager'		=> true
+					'pager'			=> true
 				));
 				
 				$this->setting->set_title('Search Results: '.$query);

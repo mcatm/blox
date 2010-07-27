@@ -8,8 +8,6 @@ function init() {
 	
 	//ユーザーエージェント取得
 	if ($CI->setting->get('switch_useragent')) {
-		$CI->load->library('user_agent');
-		
 		if ($CI->agent->is_mobile()) {//mobile
 			switch($CI->agent->mobile()) {
 				case 'Apple iPhone':
@@ -55,7 +53,7 @@ function init() {
 			}
 		}
 		if (!isset($CI->data->out['admin_menu'])) $CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();//管理メニュー取得
-	} elseif (defined('HOME_MODE') && HOME_MODE === true) {
+	} elseif (defined('HOME_MODE') && HOME_MODE === true) {//HOME画面
 		define('SSL_MODE', true);//SSLモード
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth('home')) {
 			if ($CI->uri->segment(1) != 'login') {
@@ -64,12 +62,17 @@ function init() {
 				exit;
 			}
 		}
-		#$CI->setting->set('theme', 'home');
+	} elseif (defined('API_MODE') && API_MODE === true) {//API
+		if (!$CI->setting->get('open_api')) show_error('API access is not arrowed.', 403);
+		define('SSL_MODE', true);//SSLモード
+		$CI->setting->set('theme', '_api');
 	} else {
 		$CI->log->set_access();//アクセス解析
 	}
 	
 	$CI->blox->action('c:'.substr($CI->uri->uri_string(), 1));
+	
+	if (defined("DEBUG_MODE") && DEBUG_MODE === true) $CI->output->enable_profiler(TRUE);
 	
 	if (defined('SSL_MODE') && SSL_MODE === true) {//SSLモード
 		if(defined('USE_SSL') && USE_SSL === true) {

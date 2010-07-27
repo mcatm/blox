@@ -55,8 +55,8 @@ $route[$home]				= "home/top";
 $route['admin/(:any)']		= "admin/$1";
 $route['admin']				= "admin/top";
 
-#$route['search/(:any)']	= "search/$1";
-#$route['search']			= "search";
+$route['api/(:any)']		= "api/$1";
+$route['api']				= "api";
 
 $route['feed/(:any)']		= "feed/$1";
 $route['feed']				= "feed";

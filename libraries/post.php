@@ -92,7 +92,7 @@ class BLX_Post {
 		
 		if ($param['qty'] == 0) $param['qty'] = $count;//qtyが0の場合は、全てを選択
 		
-		if (defined("DEBUG_MODE")) print $CI->db->last_query();
+		#if (defined("DEBUG_MODE")) print $CI->db->last_query();
 		
 		if (isset($param['count'])) {
 			$CI->db->flush_cache();

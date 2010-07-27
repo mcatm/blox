@@ -55,7 +55,5 @@ class Delete extends Controller {
 	
 	function Delete() {
 		parent::Controller();
-		
-		if (!preg_match('(^'.base_url().')', $this->agent->referrer())) exit;//外部からの参照はNG
 	}
 }

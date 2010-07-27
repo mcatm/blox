@@ -17,10 +17,7 @@
 			<title><![CDATA[<?if (isset($v['title'])) {?><?=$v['title']?><?} else {?><?=$v['author'][0]['name']?><?}?>]]></title>
 			<description><![CDATA[
 			<?=format_text($v['text'])?>
-			<?if (isset($v['file_main']) && $v['file_main'][0]['type'] == 'image'){?><p><img src="<?=img_url($v['file_main'][0]['id'], $this->setting->get('img_size_mid'))?>" width="<?=$this->setting->get('img_size_mid')?>" border="0" /></p><?}?>
-			<?/*if (isset($v['related'])) {?><blockquote><h4>関連記事 - related posts</h4>
-			<?foreach($v['related'] as $related){?>- <a href="<?=$related['url']?>" target="_blank"><?=$related['title']?></a><br /><?}?>
-			</blockquote><?}*/?>
+			<?if (isset($v['file_main']) && $v['file_main'][0]['type'] == 'image'){?><p><img src="<?=img_url($v['file_main'][0]['id'], $this->setting->get('img_size_main'))?>" width="<?=$this->setting->get('img_size_main')?>" border="0" /></p><?}?>
 			]]></description>
 			<link><?=$v['url']?></link>
 			<guid><?=$v['url']?></guid>
