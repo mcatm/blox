@@ -364,7 +364,7 @@ class Pipe extends Controller {
 				$this->$c['type']->get($p);
 			}
 		}
-		#print_r($this->data->out['post']);exit;
+		
 		if (isset($param['detail']) && isset($param['segment']['id'])) {//詳細の場合
 			$post_id = $param['segment']['id'];
 			//記事一件を取得

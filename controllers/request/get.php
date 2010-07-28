@@ -90,6 +90,9 @@ class Get extends Controller {
 	function Get() {
 		parent::Controller();
 		
-		if (!preg_match('(^'.base_url().')', $this->agent->referrer())) exit;//外部からの参照はNG
+		#print $this->agent->referrer();
+		$url = parse_url(base_url());
+		#print_r($url);
+		if (!preg_match('(^(http|https):\/\/'.$url['host'].')', $this->agent->referrer())) exit;//外部からの参照はNG
 	}
 }
