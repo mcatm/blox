@@ -112,6 +112,7 @@ class Set extends Controller {
 	function Set() {
 		parent::Controller();
 		
-		if (!preg_match('(^'.base_url().')', $this->agent->referrer())) exit;//外部からの参照はNG
+		$url = parse_url(base_url());
+		if (!preg_match('(^(http|https):\/\/'.$url['host'].')', $this->agent->referrer())) exit;//外部からの参照はNG
 	}
 }

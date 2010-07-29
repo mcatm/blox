@@ -30,7 +30,7 @@
 			<div class="postbody">
 				<p>
 					<label>text : </label>
-					<textarea name="text" class="input elastic editor" id="edit_text" rows="4"><?=set_value('text', (isset($post[0]['text'])) ? $post[0]['text'] : '')?></textarea>
+					<textarea name="text" class="input elastic editor" id="edit_text" rows="6"><?=set_value('text', (isset($post[0]['text'])) ? $post[0]['text'] : '')?></textarea>
 					<?=form_error('text')?>
 				</p>
 			</div>
@@ -38,7 +38,7 @@
 				<div class="postbody">
 					<?foreach($ext as $e){?><p>
 						<label><?=$e['label']?></label>
-						<?if ($e['type'] == 'textarea'){?><textarea name="ext_<?=$e['field']?>" class="input elastic" rows="6"><?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?></textarea>
+						<?if ($e['type'] == 'textarea'){?><textarea name="ext_<?=$e['field']?>" id="edit_text_<?=$e['field']?>" class="input elastic editor" rows="6"><?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?></textarea>
 						<?} else {?><input type="text" name="ext_<?=$e['field']?>" value="<?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?>" class="query input" />
 						<?}?>
 					</p><?}?>
