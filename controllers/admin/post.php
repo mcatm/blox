@@ -61,7 +61,9 @@ class Post extends Controller {
 		$msg = $this->post->set($id);
 		switch ($msg['result']) {
 			case 'success':
-				$this->post->get(array('id' => $msg['id'], 'qty' => 1, 'file' => true, 'schedule' => true,));
+				$where = array('id' => $msg['id'], 'qty' => 1, 'file' => true, 'schedule' => true);
+				if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 10;
+				$this->post->get($where);
 			break;
 			
 			case 'error':

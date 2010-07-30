@@ -2,7 +2,7 @@
 <?$this->load->view('_inc/html.header.php')?>
 <body>
 	<?$this->load->view('_inc/head.php')?>
-	<form action="<?=base_url()?>admin/post/edit/" method="post" id="body">
+	<form action="<?=base_url()?>admin/post/edit/<?if(isset($post[0]['id'])){?><?=$post[0]['id']?>/<?}?>" method="post" id="body">
 	<?if(isset($post[0]['id'])){?><input type="hidden" name="id" value="<?=$post[0]['id']?>" /><?}?>
 	<?if(isset($post[0]['type'])){?><input type="hidden" name="type" value="<?=$post[0]['type']?>" /><?}?>
 	<?if(isset($post[0]['parent'])){?><input type="hidden" name="parent" value="<?=$post[0]['parent']?>" /><?}?>

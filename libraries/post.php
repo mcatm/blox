@@ -607,8 +607,8 @@ class BLX_Post {
 					
 					//著者登録
 					$author = set_value('author[]');
+					$CI->linx->delete('post2user', array('a' => $id));
 					if (isset($author) && is_array($author) & !empty($author)) {
-						$CI->linx->delete('post2user', array('a' => $id));
 						foreach($author as $ak => $av) {
 							$set = array(
 								'a'		=> $id,
