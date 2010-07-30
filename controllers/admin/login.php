@@ -4,7 +4,8 @@ class Login extends Controller {
 
 	function index() {
 		if ($this->auth->login($this->input->post('email'), $this->input->post('pwd'))) {
-			header('location:'.base_url().'admin/');
+			$redirect = ($this->input->post('redirect')) ? $this->input->post('redirect') : base_url().'admin/';
+			header('location:'.$redirect);
 		} else {
 			$this->load->view('login.php');
 		}

@@ -211,6 +211,107 @@ class BLX_Image_lib extends CI_Image_lib {
 		}
 	}
 	
+	function view($org_path, $w = 0, $trim = "", $h = 0) {
+		
+		$config['image_library']	= 'gd2';
+		$config['source_image']		= $org_path;
+		#$config['new_image']		= $path;
+		$config['create_thumb']		= FALSE;
+		$config['dynamic_output']	= TRUE;
+		$config['quality']			= 80;
+		
+		#exit($org_path);
+		
+		if ($trim != '') {//トリミングする場合
+			$info_org = @getimagesize($org_path);//オリジナル画像のサイズを取得
+			$org_w	= $info_org[0];
+			$org_h	= $info_org[1];
+			
+			if (!isset($w) || $w == 0) $w = $org_w;
+			
+			if ($trim == 'auto') {//トリミングせず、長辺を合わせる場合
+				if ($h > 0) {//高さまで指定
+					$tar_w = $w;
+					$tar_h = ceil($org_h * ($w / $org_w));
+					
+					$config['maintain_ratio']	= true;
+					if ($tar_h > $h) {
+						$config['width']		= $w * (ceil($h / $tar_h));
+						$config['height']		= $h;
+						$config['master_dim']	= 'height';
+					} else {
+						$config['width']		= $w;
+						$config['height']		= $h;
+						$config['master_dim']	= 'width';
+					}
+					
+					$this->initialize($config);
+					$this->resize();
+					
+					@chmod($path, DIR_WRITE_MODE);
+				} else {//高さ指定無し（tumblr風）
+					if ($w > $org_w) $w = $org_w;
+					
+					$config['maintain_ratio']	= true;
+					$config['width']		= $w;
+					$config['height']		= $w;
+					$config['master_dim']	= 'width';
+					
+					$this->initialize($config);
+					$this->resize();
+					
+					@chmod($path, DIR_WRITE_MODE);
+				}
+			} else {//正方形にトリミングする場合
+				//一旦大きめの画像を作成
+				$config['maintain_ratio']	= TRUE;
+				$config['width']		= $w;
+				$config['height']		= $w;
+				
+				if ($org_w < $org_h) {
+					$config['master_dim']		= 'width';
+				} else {
+					$config['master_dim']		= 'height';
+				}
+				
+				$this->initialize($config);
+				$this->resize();
+				
+				//指定のサイズに切り抜く
+				unset($config);
+				$config['image_library']	= 'gd2';
+				$config['source_image']		= $path;
+				$config['quality']			= 100;
+				$config['width']			= $w;
+				$config['height']			= $w;
+				$config['maintain_ratio']	= FALSE;
+				
+				$v2 = @getimagesize($path);
+				
+				if($org_w < $org_h) {
+					$config['x_axis'] = '0';
+					$config['y_axis'] = ceil(($v2[1] - $w) / 2);
+				} else {
+					$config['x_axis'] = ceil(($v2[0] - $w) / 2);
+					$config['y_axis'] = '0';
+				}
+				
+				$this->initialize($config);
+				$this->crop();
+			}
+		} else {//正方形にトリミングしない場合
+			$config['maintain_ratio']	= TRUE;
+			if ($w > 0) {
+				$config['width']		= $w;
+				$config['height']		= $w;
+			}
+			$config['master_dim']		= 'width';
+			
+			$this->initialize($config);
+			$this->resize();
+		}
+	}
+	
 	function image_reproportion() {
 		if ( ! is_numeric($this->width) OR ! is_numeric($this->height) OR $this->width == 0 OR $this->height == 0) return;//数字じゃなかったり、0が設定されていた場合には、空を返す
 		

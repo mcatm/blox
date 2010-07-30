@@ -3,6 +3,7 @@
 class BLX_File {//ファイル管理クラス
     
 	var $dat = array();
+	var $msg;
 	
 	function get($user_param = array()) {
 		$CI =& get_instance();
@@ -256,6 +257,173 @@ class BLX_File {//ファイル管理クラス
 			
 			return $file_id;
 		}
+	}
+	
+	function set_information($id) {//情報改変
+		$validation_rule = array(
+			array(
+				'field'   => 'name',
+				'label'   => 'lang:system_post_label_title',
+				'rules'   => 'trim|required|xss_clean'
+			),
+			array(
+				'field'   => 'copyright',
+				'label'   => 'lang:system_post_label_title',
+				'rules'   => 'trim|xss_clean'
+			),
+			array(
+				'field'   => 'comment',
+				'label'   => 'lang:system_post_label_title',
+				'rules'   => 'xss_clean'
+			)
+		);
+		
+		$CI =& get_instance();
+		
+		$CI->load->library(array('form_validation', 'ext'));
+		
+		$CI->form_validation->set_error_delimiters($CI->setting->get('output_error_open'), $CI->setting->get('output_error_close'));//エラーメッセージの囲み
+		
+		$CI->load->helper(array('form', 'date'));
+		$now = now();
+		
+		if ($id == 0 && $CI->input->post('id')) $id = $CI->input->post('id');//POSTからIDを取得
+		
+		if ($id > 0) $this->get(array('id' => $id));//エントリを取得
+		
+		//記事拡張を読込
+		$CI->ext->get(array('stack' => true, 'div' => 'file'));
+		if (isset($CI->data->out['ext'])) {
+			$ext = $CI->data->out['ext'];
+			if (!empty($ext) && is_array($ext)) {
+				foreach ($ext as $e) {
+					$validation_rule[] = array(
+						'field'		=> 'ext_'.$e['field'],
+						'rules'		=> $e['rule'],
+						'label'		=> $e['label']
+					);
+				}
+			}
+		}
+		
+		$CI->form_validation->set_rules($validation_rule);
+		
+		/*if (isset($CI->data->out['me']['id'])) {
+			if ($id == 0 && !$CI->auth->check_auth('post')) {
+				$flg_cnt_post = true;//記事を書く権限がない場合
+			} elseif (isset($CI->data->out['post'][0]['author']) && $CI->auth->check_auth()) {//他人のエントリを編集する権限がない場合
+				foreach($CI->data->out['post'][0]['author'] as $ka => $va) {
+					if ($va['id'] == $CI->data->out['me']['id']) $flg_cnt_post = true;
+				}
+			}
+		}*/
+		
+		#if (!isset($flg_cnt_post)) $msg_stop_post = $CI->lang->line('system_post_error_auth');
+		
+		if (!$CI->auth->check_auth('file')) {
+			$this->msg = array(
+				'result'	=> 'error',
+				'msg'		=> $msg_stop_post
+			);
+		} else {
+			if ($CI->form_validation->run() == FALSE) {
+				$this->msg = array(
+					'result'	=> 'error',
+					'msg'		=> $CI->lang->line('system_file_error')
+				);
+			} else {
+				if ($id == 0) {//新規投稿
+					/*$createdate = (set_value('createdate') === 'now' || set_value('createdate') == "") ? $now : set_value('createdate');//投稿日時設定
+					$arr = array(
+						'post_title'			=> set_value('title'),
+						'post_text'				=> htmlspecialchars_decode(set_value('text')),
+						'post_type'				=> set_value('type'),
+						'post_alias'			=> format_alias($alias),
+						'post_status'			=> set_value('status'),
+						'post_number'			=> set_value('number'),
+						'post_parent'			=> set_value('parent'),
+						'post_createdate'		=> $createdate,
+						'post_modifydate'		=> $now
+					);
+					$arr['post_meta'] = $this->_get_meta($arr);
+					
+					$id = $this->_set_post($arr);
+					
+					//著者登録
+					$author = set_value('author[]');
+					if (empty($author) && $CI->input->post('author')) $author[] = $CI->input->post('author');
+					if (isset($author) && is_array($author) & !empty($author)) {
+						foreach($author as $ak => $av) {
+							$set = array(
+								'a'		=> $id,
+								'b'		=> $av
+							);
+							$CI->linx->set('post2user', $set);
+						}
+					} else if (isset($CI->data->out['me']['id']) && $CI->data->out['me']['id'] != 0) {
+						$CI->linx->set('post2user', array(
+							'a'		=> $id,
+							'b'		=> $CI->data->out['me']['id'],
+							'status'	=> 'main'
+						));
+						$author_id = $CI->data->out['me']['id'];
+					}
+					
+					//タグ登録
+					$CI->load->library('tag');
+					$CI->tag->set($CI->input->post('tagstr'), 'post2tag', $id, $author_id);
+					
+					if ($CI->setting->get('flg_post_tweet')) {//記事をtweetする
+						$set = array(
+							'a'		=> $id,
+							'status'	=> 'twitter'
+						);
+						$CI->linx->set('post2extapp', $set);
+					}*/
+				} else {//記事編集
+					$arr = array(
+						'file_name'				=> set_value('name'),
+						'file_comment'			=> htmlspecialchars_decode(set_value('comment')),
+						'file_copyright'		=> set_value('copyright'),
+						'file_modifydate'		=> $now
+					);
+					
+					$CI->db->where('file_id', $id);
+					$CI->db->update(DB_TBL_FILE, $arr);
+					$CI->log->set_history('file', $id, $arr);//ヒストリーログを残す
+					
+					/*
+					//タグ登録
+					$CI->load->library('tag');
+					$CI->tag->set($CI->input->post('tagstr'), 'post2tag', $id, $author_id);*/
+				}
+				
+				/*if (!empty($ext) && is_array($ext)) {//記事拡張
+					foreach($ext as $e) {
+						$ext_value = set_value('ext_'.$e['field']);
+						if (isset($ext_value)) {
+							$set = array(
+								'a'		=> $id,
+								'status'	=> $e['field']
+							);
+							$ch = $CI->linx->get('file2ext', $set);
+							
+							if (!empty($ch)) $set['id'] = $ch[0]['id'];
+							$set['param'] = array('value' => $ext_value);
+							
+							$CI->linx->set('file2ext', $set);
+						}
+					}
+				}*/
+				
+				$this->msg = array(
+					'result'	=> 'success',
+					'msg'		=> $CI->lang->line('system_post_success')
+				);
+				if (isset($id)) $this->msg['id'] = $id;
+			}
+		}
+		return $this->msg;
 	}
 	
 	function delete($id = array()) {

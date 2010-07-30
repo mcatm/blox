@@ -60,9 +60,26 @@ class File extends Controller {
 		$this->index();
 	}
 	
-	/*function edit($id = 0) {
+	function edit($id = 0) {
+		$this->load->library(array('file', 'form_validation'));
 		
-	}*/
+		$msg = $this->file->set_information($id);
+		switch ($msg['result']) {
+			case 'success':
+				$this->file->get(array('id' => $msg['id']));
+			break;
+			
+			case 'error':
+			default:
+				$where = array('id' => $id);
+				if ($this->data->out['me']['auth']['type'] == 'admin') $where['auth'] = 10;
+				if ($id > 0) $this->file->get($where);
+			break;
+		}
+		$this->setting->set_title($this->lang->line('system_file_edit'));
+		
+		$this->load->view('file.detail.php');
+	}
 	
 	function add() {
 		#exit(ini_get('upload_max_filesize'));
@@ -97,7 +114,7 @@ class File extends Controller {
 			break;
 			
 			case 'edit':
-				//$this->edit($this->uri->segment(4));
+				$this->edit($this->uri->segment(4));
 			break;
 			
 			case 'delete':

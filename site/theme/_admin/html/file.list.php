@@ -20,8 +20,8 @@
 					<table>
 						<?foreach($file as $k => $v){?><tr>
 							<td rowspan="2" style="text-align:center;"><input type="checkbox" name="id[]" value="<?=$v['id']?>" /></td>
-							<td rowspan="2" style="text-align:center;"><img src="<?=img_url($v['id'], 100)?>" /></td>
-							<td colspan="4"><h3><?=$v['name']?></h3></td>
+							<td rowspan="2" style="text-align:center;"><a href="<?=base_url()?>admin/file/edit/<?=$v['id']?>/"><img src="<?=img_url($v['id'], 100)?>" /></a></td>
+							<td colspan="4"><h3><a href="<?=base_url()?>admin/file/edit/<?=$v['id']?>/"><?=$v['name']?></a></h3></td>
 						</tr>
 						<tr>
 							<td class="createdate"><?=$v['createdate']?></td>
