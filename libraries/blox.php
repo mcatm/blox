@@ -53,11 +53,6 @@ class Blox {
 				$load_module['alias'][]	= $lm[1];
 			}
 		
-			#print_r($load_module);exit;
-			
-			#$extension_arr = directory_map(LIB_FOLDER.'/extension');
-			#$loaded_extension = array();
-			
 			$module_path = array(
 				EX_FOLDER.'/module/%s/',
 				APP_FOLDER.'/module/%s/'
@@ -68,22 +63,19 @@ class Blox {
 					$p = str_replace('%s', $v, $m);
 					if (is_file($p.'core.php')) {
 						require_once($p.'core.php');
-						#print $p.'<br />';
-						$CI->module->$v = new $v;
-						$CI->module->$v->init($load_module['name'][$k], $p);
-						#$CI
-						#exit($p);
-						$module_loaded[] = array(
+						$CI->mod->$v = new $v;
+						$CI->mod->$v->init($load_module['name'][$k], $p);
+						$module_loaded[$load_module['alias'][$k]] = array(
 							'name'	=> $load_module['name'][$k],
 							'alias'	=> $load_module['alias'][$k],
 							'path'	=> $p
 						);
-						#exit($CI->module->$v->module_path);
 						continue;
 					}
 				}
 			}
 		}
+		$CI->setting->set('module_loaded', $module_loaded);
 		
 		//extension : コアの拡張（廃止）
 		$extension_arr = directory_map(LIB_FOLDER.'/extension');

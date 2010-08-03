@@ -2,31 +2,19 @@
 
 class Pipe extends Controller {
 	
-	/*
-	
-	$param:
-		segment - id / page / offset
-		content - type
-	
-	*/
-	
-	function _remap($method) {//switch
-		exit($method);
+	function _remap($method) {//switch as url segment
 		
+		if ($method == 'index') $method = 'top';
+		
+		$mod_loaded = $this->setting->get('module_loaded');
 		$this->load->library('module');
-		
-		#print_r($this->setting->get('extension_loaded'));
-		if (in_array($method, $this->setting->get('extension_loaded'))) {
-			$this->extension->$method->controller($method);
+		if (array_key_exists($method, $mod_loaded)) {
+			$this->mod->$mod_loaded[$method]['name']->controller($mod_loaded[$method]['name']);
 			exit;
 		}
 		
-		switch($method) {
-			case 'index':
-			case 'top':
-				
-			break;
-		}
+		show_404();
+		#exit($method);
 	}
 	
 	function _view($param = array()) {

@@ -3,41 +3,41 @@
 class Module {
 	
 	var $module_path = "";
-	
-	/*var $extension_name = "";
 	var $admin_menu = array();
 	
-	function controller($ext, $mode = '') {
+	function controller($mod, $mode = '') {
 		$CI =& get_instance();
-		$EX =& $CI->extension->$ext;
-		define('EXTENSION_CONTROLLER', $ext);
-		$ctlpath = LIB_FOLDER.'/extension/'.$ext.'/controller.php';
+		$MD =& $CI->mod->$mod;
+		$mod_loaded = $CI->setting->get('module_loaded');
+		
+		define('MOD_CONTROLLER', $mod);
+		$ctlpath = $this->module_path.'controller.php';
 		
 		if (is_file($ctlpath)) {
 			require_once($ctlpath);
 			switch ($mode) {
 				case 'admin';
-					$EX->controller = new Ex_Admin_Controller;
+					$MD->controller = new M_Admin_Controller;
 					$method = ($CI->uri->segment(4)) ? $CI->uri->segment(4) : "index";
 					if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
 				break;
 				
 				default:
-					$EX->controller = new Ex_Controller;
+					$MD->controller = new M_Controller;
 					$method = ($CI->uri->segment(2)) ? $CI->uri->segment(2) : "index";
 				break;
 			}
-			if (!method_exists($EX->controller, $method)) show_404();//メソッドが存在しない場合、404
-			$EX->controller->$method();
+			if (!method_exists($MD->controller, $method)) show_404();//メソッドが存在しない場合、404
+			$MD->controller->$method();
 			exit;
 		}
 		
 		show_404();
-	}*/
+	}
 	
 	function init($name, $module_path) {
 		$CI =& get_instance();
-		#exit($module_path);
+		$this->module_path = $module_path;
 		$config_path = $module_path.'config.php';
 		$cfg_prefix = 'mod_'.$name.'_';
 		if (is_file($config_path)) {
@@ -50,7 +50,6 @@ class Module {
 				if (!empty($admin_menu)) $this->admin_menu = $admin_menu;
 			}
 		}
-		
 		if (is_file(EX_FOLDER.'/language/'.$CI->config->item('language').'/'.$name.'_lang.php')) $CI->lang->load($name);//拡張言語ファイル読込
 	}
 	
