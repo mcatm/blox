@@ -54,17 +54,14 @@ class Blox {
 			}
 		
 			$module_path = array(
-				EX_FOLDER.'/module/%s/',
-				APP_FOLDER.'/module/%s/'
+				APP_FOLDER.'/module/%s/',
+				EX_FOLDER.'/module/%s/'
 			);
 			
 			foreach ($load_module['name'] as $k=>$v) {
 				foreach ($module_path as $m) {
 					$p = str_replace('%s', $v, $m);
 					if (is_file($p.'core.php')) {
-						require_once($p.'core.php');
-						$CI->mod->$v = new $v;
-						$CI->mod->$v->init($load_module['name'][$k], $p);
 						$module_loaded[$load_module['alias'][$k]] = array(
 							'name'	=> $load_module['name'][$k],
 							'alias'	=> $load_module['alias'][$k],
