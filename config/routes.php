@@ -44,24 +44,24 @@ $route['default_controller'] = "pipe";
 
 $route['(:num)'] = "pipe/top/$1";
 
-$route['request/(:any)']	= "request/$1";
-$route['request']			= "request";
+#$route['request/(:any)']	= "request/$1";
+#$route['request']			= "request";
 
-$home = (defined('URL_ALIAS_HOME')) ? URL_ALIAS_HOME : 'home';
+#$home = (defined('URL_ALIAS_HOME')) ? URL_ALIAS_HOME : 'home';
 
-$route[$home.'/(:any)']		= "home/$1";
-$route[$home]				= "home/top";
+#$route[$home.'/(:any)']		= "home/$1";
+#$route[$home]				= "home/top";
 
 $route['admin/(:any)']		= "admin/$1";
 $route['admin']				= "admin/top";
 
-$route['api/(:any)']		= "api/$1";
-$route['api']				= "api";
+#$route['api/(:any)']		= "api/$1";
+#$route['api']				= "api";
 
-$route['feed/(:any)']		= "feed/$1";
-$route['feed']				= "feed";
-$route['rss/(:any)']		= "feed/$1";
-$route['rss']				= "feed";
+#$route['feed/(:any)']		= "feed/$1";
+#$route['feed']				= "feed";
+#$route['rss/(:any)']		= "feed/$1";
+#$route['rss']				= "feed";
 
 $route['login/(:any)']		= "login/$1";
 $route['login']				= "login";
@@ -69,13 +69,13 @@ $route['login']				= "login";
 $route['redirect/(:any)']		= "redirect/$1";
 $route['redirect']				= "redirect";
 
-$route['download/(:any)']	= "download/$1";
+#$route['download/(:any)']	= "download/$1";
 
 $route['logout/(:any)']		= "logout/$1";
 $route['logout']			= "logout";
 
-$route['cron/(:any)']		= "cron/$1";
-$route['cron']				= "cron";
+#$route['cron/(:any)']		= "cron/$1";
+#$route['cron']				= "cron";
 
 $route['(:any)']	= 'pipe/$1';
 

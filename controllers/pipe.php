@@ -10,7 +10,81 @@ class Pipe extends Controller {
 	
 	*/
 	
-	function _remap($method) {//URLマッピング
+	function _remap($method) {//switch
+		exit($method);
+		
+		$this->load->library('module');
+		
+		#print_r($this->setting->get('extension_loaded'));
+		if (in_array($method, $this->setting->get('extension_loaded'))) {
+			$this->extension->$method->controller($method);
+			exit;
+		}
+		
+		switch($method) {
+			case 'index':
+			case 'top':
+				
+			break;
+		}
+	}
+	
+	function _view($param = array()) {
+		/*$div = (isset($this->data->out['div'][0])) ? $this->data->out['div'][0] : array();
+		
+		$param['theme']	= (!empty($div['theme'])) ? $div['theme'] : $this->setting->get('theme');//テーマの確定
+		if (!isset($param['tpl'])) $param['tpl'] = $this->_get_tpl($div, $param);//テンプレートの確定
+		
+		if (isset($div['content']) && is_array($div['content'])) {
+			foreach ($div['content'] as $c) {
+				$this->load->library($c['type']);
+				$c['param']['offset'] = (isset($param['segment']['offset'])) ? $param['segment']['offset'] : 0;
+				$p = (isset($c['param']) && is_array($c['param']) && !empty($c['param'])) ? $c['param'] : array();
+				$this->$c['type']->get($p);
+			}
+		}
+		
+		if (isset($param['detail']) && isset($param['segment']['id'])) {//詳細の場合
+			$post_id = $param['segment']['id'];
+			//記事一件を取得
+			$where = array(
+				'id'	=> $post_id,
+				'related'	=> 10,
+				'neighbor'	=> true,
+				'schedule'	=> true,
+				'access'	=> true,
+				'comment'	=> true
+			);
+			
+			if (isset($param['segment']['page']))	$where['page']		= $param['segment']['page'];
+			if (isset($param['id_type']))			$where['id_type']	= $param['id_type'];
+			
+			if ($this->data->out['me']['auth']['type'] == "admin") $where['auth'] = 10;
+			$this->post->get($where);
+			
+			if (isset($this->data->out['post'])) {
+				//アクセス解析
+				$access_path = 'access/'.$this->setting->get('url_alias_post').'/'.$post_id.'/';
+				$this->log->get_access($access_path);
+				$this->setting->set_title($this->data->out['post'][0]['title']);//タイトルセット
+				$this->setting->set_description(format_description($this->data->out['post'][0]['text'], 120));//要約セット
+			}
+		} else {
+			$flg_title = (isset($param['category']) || !isset($param['title_clear'])) ? false : true;
+			#$flg_title = true;
+			$site_title = (isset($div['name'])) ? $div['name'] : "";
+			$this->setting->set_title($site_title, $flg_title);
+			$site_description = (isset($div['description'])) ? $div['description'] : "";
+			$this->setting->set_description(format_description($site_description, 300));
+			$keyword = (isset($div['keyword'])) ? $div['keyword'] : array();
+			$this->setting->set_keyword($keyword, true);
+		}
+		
+		$this->setting->set('theme', $param['theme']);
+		$this->load->view($param['tpl']);*/
+	}
+	
+	/*function _remap($method) {//URLマッピング
 		$this->load->library('div');
 		
 		switch($method) {
@@ -250,9 +324,11 @@ class Pipe extends Controller {
 			break;
 			
 			default:
-				/*
-				extensionから確認
-				*/
+				
+				#
+				# extensionから確認
+				#
+				
 				#print '2: get extensions<br />';
 				#print_r($this->setting->get('extension_loaded'));
 				if (in_array($method, $this->setting->get('extension_loaded'))) {
@@ -260,13 +336,12 @@ class Pipe extends Controller {
 					exit;
 				}
 				
-				/*
-				デフォルトでは一番最初に出てきた数字がID、
-				/page/の次に出てきた数字がPAGE。
-				ただし、$this->setting->get('url_segment_identifier_id')の次のsegmentがID
-				$this->setting->get('url_segment_identifier_page')の次のsegmentがPAGE
-				とすることも可能
-				*/
+				
+				# デフォルトでは一番最初に出てきた数字がID、
+				# /page/の次に出てきた数字がPAGE。
+				# ただし、$this->setting->get('url_segment_identifier_id')の次のsegmentがID
+				# $this->setting->get('url_segment_identifier_page')の次のsegmentがPAGE
+				# とすることも可能
 				
 				//URLからmethodを呼び出し
 				$flg_next_seg = "";
@@ -348,69 +423,14 @@ class Pipe extends Controller {
 				}
 			break;
 		}
-	}
-	
-	function _view($param = array()) {
-		$div = (isset($this->data->out['div'][0])) ? $this->data->out['div'][0] : array();
-		
-		$param['theme']	= (!empty($div['theme'])) ? $div['theme'] : $this->setting->get('theme');//テーマの確定
-		if (!isset($param['tpl'])) $param['tpl'] = $this->_get_tpl($div, $param);//テンプレートの確定
-		
-		if (isset($div['content']) && is_array($div['content'])) {
-			foreach ($div['content'] as $c) {
-				$this->load->library($c['type']);
-				$c['param']['offset'] = (isset($param['segment']['offset'])) ? $param['segment']['offset'] : 0;
-				$p = (isset($c['param']) && is_array($c['param']) && !empty($c['param'])) ? $c['param'] : array();
-				$this->$c['type']->get($p);
-			}
-		}
-		
-		if (isset($param['detail']) && isset($param['segment']['id'])) {//詳細の場合
-			$post_id = $param['segment']['id'];
-			//記事一件を取得
-			$where = array(
-				'id'	=> $post_id,
-				'related'	=> 10,
-				'neighbor'	=> true,
-				'schedule'	=> true,
-				'access'	=> true,
-				'comment'	=> true
-			);
-			
-			if (isset($param['segment']['page']))	$where['page']		= $param['segment']['page'];
-			if (isset($param['id_type']))			$where['id_type']	= $param['id_type'];
-			
-			if ($this->data->out['me']['auth']['type'] == "admin") $where['auth'] = 10;
-			$this->post->get($where);
-			
-			if (isset($this->data->out['post'])) {
-				//アクセス解析
-				$access_path = 'access/'.$this->setting->get('url_alias_post').'/'.$post_id.'/';
-				$this->log->get_access($access_path);
-				$this->setting->set_title($this->data->out['post'][0]['title']);//タイトルセット
-				$this->setting->set_description(format_description($this->data->out['post'][0]['text'], 120));//要約セット
-			}
-		} else {
-			$flg_title = (isset($param['category']) || !isset($param['title_clear'])) ? false : true;
-			#$flg_title = true;
-			$site_title = (isset($div['name'])) ? $div['name'] : "";
-			$this->setting->set_title($site_title, $flg_title);
-			$site_description = (isset($div['description'])) ? $div['description'] : "";
-			$this->setting->set_description(format_description($site_description, 300));
-			$keyword = (isset($div['keyword'])) ? $div['keyword'] : array();
-			$this->setting->set_keyword($keyword, true);
-		}
-		
-		$this->setting->set('theme', $param['theme']);
-		$this->load->view($param['tpl']);
-	}
+	}*/
 	
 	
 	function Pipe() {
 		parent::Controller();
 	}
 	
-	function _get_tpl($div = array(), $param = array()) {
+	/*function _get_tpl($div = array(), $param = array()) {
 		if (empty($div['tpl'])) {//テンプレートの確定
 			switch ($div['type']) {
 				case 'top':
@@ -437,5 +457,5 @@ class Pipe extends Controller {
 		}
 		
 		return $tpl;
-	}
+	}*/
 }

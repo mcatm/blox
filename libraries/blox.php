@@ -36,12 +36,56 @@ class Blox {
 		}
 	}
 	
-	function Blox() {
+	function init() {
 		$CI =& get_instance();
 		$CI->load->helper('directory');
 		$this->trigger = $CI->config->item('blox_trigger');//トリガー取得
 		
-		//extension : コアの拡張
+		//module
+		$load_module = array();
+		$m_arr = explode(',', $CI->setting->get('module'));
+		if (!empty($m_arr)) {
+			$CI->load->library('module');
+			foreach ($m_arr as $l) {
+				$lm = explode(':', $l);
+				if (count($lm) < 2) $lm[1] = $lm[0];
+				$load_module['name'][]	= $lm[0];
+				$load_module['alias'][]	= $lm[1];
+			}
+		
+			#print_r($load_module);exit;
+			
+			#$extension_arr = directory_map(LIB_FOLDER.'/extension');
+			#$loaded_extension = array();
+			
+			$module_path = array(
+				EX_FOLDER.'/module/%s/',
+				APP_FOLDER.'/module/%s/'
+			);
+			
+			foreach ($load_module['name'] as $k=>$v) {
+				foreach ($module_path as $m) {
+					$p = str_replace('%s', $v, $m);
+					if (is_file($p.'core.php')) {
+						require_once($p.'core.php');
+						#print $p.'<br />';
+						$CI->module->$v = new $v;
+						$CI->module->$v->init($load_module['name'][$k], $p);
+						#$CI
+						#exit($p);
+						$module_loaded[] = array(
+							'name'	=> $load_module['name'][$k],
+							'alias'	=> $load_module['alias'][$k],
+							'path'	=> $p
+						);
+						#exit($CI->module->$v->module_path);
+						continue;
+					}
+				}
+			}
+		}
+		
+		//extension : コアの拡張（廃止）
 		$extension_arr = directory_map(LIB_FOLDER.'/extension');
 		$loaded_extension = array();
 		if (!empty($extension_arr)) {

@@ -5,6 +5,7 @@ function init() {
 	$CI =& get_instance();
 	$CI->setting->init();//設定読込
 	$CI->auth->init();//ログインデータ読込
+	$CI->blox->init();
 	
 	//ユーザーエージェント取得
 	if ($CI->setting->get('switch_useragent')) {
