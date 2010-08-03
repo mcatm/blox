@@ -136,7 +136,7 @@ class Pipe extends Controller {
 						$description = (!empty($this->data->out['div'][0]['description'])) ? $this->data->out['div'][0]['description'] : '';
 						$keyword = (!empty($this->data->out['div'][0]['tag'])) ? $this->data->out['div'][0]['tag'] : '';
 						
-						#if (isset($this->data->out['post'])) {
+						#if (isset($this->data->out['post'])) {//test
 							$this->data->set_array('div', array(
 								array(
 									'type'			=> 'post',
