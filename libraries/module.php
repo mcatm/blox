@@ -39,7 +39,7 @@ class Module {
 				}
 			}
 			$ctlpath = $ctl;
-			
+			#print $ctlpath.'<br />';
 			if ($ctlflg) break;
 		}
 		
@@ -54,7 +54,7 @@ class Module {
 			require_once($ctlpath);
 			
 			$method = (isset($uri_segment[$i+1])) ? $uri_segment[$i+1] : 'index';
-			
+			#print $method;
 			switch ($mode) {
 				/*case 'admin';
 					$MD->controller = new M_Admin_Controller;
