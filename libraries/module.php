@@ -11,50 +11,67 @@ class Module {
 		$mod_loaded = $CI->setting->get('module_loaded');
 		
 		define('MOD_CONTROLLER', $mod);
-		#print_r();
+		
 		$uri_segment[] = 'top';
 		for ($i=1;$CI->uri->segment($i);$i++) {
-			$uri_segment[] = $CI->uri->segment($i);
+			if (is_numeric($CI->uri->segment($i))) break;
+			if ($i != 1) $uri_segment[] = $CI->uri->segment($i);
 		}
-		
-		#if (empty($uri_segment)) $uri_segment[] = 'top';
-		print_r($uri_segment);print '<hr />';
-		$ctl = $this->module_path.'controller';
-		for ($i=0;isset($uri_segment[$i]);$i++) {
-			if ($i != 1) {
-				$classname = $uri_segment[$i];
-				
-				$ctl .= ($i != 0) ? $classname : '';
-				#$ctlfile = $classname.'.php';
-				$ctlfile = ($i == 0) ? '/top.php' : '/'.$classname.'.php';
-				$ctlpath = $ctl.$ctlfile;
-				print $classname.'<br />';
-				print $ctlpath.'<hr />';
+		#print_r($uri_segment);
+		$ctl = $this->module_path.'controller/';
+		foreach ($uri_segment as $i => $u) {
+			$classname = $u;
+			$ctlflg = false;
 			
-				if (is_file($ctlpath)) {
-					require_once($ctlpath);
-					
-					$method = (isset($uri_segment[$i+1])) ? $uri_segment[$i+1] : 'index';
-					
-					switch ($mode) {
-						case 'admin';
-							$MD->controller = new M_Admin_Controller;
-							#$method = ($CI->uri->segment(4)) ? $CI->uri->segment(4) : "index";
-							if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
-						break;
-						
-						default:
-							$MD->controller = new $classname;
-							#$method = ($CI->uri->segment(2)) ? $CI->uri->segment(2) : "index";
-						break;
+			if (is_file($ctl.$classname.'.php') && $classname != 'top') {
+				$ctl .= $classname.'.php';
+				$ctlflg = true;
+			}
+			
+			if (!$ctlflg) {
+				$ctl .= ($u != 'top') ? $classname.'/' : '';
+				if (is_file($ctl.'top.php')) {
+					if ((count($uri_segment) == 1 && $i == 0) || $i > 0) {
+						$classname = 'top';
+						$ctl .= 'top.php';
+						$ctlflg = true;
 					}
-					if (!method_exists($MD->controller, $method)) show_404();//メソッドが存在しない場合、404
-					$MD->controller->$method();
-					exit;
-				} else {
-					$ctl .= "/";
 				}
 			}
+			$ctlpath = $ctl;
+			
+			if ($ctlflg) break;
+		}
+		
+		//コントローラーが無くてtop.phpだけ存在する場合、最終的にtop.phpにアクセス
+		if (!$ctlflg && is_file($ctl = $this->module_path.'controller/top.php')) {
+			$ctlpath = $ctl;
+			$classname = 'top';
+			$ctlflg = true;
+		}
+		
+		if ($ctlflg) {
+			require_once($ctlpath);
+			
+			$method = (isset($uri_segment[$i+1])) ? $uri_segment[$i+1] : 'index';
+			
+			switch ($mode) {
+				/*case 'admin';
+					$MD->controller = new M_Admin_Controller;
+					#$method = ($CI->uri->segment(4)) ? $CI->uri->segment(4) : "index";
+					if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
+				break;*/
+				
+				default:
+					$classname = 'Mod_'.$classname;
+					#exit($classname);
+					$MD->controller = new $classname;
+					#$method = ($CI->uri->segment(2)) ? $CI->uri->segment(2) : "index";
+				break;
+			}
+			if (!method_exists($MD->controller, $method)) show_404();//メソッドが存在しない場合、404
+			$MD->controller->$method();
+			exit;
 		}
 		
 		show_404();
@@ -62,6 +79,13 @@ class Module {
 	
 	function view($param = array()) {
 		$CI =& get_instance();
+		
+		/*
+		
+		$param
+		type: content type
+		
+		*/
 		
 		$div = (isset($CI->data->out['div'][0])) ? $CI->data->out['div'][0] : array();
 		$param = array_merge($param, $div);
