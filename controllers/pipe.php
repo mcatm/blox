@@ -135,32 +135,7 @@ class Pipe extends Controller {
 				$this->load->view('bookmarklet.php');
 			break;
 			
-			case 'search'://検索
-				$this->load->library('post');
-				
-				$query = $this->input->post('query');
-				
-				if (!$this->uri->segment(2) && $query) {
-					header('location:'.base_url().'search/'.urlencode($query).'/');
-				} else {
-					$query = urldecode($this->uri->segment(2));
-				}
-				
-				$offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-				
-				$this->post->get(array(
-					'query'			=> $query,
-					'base_url'		=> base_url().'search/'.$this->uri->segment(2).'/',
-					'offset'		=> $offset,
-					'uri_segment'	=> 3,
-					'pager'			=> true
-				));
-				
-				$this->setting->set_title('Search Results: '.$query);
-				$this->setting->set_keyword(array($query));
-				
-				$this->load->view('list.php');
-			break;
+			
 			
 			case $this->setting->get('url_alias_user')://ユーザー表示
 				$this->load->library(array('user', 'post'));
