@@ -44,8 +44,8 @@ $route['default_controller'] = "pipe";
 
 $route['(:num)'] = "pipe/top/$1";
 
-#$route['request/(:any)']	= "request/$1";
-#$route['request']			= "request";
+$route['request/(:any)']	= "request/$1";
+$route['request']			= "request";
 
 #$home = (defined('URL_ALIAS_HOME')) ? URL_ALIAS_HOME : 'home';
 

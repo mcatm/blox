@@ -77,72 +77,51 @@ class Module {
 		show_404();
 	}
 	
-	function view($param = array()) {
+	function view($user_param = array()) {
 		$CI =& get_instance();
 		
 		/*
 		
 		$param
 		type: content type
+		tpl:	テンプレートファイル
+		theme:	テーマ
 		
 		*/
 		
-		$div = (isset($CI->data->out['div'][0])) ? $CI->data->out['div'][0] : array();
-		$param = array_merge($param, $div);
-		print_r($param);
+		$param = array(
+			'keyword'	=> array(),//for SEO
+			'description'	=> "",//for SEO
+			'title'			=> '{@sitename}',
+			'flg_title_clear'	=> true
+		);
 		
-		/*
+		$div = array();
+		if (isset($CI->data->out['div'][0])) {
+			foreach ($CI->data->out['div'][0] as $dk => $dv) {
+				if (!empty($d)) $div[$dk] = $dv;
+			}
+		}
 		
-		$param['theme']	= (!empty($div['theme'])) ? $div['theme'] : $this->setting->get('theme');//テーマの確定
-		if (!isset($param['tpl'])) $param['tpl'] = $this->_get_tpl($div, $param);//テンプレートの確定
+		$param = array_merge($param, $user_param, $div);
 		
+		//コンテンツ取得
 		if (isset($div['content']) && is_array($div['content'])) {
 			foreach ($div['content'] as $c) {
-				$this->load->library($c['type']);
+				$CI->load->library($c['type']);
 				$c['param']['offset'] = (isset($param['segment']['offset'])) ? $param['segment']['offset'] : 0;
 				$p = (isset($c['param']) && is_array($c['param']) && !empty($c['param'])) ? $c['param'] : array();
-				$this->$c['type']->get($p);
+				$CI->$c['type']->get($p);
 			}
 		}
 		
-		if (isset($param['detail']) && isset($param['segment']['id'])) {//詳細の場合
-			$post_id = $param['segment']['id'];
-			//記事一件を取得
-			$where = array(
-				'id'	=> $post_id,
-				'related'	=> 10,
-				'neighbor'	=> true,
-				'schedule'	=> true,
-				'access'	=> true,
-				'comment'	=> true
-			);
-			
-			if (isset($param['segment']['page']))	$where['page']		= $param['segment']['page'];
-			if (isset($param['id_type']))			$where['id_type']	= $param['id_type'];
-			
-			if ($this->data->out['me']['auth']['type'] == "admin") $where['auth'] = 10;
-			$this->post->get($where);
-			
-			if (isset($this->data->out['post'])) {
-				//アクセス解析
-				$access_path = 'access/'.$this->setting->get('url_alias_post').'/'.$post_id.'/';
-				$this->log->get_access($access_path);
-				$this->setting->set_title($this->data->out['post'][0]['title']);//タイトルセット
-				$this->setting->set_description(format_description($this->data->out['post'][0]['text'], 120));//要約セット
-			}
-		} else {
-			$flg_title = (isset($param['category']) || !isset($param['title_clear'])) ? false : true;
-			#$flg_title = true;
-			$site_title = (isset($div['name'])) ? $div['name'] : "";
-			$this->setting->set_title($site_title, $flg_title);
-			$site_description = (isset($div['description'])) ? $div['description'] : "";
-			$this->setting->set_description(format_description($site_description, 300));
-			$keyword = (isset($div['keyword'])) ? $div['keyword'] : array();
-			$this->setting->set_keyword($keyword, true);
-		}
+		//META
+		$CI->setting->set_title($param['title'], $param['flg_title_clear']);
+		$CI->setting->set_keyword($param['keyword'], true);
+		$CI->setting->set_description(str_replace("\n", '', $param['description']));
 		
-		$this->setting->set('theme', $param['theme']);
-		$this->load->view($param['tpl']);*/
+		if (isset($param['theme'])) $CI->setting->set('theme', $param['theme']);
+		$CI->load->view($param['tpl']);
 	}
 	
 	function init($name, $module_path) {
