@@ -142,15 +142,11 @@ class Setting {
 			'site_rss'					=> base_url().'rss/',//RSS
 			'site_favicon'				=> ex_url().'favicon.ico',//favicon
 			'theme'						=> 'default',//a default theme
-			'module'					=> 'top,post,download,search',//modules to load
+			'module'					=> 'top,post,download,user:u,search,bookmarklet:b',//modules to load
+			#'module'					=> 'top,post,download',//modules to load
 			'module_shortcut'			=> 'section',//module needs no alias
 			'usertype_type'				=> 'admin,contributor,anonymous',//the kind of usertype
 			'authtype'					=> 'post,user,category,section,home,comment,usertype,theme,setting,page,file,install',//authority types
-			#'url_alias_category'		=> 'category',//url alias of category
-			'url_alias_post'			=> 'post',//url alias of posts
-			#'url_alias_tag'				=> 'tag',//url alias of tags
-			#'url_alias_user'			=> 'user',//ユーザーのエイリアス
-			#'url_alias_home'			=> $tmp_home,//ホーム画面のエイリアス
 			'url_alias_bookmarklet'		=> 'bookmarklet',//ブックマークレットのエイリアス
 			'url_segment_identifier_id'	=> '',//ID識別子：この次のセグメントがIDとなる
 			'url_segment_identifier_page'	=> 'page',//PAGE識別子

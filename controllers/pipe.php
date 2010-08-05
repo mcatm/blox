@@ -139,37 +139,7 @@ class Pipe extends Controller {
 			
 			
 			case $this->setting->get('url_alias_user')://ユーザー表示
-				$this->load->library(array('user', 'post'));
-				if ($this->uri->segment(2) && $this->uri->segment(2) != 'offset') {//ユーザー詳細
-					$offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-					$this->user->get(array(
-						'account'	=> $this->uri->segment(2)
-					));
-					
-					if (isset($this->data->out['user'])) {
-						$this->post->get(array(
-							'user'	=> $this->data->out['user'][0]['id'],
-							'pager'		=> true,
-							#'qty'		=> 1,
-							'base_url'	=> base_url().'/'.$this->setting->get('url_alias_user').'/'.$this->uri->segment(2).'/',
-							'offset'	=> $offset
-						));
-						print_r($this->data->out['post']);
-					} else {
-						show_404();
-					}
-				} else {//ユーザー一覧
-					$offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-					$this->user->get(array(
-						'offset'	=> $offset,
-						'base_url'	=> base_url().'/'.$this->setting->get('url_alias_user').'/',
-						'sort'		=> 'actiondate',
-						'order'		=> 'desc',
-						'reject_tmp_user'	=> true,
-						'pager'		=> true
-					));
-					print_r($this->data->out['user']);
-				}
+				
 			break;
 			
 			default:
