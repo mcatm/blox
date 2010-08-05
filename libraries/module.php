@@ -127,6 +127,8 @@ class Module {
 	function init($name, $module_path) {
 		$CI =& get_instance();
 		$this->module_path = $module_path;
+		
+		//load a config file.
 		$config_path = $module_path.'config.php';
 		$cfg_prefix = 'mod_'.$name.'_';
 		if (is_file($config_path)) {
@@ -139,7 +141,13 @@ class Module {
 				if (!empty($admin_menu)) $this->admin_menu = $admin_menu;
 			}
 		}
-		if (is_file(EX_FOLDER.'/language/'.$CI->config->item('language').'/'.$name.'_lang.php')) $CI->lang->load($name);//拡張言語ファイル読込
+		
+		//load a language file
+		$lang_path = $module_path.'language/'.$CI->config->item('language').'.php';
+		if (is_file($lang_path)) {
+			$CI->config->set_item('mod_language_path', $lang_path);
+			$CI->lang->load($name);//拡張言語ファイル読込
+		}
 	}
 	
 	function Module() {

@@ -25,7 +25,7 @@ class Mod_Top {
 		));
 		
 		$CI->mod->search->view(array(
-			'title'		=> 'Search Result: '.$query,
+			'title'		=> $CI->lang->line('search_result_title').$query,
 			'tpl'		=> $CI->setting->get('mod_search_tpl')
 		));
 	}
