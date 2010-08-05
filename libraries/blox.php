@@ -54,8 +54,8 @@ class Blox {
 			}
 		
 			$module_path = array(
-				APP_FOLDER.'/module/%s/',
-				EX_FOLDER.'/module/%s/'
+				APP_FOLDER.'/modules/%s/',
+				EX_FOLDER.'/modules/%s/'
 			);
 			
 			foreach ($load_module['name'] as $k=>$v) {
@@ -72,7 +72,7 @@ class Blox {
 				}
 			}
 		}
-		$CI->setting->set('module_loaded', $module_loaded);
+		if (!empty($module_loaded)) $CI->setting->set('module_loaded', $module_loaded);
 		
 		//extension : コアの拡張（廃止）
 		$extension_arr = directory_map(LIB_FOLDER.'/extension');

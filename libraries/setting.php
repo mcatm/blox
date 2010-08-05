@@ -142,7 +142,7 @@ class Setting {
 			'site_rss'					=> base_url().'rss/',//RSS
 			'site_favicon'				=> ex_url().'favicon.ico',//favicon
 			'theme'						=> 'default',//a default theme
-			'module'					=> 'top,post,post:article,search',//modules to load
+			'module'					=> 'top,post,download,search',//modules to load
 			'module_shortcut'			=> 'section',//module needs no alias
 			'usertype_type'				=> 'admin,contributor,anonymous',//the kind of usertype
 			'authtype'					=> 'post,user,category,section,home,comment,usertype,theme,setting,page,file,install',//authority types
