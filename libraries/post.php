@@ -7,7 +7,7 @@ class BLX_Post {
 	function get($user_param = array()) {
 		$CI =& get_instance();
 		$CI->load->library(array('pagination', 'user'));
-		$label = $CI->setting->get('url_alias_post');//記事のラベル
+		$label = explode(',', $CI->setting->get('url_alias_post'));//記事のラベル
 		
 		$param = array(//デフォルトの設定
 			'auth'			=> 0,
@@ -325,7 +325,12 @@ class BLX_Post {
 						}
 					}
 					
-					$CI->data->out[$param['label']][$k]['url'] = $this->_make_permalink($label, $v['id'], $v['alias']);//permalink
+					$CI->data->out[$param['label']][$k]['url'] = $this->_make_permalink($label[0], $v['id'], $v['alias']);//permalink
+					
+					//multi urls
+					if (count($label) > 1) {
+						foreach($label as $su) $CI->data->out[$param['label']][$k]['urls'][$su] = $this->_make_permalink($su, $v['id'], $v['alias']);
+					}
 					
 					if (defined('ADMIN_MODE') && ADMIN_MODE === true) {
 						$CI->data->out[$param['label']][$k]['admin_url'] = base_url().'admin/post/'.$v['id'].'/';//url for admin

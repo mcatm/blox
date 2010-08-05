@@ -147,6 +147,7 @@ class Setting {
 			'module_shortcut'			=> 'section',//module needs no alias
 			'usertype_type'				=> 'admin,contributor,anonymous',//the kind of usertype
 			'authtype'					=> 'post,user,category,section,home,comment,usertype,theme,setting,page,file,install',//authority types
+			'url_alias_post'			=> 'post',
 			'url_alias_bookmarklet'		=> 'bookmarklet',//ブックマークレットのエイリアス
 			'url_segment_identifier_id'	=> '',//ID識別子：この次のセグメントがIDとなる
 			'url_segment_identifier_page'	=> 'page',//PAGE識別子

@@ -10,8 +10,8 @@ class Mod_Top {
 			$post_id = (int)$CI->uri->segment(2);
 			
 			$page = 0;//get page number
-			if (isset($_GET['p'])) $page = $_GET['p'];
-			if (isset($_GET['page'])) $page = $_GET['page'];
+			if (isset($_GET['p']))		$page = $_GET['p'];
+			if (isset($_GET['page']))	$page = $_GET['page'];
 			
 			$CI->post->get(array(
 				'id'		=> $post_id,
@@ -27,12 +27,12 @@ class Mod_Top {
 			
 			if (isset($CI->data->out['post'])) {
 				$CI->mod->post->view(array(
-					'type'			=> 'post',
-					'name'			=> $CI->data->out['post'][0]['title'],
-					'description'	=> format_description($CI->data->out['post'][0]['text'], 300),
-					'keyword'		=> $CI->data->out['post'][0]['tag'],
-					'title_clear'	=> false,
-					'tpl'			=> 'post.detail.php'
+					'type'				=> 'post',
+					'title'				=> $CI->data->out['post'][0]['title'],
+					'description'		=> format_description($CI->data->out['post'][0]['text'], 300),
+					'keyword'			=> $CI->data->out['post'][0]['tag'],
+					'flg_title_clear'	=> false,
+					'tpl'				=> 'post.detail.php'
 				));
 			} else {
 				show_404();
@@ -52,10 +52,11 @@ class Mod_Top {
 				$CI->mod->post->view(array(
 					'type'			=> 'post',
 					'name'			=> $CI->setting->get('url_alias_post'),
+					'title'			=> 'post',
+					'flg_title_clear'	=> false,
 					'description'	=> "",
 					'keyword'		=> "",
-					'tpl'			=> 'list',
-					'title_clear'	=> false
+					'tpl'			=> 'list'
 				));
 			} else {
 				show_404();

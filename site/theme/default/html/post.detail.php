@@ -15,17 +15,20 @@
 		<p>count: <?=$access['value']['count']['total']?> (一日あたり<?=$access['value']['count']['rate']?>）</p>
 		<p>last access: <?=$access['update']?></p>
 		
+		<?if(isset($comment)){?>
 		<h4>comment</h4>
 		
 		<?foreach($post[0]['comment'] as $c){?><div><?=$c['author'][0]['name']?> : <?=$c['text']?></div><?}?>
+		<?}?>
 		
+		<?if ($this->auth->check_auth('comment')) {?>
 		<form action="<?=base_url()?>request/set/comment/" method="post" />
 			<input type="hidden" name="parent" value="<?=$post[0]['id']?>" />
 			<input type="hidden" name="type" value="1" />
 			<input type="hidden" name="status" value="0" />
 			<textarea name="text"></textarea>
 			<input type="submit" value="add a comment" />
-		</form>
+		</form><?}?>
 	</div><?} else {?>このエントリは削除されたか、閲覧出来ない設定になっております<?}?>
 </body>
 </html>
