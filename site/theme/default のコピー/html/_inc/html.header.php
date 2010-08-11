@@ -3,15 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?=$this->setting->get('title')?></title>
+<title><?=$setting['title']?></title>
 
-<meta name="Description" content="<?=$this->setting->get('description')?>" />
-<meta name="Keywords" content="<?=$this->setting->get('keyword')?>" />
+<meta name="Description" content="<?=$setting['description']?>" />
+<meta name="Keywords" content="<?=$setting['keyword']?>" />
 
 <link rel="stylesheet" type="text/css" href="<?=theme_url()?>css/import.css" />
 <?if (isset($setting['favicon'])){?><link rel="shortcut icon" href="<?=$setting['favicon']?>" /><?}?>
-
-<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?=base_url()?>rss/" /> 
 
 <script type="text/javascript" src="<?=ex_url()?>js/jquery.js"></script>
 <script type="text/javascript" src="<?=ex_url()?>js/jquery/editor.js"></script>
@@ -27,4 +25,5 @@
 	
 	//-->
 </script>
+
 </head>

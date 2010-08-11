@@ -15,7 +15,7 @@ class Mod_Top {
 		$CI->post->get(array(
 			'offset'		=> $offset,
 			'uri_segment'	=> 1,
-			'type'			=> 0,
+			#'type'			=> 0,
 			'pager'			=> true
 		));
 			

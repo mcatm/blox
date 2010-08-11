@@ -40,7 +40,7 @@ class Set extends Controller {
 		/*print json_encode($this->msg);*/
 	}
 	
-	function file() {
+	function file($type = 'json') {
 		if(isset($_FILES['file']) && $_FILES['file']['size'] > 0) {
 			$this->load->library('file');
 			$file_id = $this->file->set();
@@ -68,7 +68,19 @@ class Set extends Controller {
 				'msg'		=> '不正なファイルです'
 			);
 		}
-		print json_encode($this->msg);
+		switch ($type) {
+			case 'json':
+			print json_encode($this->msg);
+			break;
+			
+			default:
+				if ($this->msg['result'] === 'success') {
+					print '1';
+				} else {
+					print '0';
+				}
+			break;
+		}
 	}
 	
 	function linx($type, $a, $b, $status = '', $unique = '') {
@@ -113,6 +125,6 @@ class Set extends Controller {
 		parent::Controller();
 		
 		$url = parse_url(base_url());
-		if (!preg_match('(^(http|https):\/\/'.$url['host'].')', $this->agent->referrer())) exit;//外部からの参照はNG
+		#if (!preg_match('(^(http|https):\/\/'.$url['host'].')', $this->agent->referrer())) exit;//外部からの参照はNG
 	}
 }

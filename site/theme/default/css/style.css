@@ -1,0 +1,136 @@
+@charset "utf-8";
+
+/* ----------------------------------------------------------------
+
+	*
+
+---------------------------------------------------------------- */
+
+body {
+	width:100%;
+	background:#F4F4F4;
+	
+}
+
+.wrapper {
+	width:860px;
+	margin:auto;
+}
+
+#head {
+	padding:10px 0 30px;
+}
+
+#main {
+	width:580px;
+	padding:20px 20px 30px 0;
+	float:left;
+	border-top:1px solid #CCC;
+}
+
+#side {
+	width:260px;
+	float:right;
+	padding:20px 0 30px 0;
+	border-top:1px solid #008844;
+}
+
+#foot {
+	clear:both;
+}
+
+/* ----------------------------------------------------------------
+
+	#head
+
+---------------------------------------------------------------- */
+
+#head h1 {
+	font-family:Georgia, 'Times New Roman', serif;
+	font-size:34px;
+	width:680px;
+	float:left;
+}
+
+#head h1 a {
+	color:#BBB;
+	text-shadow:0 1px 1px #FFF;
+}
+
+#head h1 a:hover {
+	color:#AAA;
+	text-decoration:none;
+}
+
+#head form.search {
+	width:180px;
+	float:right;
+	padding:15px 0 0 0;
+}
+
+#head form.search input {
+	width:168px;
+	padding:5px;
+}
+
+/* ----------------------------------------------------------------
+
+	#main
+
+---------------------------------------------------------------- */
+
+#main ul {
+
+}
+
+#main li {
+	margin:0 0 20px;
+}
+
+#main li h3 {
+	font-family:Georgia, 'Times New Roman', serif;
+	font-size:20px;
+}
+
+#main li h3 a {
+	text-shadow:0 1px 1px #FFF;
+}
+
+#main li h3 a:hover {
+	text-shadow:0 1px 1px #CCC;
+	text-decoration:none;
+	color:#333;
+}
+
+#main li p.data {
+	margin:0 0 15px;
+	font-size:10px;
+	color:#888;
+}
+
+/* ----------------------------------------------------------------
+
+	general
+
+---------------------------------------------------------------- */
+
+.text {
+
+}
+
+.text p {
+	padding:0 0 20px;
+}
+
+.text blockquote {
+	border:1px #BBB dotted;
+	padding:15px 15px 0 15px;
+	margin:0 0 15px;
+}
+
+
+
+
+
+
+
