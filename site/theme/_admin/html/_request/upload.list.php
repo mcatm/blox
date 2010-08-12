@@ -10,7 +10,7 @@
 				<?foreach($this->data->out['file_segment'] as $seg){?><option value="<?=$seg?>"<?if($f['status'] == $seg){?> selected="selected"<?}?>><?=$seg?></option><?}?>
 			</select>
 			<a class="btn-file-unlink" file_id="<?=$f['id']?>">unlink</a>
-			<input type="text" value="{@img:<?=$f['id']?>:100}" />
+			<input type="text" value="<?=$this->setting->get('format_tag_open')?>img:<?=$f['id']?>:mid:0::<?=$this->setting->get('format_tag_close')?>" />
 		</div>
 	</li>
 <?}?></ul><?}?>

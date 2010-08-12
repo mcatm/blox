@@ -5,7 +5,7 @@
 		<div class="hide filemenu round" id="filemenu-global-<?=$f['id']?>">
 			<p class="img"><?if($f['type'] == 'image'){?><img src="<?=img_url($f['id'], 120, true)?>" /><?} else {?>sound<?}?></p>
 			<a class="btn-file-link" file_id="<?=$f['id']?>">link</a>
-			<input type="text" value="{@img:<?=$f['id']?>:100}" />
+			<input type="text" value="<?=$this->setting->get('format_tag_open')?>img:<?=$f['id']?>:mid:0::<?=$this->setting->get('format_tag_close')?>" />
 		</div>
 		<?/*select class="file_segment">
 			<option value="">---</option>
