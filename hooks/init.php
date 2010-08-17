@@ -46,6 +46,16 @@ function init() {
 		define('SSL_MODE', true);//SSLモード
 		$CI->setting->set('theme', '_admin');
 		$CI->setting->set('site_name', 'blox admin');
+		$CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();
+		
+		$mod_loaded = $CI->setting->get('module_loaded');//Load Module Managers
+		if (!empty($mod_loaded)) {
+			foreach($mod_loaded as $mod) {
+				$CI->module->load_config($mod['name'], $mod['path']);
+				$CI->module->load_lang($mod['name'], $mod['path']);
+			}
+		}
+		
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth()) {
 			if ($CI->uri->segment(2) != 'login') {
 				$CI->data->out['redirect'] = self_url();
@@ -53,7 +63,7 @@ function init() {
 				exit;
 			}
 		}
-		if (!isset($CI->data->out['admin_menu'])) $CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();//管理メニュー取得
+		
 	} elseif (defined('HOME_MODE') && HOME_MODE === true) {//HOME画面
 		define('SSL_MODE', true);//SSLモード
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth('home')) {

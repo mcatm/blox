@@ -12,9 +12,10 @@ class Module {
 		
 		define('MOD_CONTROLLER', $mod);
 		
-		$uri_segment[] = 'top';
+		$uri_segment[] = ($mode == "") ? 'top' : '_'.$mode;
 		for ($i=1;$CI->uri->segment($i);$i++) {
 			if (is_numeric($CI->uri->segment($i))) break;
+			if ($mode != "" && ($CI->uri->segment($i) == 'mod' || $CI->uri->segment($i) == $mod)) continue;
 			if ($i != 1) $uri_segment[] = $CI->uri->segment($i);
 		}
 		#print_r($uri_segment);
@@ -49,18 +50,24 @@ class Module {
 			$classname = 'top';
 			$ctlflg = true;
 		}
-		
+		#exit($ctlpath);
 		if ($ctlflg) {
 			require_once($ctlpath);
 			
 			$method = (isset($uri_segment[$i+1])) ? $uri_segment[$i+1] : 'index';
 			#print $method;
 			switch ($mode) {
-				/*case 'admin';
-					$MD->controller = new M_Admin_Controller;
+				case 'admin';
+					
+					//$MD->controller = new M_Admin_Controller;
 					#$method = ($CI->uri->segment(4)) ? $CI->uri->segment(4) : "index";
-					if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
-				break;*/
+					//if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
+					#exit('admin');
+					$classname = 'Mod_'.$classname;
+					#exit($classname);
+					$MD->controller = new $classname;
+					
+				break;
 				
 				default:
 					$classname = 'Mod_'.$classname;
@@ -128,7 +135,15 @@ class Module {
 		$CI =& get_instance();
 		$this->module_path = $module_path;
 		
-		//load a config file.
+		$this->load_config($name, $module_path);//load a config file.
+		
+		//load a language file
+		
+	}
+	
+	function load_config($name, $module_path) {
+		$CI =& get_instance();
+		
 		$config_path = $module_path.'config.php';
 		$cfg_prefix = 'mod_'.$name.'_';
 		if (is_file($config_path)) {
@@ -138,11 +153,14 @@ class Module {
 				foreach ($config as $k => $v) {
 					$CI->setting->set($cfg_prefix.$k, $v);
 				}
-				if (!empty($admin_menu)) $this->admin_menu = $admin_menu;
+				if (!empty($admin_menu) && defined('ADMIN_MODE')) $CI->data->out['admin_menu'][$name] = $admin_menu;
 			}
 		}
+	}
+	
+	function load_lang($name, $module_path) {
+		$CI =& get_instance();
 		
-		//load a language file
 		$lang_path = $module_path.'language/'.$CI->config->item('language').'.php';
 		if (is_file($lang_path)) {
 			$CI->config->set_item('mod_language_path', $lang_path);

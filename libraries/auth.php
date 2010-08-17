@@ -147,8 +147,7 @@ class Auth {
 			
 			$auth['type'] = $r['type'];//権限タイプ（admin|contributor|anonymous）
 			
-			//権限付与
-			if (!empty($r['auth'])) {
+			if (!empty($r['auth'])) {//権限付与
 				foreach(explode(',', $r['auth']) as $a) $auth[$a] = true;
 			}
 		}
