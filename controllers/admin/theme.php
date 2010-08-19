@@ -2,7 +2,7 @@
 
 class Theme extends Controller {
 	
-	var $out = array();
+	var $path;
 	
 	function index($dir = "") {
 		$this->load->helper('directory');
@@ -15,9 +15,15 @@ class Theme extends Controller {
 		$this->data->out['page']['base_segment'] = implode($base_segment, '/');
 		if (!empty($this->data->out['page']['base_segment'])) $this->data->out['page']['base_segment'] .= "/";
 		
-		$out = $this->_get_tpl($tpl, array());
+		foreach ($base_segment as $bs) {
+			$tpl = $tpl[$bs];
+		}
 		
-		foreach ($base_segment as $bs) $out = $out[$bs];
+		$out = $this->_get_tpl($tpl);
+		#$out = $tpl;
+		#print_r($tpl);exit;
+		
+		
 		$this->data->out['tpl'] = $out;
 		
 		$this->load->view('theme.list.php');
@@ -43,17 +49,29 @@ class Theme extends Controller {
 		);
 	}
 	
-	private function _get_tpl($tpl = array(), $out = array(), $is_theme = true) {
-		foreach($tpl as $k => $v) {
-			if (!preg_match('(^_(.*))', $k) || $is_theme === false) {
-				if (is_array($v)) {
-					$out[$k] = $this->_get_tpl($v, $out, false);
-				} else {
-					$out[] = $v;
+	private function _get_tpl($tpl = array()/*, $out = array()*/, $is_theme = true) {
+		if (!empty($tpl)) {
+			foreach($tpl as $k => $v) {
+				if (!preg_match('(^_(.*))', $k) || $is_theme === false) {
+					if (is_array($v)) {
+						$this->path = $k;
+						$out[] = array(
+							'name'	=> $k,
+							'path'	=> $this->path,
+							'child'	=> $this->_get_tpl($v/*, $out*/, false)
+						);
+					} else {
+						$out[] = array(
+							'name'	=> $v,
+							'path'	=> $this->path
+						);
+					}
 				}
 			}
+			return $out;
+		} else {
+			return false;
 		}
-		return $out;
 	}
 	
 	function _remap($m) {

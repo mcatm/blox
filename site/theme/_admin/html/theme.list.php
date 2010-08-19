@@ -21,14 +21,18 @@
 				</div>
 				<?if(isset($tpl)){?><form action="<?=base_url()?>admin/theme/delete/" method="post" id="form_list" name="form_list">
 					<table>
-						<?foreach($tpl as $k => $v){?><?if(!is_numeric($k)){?><tr class="theme_id<?=$k?>">
-							<td><h3><a href="<?=base_url()?>admin/theme/<?=$page['base_segment']?><?=$k?>/"><?=$k?></a></h3></td>
+						<?foreach($tpl as $k => $v){?>
+						<?if(isset($v['child'])){?><tr class="theme_id<?=$v['name']?>">
+							<td><h3><a href="<?=base_url()?>admin/theme/<?=$page['base_segment']?><?=$v['name']?>/"><?=$v['name']?></a></h3></td>
+						</tr>
+						<tr><td>
+							<?foreach($v['child'] as $ck => $cv){?>
+								<?if (isset($cv['child'])) {?><a href="<?=base_url()?>admin/theme/<?=$page['base_segment']?><?=$v['name']?>/<?=$cv['path']?>/"><?=$cv['name']?></a><br /><?} else {?><a href="<?=base_url()?>admin/theme/edit/<?=$page['base_segment']?><?=$v['name']?>/<?=$cv['name']?>"><?=$cv['name']?></a><br /><?}}?>
+						</td></tr>
+						<?}else{?><tr class="theme_id<?=$v['name']?>">
+							<td><h3><a href="<?=base_url()?>admin/theme/edit/<?=$page['base_segment']?><?=$v['name']?>"><?=$v['name']?></a></h3></td>
 						</tr><?}?>
-						<?if(is_array($v)){?><?foreach($v as $tk => $tv){?><tr class="theme_id<?=$k?>">
-							<?if(is_array($tv)){?><td><a href="<?=base_url()?>admin/theme/<?=$page['base_segment']?><?=$k?>/<?=$tk?>/"><?=$tk?></a></td>
-							<?}else{?><td>- <a href="<?=base_url()?>admin/theme/edit/<?=$page['base_segment']?><?=$tv?>"><?=$tv?></a></td>
-							<?}?>
-						</tr><?}}}?>
+						<?}?>
 					</table>
 					<div id="list_footer" class="clearfix">
 						<div class="tool">

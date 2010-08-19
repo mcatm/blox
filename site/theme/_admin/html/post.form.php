@@ -7,12 +7,14 @@
 	<?if(isset($post[0]['type'])){?><input type="hidden" name="type" value="<?=$post[0]['type']?>" /><?}?>
 	<?if(isset($post[0]['parent'])){?><input type="hidden" name="parent" value="<?=$post[0]['parent']?>" /><?}?>
 		<div class="container">
-			<div class="postmeta">
+			<div class="postwhole">
 				<div class="row">
 					<label>title : </label>
 					<input type="text" name="title" value="<?=set_value('title', (isset($post[0]['title'])) ? $post[0]['title'] : '')?>" class="query input" />
 				</div>
-				
+			</div>
+			
+			<div class="postmeta">
 				<div class="row">
 					<label>status : </label><select name="status">
 						<option value="0"<?=set_select('status', 0)?><?if(isset($post[0]['status']) && $post[0]['status']==0){?> selected="selected"<?}?>>公開</option>
@@ -26,11 +28,21 @@
 					<input type="text" name="tagstr" value="<?=set_value('tagstr', (isset($post[0]['tagstr'])) ? $post[0]['tagstr'] : '')?>" class="query input" id="tag" autocomplete="off" />
 					<div id="suggest"></div>
 				</div>
+				
+				<div class="row">
+					<label>number : </label>
+					<input type="text" name="number" value="<?=set_value('number', (isset($post[0]['number'])) ? $post[0]['number'] : '')?>" class="query input" />
+				</div>
+				
+				<div class="row">
+					<label>alias : </label>
+					<input type="text" name="alias" value="<?=set_value('alias', (isset($post[0]['alias'])) ? $post[0]['alias'] : '')?>" class="query input" />
+				</div>
 			</div>
 			<div class="postbody">
 				<p>
 					<label>text : </label>
-					<textarea name="text" class="input elastic editor" id="edit_text" rows="6"><?=set_value('text', (isset($post[0]['text'])) ? $post[0]['text'] : '')?></textarea>
+					<textarea name="text" class="input elastic editor" id="edit_text" rows="10"><?=set_value('text', (isset($post[0]['text'])) ? $post[0]['text'] : '')?></textarea>
 					<?=form_error('text')?>
 				</p>
 			</div>
@@ -64,10 +76,8 @@
 				<div class="trigger"><a id="trigger_advance">advance</a></div>
 				<div id="advance_form">
 					<div class="postmeta">
-						<p><label>number : </label><input type="text" name="number" value="<?=set_value('number', (isset($post[0]['number'])) ? $post[0]['number'] : '')?>" class="query input" /></p>
 						<p><label>createdate : </label>
 						<input type="text" name="createdate" value="<?=set_value('createdate', (isset($post[0]['createdate'])) ? $post[0]['createdate'] : 'now')?>" class="query input" /></p>
-						<p><label>alias : </label><input type="text" name="alias" value="<?=set_value('alias', (isset($post[0]['alias'])) ? $post[0]['alias'] : '')?>" class="query input" /></p>
 						
 						<p><label>startedate : </label>
 						<input type="text" name="startdate[]" value="<?=set_value('startdate[0]', (isset($post[0]['schedule']['start'][0])) ? $post[0]['schedule']['start'][0] : '')?>" class="query input" /></p>
