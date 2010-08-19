@@ -1,23 +1,23 @@
 <?php
 
-$lang['system_label_post']			= '記事';
+$lang['system_label_post']			= 'DATA';
 $lang['system_label_post_list']		= '記事一覧';
 $lang['system_label_post_new']		= '記事追加';
 $lang['system_label_comment']		= 'コメント';
 $lang['system_label_tag']			= 'タグ';
-$lang['system_label_site']			= 'サイト設定';
+$lang['system_label_site']			= 'SITE';
 $lang['system_label_theme']			= 'テーマ';
 $lang['system_label_div']			= 'サイト構成';
 $lang['system_label_mail']			= 'メール';
 $lang['system_label_setting']		= '設定変更';
 $lang['system_label_install']		= 'インストール';
-$lang['system_label_user']			= 'ユーザー';
+$lang['system_label_user']			= 'USER';
 $lang['system_label_user_list']		= '会員一覧';
 $lang['system_label_user_new']		= '会員追加';
 $lang['system_label_user_invite']	= '招待';
 $lang['system_label_usertype']		= 'ユーザータイプ';
-$lang['system_label_extension']		= '拡張機能';
-$lang['system_label_file']			= 'ファイル';
+$lang['system_label_extension']		= 'EXT';
+$lang['system_label_file']			= 'FILE';
 $lang['system_label_file_upload']	= 'アップロード';
 $lang['system_label_file_list']		= 'ファイル一覧';
 $lang['system_label_file_image']	= '画像一覧';

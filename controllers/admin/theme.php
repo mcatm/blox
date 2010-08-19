@@ -11,46 +11,36 @@ class Theme extends Controller {
 		
 		$base_segment = array();
 		for($i=3;$this->uri->segment($i);$i++) $base_segment[] = $this->uri->segment($i);
-		#print_r($base_segment);exit;
 		
 		$this->data->out['page']['base_segment'] = implode($base_segment, '/');
 		if (!empty($this->data->out['page']['base_segment'])) $this->data->out['page']['base_segment'] .= "/";
-		#exit($this->data->out['page']['base_segment']);
 		
 		$out = $this->_get_tpl($tpl, array());
 		
-		#print_r($out);
-		
 		foreach ($base_segment as $bs) $out = $out[$bs];
 		$this->data->out['tpl'] = $out;
-		#print_r($out);exit;
-		/*if (empty($dir)) {
-			$this->data->out['tpl'] = $out;
-		} else {
-			if (empty($subdir)) {
-				$this->data->out['tpl'] = $out[$dir];
-			} else {
-				$this->data->out['tpl']	= $out[$dir][$subdir];
-			}
-		}*/
 		
-		/*if (empty($dir)) {
-			
-		} else {
-			$path = THEME_FOLDER.'/'.$dir;
-			if (!is_file($path)) {
-				$p = explode('/', $dir);
-				foreach ($p as $tm) $tpl = $tpl[$tm];
-				foreach ($tpl as $tmp_k => $tmp) {
-					$u = (is_array($tmp)) ? $tmp_k : $tmp;
-					
-					#print '<a href="'.base_url().'admin/theme/'.$dir.'/'.$u.'">'.$u.'<br />';
-				}
-			} else {
-				print '<textarea style="width:900px;height:500px">'.file_get_contents($path).'</textarea>';
-			}
-		}*/
 		$this->load->view('theme.list.php');
+	}
+	
+	function edit() {
+		$this->data->out['tpl'] = $this->_get_tpl_file();
+		
+		$this->load->view('theme.form.php');
+	}
+	
+	private function _get_tpl_file() {
+		$this->load->helper('file');
+		
+		$path = "";
+		for ($i=1;$this->uri->segment($i);$i++) {
+			if ($i > 3) $path .= '/'.$this->uri->segment($i);
+		}
+		
+		return array(
+			'name'	=> $this->uri->segment($i-1),
+			'body'	=> htmlspecialchars(read_file(THEME_FOLDER.$path))
+		);
 	}
 	
 	private function _get_tpl($tpl = array(), $out = array(), $is_theme = true) {
@@ -68,6 +58,10 @@ class Theme extends Controller {
 	
 	function _remap($m) {
 		switch ($m) {
+			case 'edit':
+				$this->edit();
+			break;
+			
 			case 'index':
 			case 'offset':
 			default:

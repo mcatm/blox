@@ -236,25 +236,6 @@ class Setting {
 				)
 			)
 		),
-		'file'	=> array(
-			'alias'	=> 'file',
-			'sub'	=> array(
-				'file_upload'	=> array(
-					'alias'	=> 'file/upload'
-				),
-				'file_list'	=> array(
-					'alias'	=> 'file'
-				)/*,
-				'file_image'	=> array(
-					'alias'	=> 'file/img',
-					'auth'	=> 1
-				),
-				'file_sound'	=> array(
-					'alias' => 'file/snd',
-					'auth'	=> 1
-				)*/
-			)
-		),
 		'extension'	=> array(
 			'alias'	=> 'ex'
 		),
@@ -281,11 +262,30 @@ class Setting {
 					'auth'	=> 'add_section'
 				)
 			)
-		)/*,
+		),/*,
 		'analytic'	=> array(
 			'alias' => 'analytic',
 			'auth'	=> 'add_section'
 		)*/
+		'file'	=> array(
+			'alias'	=> 'file',
+			'sub'	=> array(
+				'file_upload'	=> array(
+					'alias'	=> 'file/upload'
+				),
+				'file_list'	=> array(
+					'alias'	=> 'file'
+				)/*,
+				'file_image'	=> array(
+					'alias'	=> 'file/img',
+					'auth'	=> 1
+				),
+				'file_sound'	=> array(
+					'alias' => 'file/snd',
+					'auth'	=> 1
+				)*/
+			)
+		)
 	);
 }
 

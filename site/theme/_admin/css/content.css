@@ -8,12 +8,14 @@
 
 #head {
 	background:url(../img/bg/header.gif) #0B1020 repeat-x bottom;
+	border-bottom:1px solid #234;
 	width:100%;
 }
 
 #navi {
-	background:#8DA2A4;
-	border-top:1px solid #AAB4C3;
+	background:#999;
+	border-top:1px solid #BBB;
+	border-bottom:1px solid #888;
 	width:100%;
 }
 
@@ -51,6 +53,10 @@
 
 #body .preview {
 	
+}
+
+#body .postwhole {
+	margin:0 0 15px;
 }
 
 #body .posthead {
@@ -202,6 +208,30 @@
 #body .posthead .div a:hover {
 	text-decoration:none;
 	color:#666;
+}
+
+/* ----------------------------------------------------------------
+
+	#body > .postwhole
+
+---------------------------------------------------------------- */
+
+#body .postwhole .row {
+	margin:0 0 20px;
+}
+
+#body .postwhole input {
+	width:960px;
+	padding:10px;
+	font-size:18px;
+	line-height:1.8;
+}
+
+#body .postwhole textarea {
+	width:960px;
+	padding:10px;
+	font-size:12px;
+	line-height:1.8;
 }
 
 /* ----------------------------------------------------------------
@@ -791,6 +821,10 @@
 	width:80px;
 }
 
+#navi ul.menu li.setting {
+	float:right !important;
+}
+
 #navi ul.menu li.section:hover {
 	color:#FFF;
 }
@@ -801,19 +835,23 @@
 	width:80px;
 }
 
+#navi ul.menu li.setting h2 {
+	text-align:right;
+}
+
 #navi ul.menu li.section h2 a {
 	display:block;
 	padding:5px 10px 5px 5px;
 	text-decoration:none;
-	color:#004E86;
+	color:#EEE;
 	width:65px;
-	text-shadow:0 1px 1px #DDD;
+	text-shadow:0 1px 1px #333;
 }
 
 #navi ul.menu li.section h2 a:hover {
-	color:#FFF;
+	color:#0B1020;
 	text-decoration:none;
-	text-shadow:none;
+	text-shadow:0 1px 1px #EEE;
 }
 
 #navi ul.menu .sub {
@@ -823,28 +861,26 @@
 	margin:0 -10px 0 0;
 }
 
-#navi ul.menu .sub .corner-left {
-	width:10px;
-	height:8px;
-	background:url(../img/pt/navi.corner.left.gif) no-repeat;
-	float:left;
-}
-
-#navi ul.menu .sub .corner-right {
-	width:10px;
-	height:8px;
-	background:url(../img/pt/navi.corner.right.gif) no-repeat;
-	float:right;
+#navi ul.menu li.setting .sub {
+	
 }
 
 #navi ul.menu .sub ul {
-	float:left;
+	/*float:left;*/
 	width:180px;
-	background:#8DA2A4;
+	background:#999;
+	border-left:1px solid #888;
+	border-right:1px solid #888;
+	border-bottom:1px solid #888;
 	-webkit-border-bottom-left-radius:6px;
 	-moz-border-radius-bottomleft:6px;
 	-webkit-border-bottom-right-radius:6px;
 	-moz-border-radius-bottomright:6px;
+}
+
+#navi ul.menu li.setting .sub ul {
+	width:128px;
+	margin:0 -140px 0 0 !important;
 }
 
 #navi ul.menu .sub li {

@@ -1,0 +1,140 @@
+@charset "utf-8";
+
+/*--------------------------------------
+
+	*
+
+---------------------------------------*/
+
+* {
+	margin:0;
+	padding:0;
+}
+	
+/*--------------------------------------
+
+	HTML Tags
+
+---------------------------------------*/
+
+html {
+	height:100%;
+}
+
+body {
+	font-family:/*"Verdana","ヒラギノ角ゴ Pro W3",'Hiragino Kaku Gothic Pro',"ＭＳ Ｐゴシック","Osaka", */sans-serif;
+	font-size:12px;
+	line-height:1.6;
+	height:100%;
+	color:#333;
+}
+
+.clear {
+	clear:both;
+}
+
+.clearfix:after {
+	content:url(../img/spacer.gif);
+	display:block;
+	clear:both;
+	height:0;
+}
+
+.clearfix {
+	display:inline-block;
+}
+
+.clearfix {
+	display:block;
+}
+
+strong {
+	font-weight:800;
+}
+
+/*--------------------------------------
+
+	HTML Tags > a
+
+---------------------------------------*/
+
+a {
+	text-decoration:none;
+	cursor:pointer;
+	outline:none;
+}
+
+a:link {
+	color:#1394E8;
+}
+
+a:visited {
+	color:#004E86;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+/*--------------------------------------
+
+	HTML Tags > img
+
+---------------------------------------*/
+
+img {
+	border:none;
+}
+
+/*--------------------------------------
+
+	HTML Tags > table
+
+---------------------------------------*/
+
+table {
+	border-collapse: collapse;
+}
+
+/*--------------------------------------
+
+	HTML Tags > form
+
+---------------------------------------*/
+
+form {
+	
+}
+
+form label {
+	font-size:10px;
+	font-weight:400;
+	display:block;
+}
+
+form input, textarea {
+	border-color:#CECECE #EFEFEF #EFEFEF #CECECE;
+	border-style:solid;
+	border-width:1px;
+	padding:3px 4px;
+}
+
+/*--------------------------------------
+
+	HTML Tags > list
+
+---------------------------------------*/
+
+ul, ol {
+	list-style:none;
+}
+
+/*--------------------------------------
+
+	HTML Tags > object
+
+---------------------------------------*/
+
+object, embed {
+	margin:0;
+}
