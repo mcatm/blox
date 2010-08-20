@@ -17,6 +17,7 @@ class Mod_Top {
 	}
 	
 	function out($url = "") {
+		$CI =& get_instance();
 		
 		if (empty($url)) header('location:'.base_url());
 		
@@ -30,7 +31,7 @@ class Mod_Top {
 		print '<body>';
 		#print '<a href="'.$url.'">'.$url.'</a>';
 		print '</body>';
-		print $this->setting->get('code_google_analytics');
+		print $CI->setting->get('code_google_analytics');
 		print '</html>';
 	}
 	
