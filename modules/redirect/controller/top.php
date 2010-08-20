@@ -1,8 +1,11 @@
-<?php
+<?
 
-class Redirect extends Controller {
-
-	function out($uri = "") {
+class Mod_Top {
+	
+	function index() {
+		$CI =& get_instance();
+		$uri = $CI->uri->uri_string();
+		
 		if ($uri == "") {
 			$url = base_url();
 		} else {
@@ -10,6 +13,14 @@ class Redirect extends Controller {
 			$url = str_replace('/redirect', 'http:/', $uri);
 		}
 		
+		$this->out($url);
+	}
+	
+	function out($url = "") {
+		
+		if (empty($url)) header('location:'.base_url());
+		
+		// Redirect
 		header('Content-type:text/html; charset=utf8');
 		print '<html>';
 		print '<head>';
@@ -17,25 +28,15 @@ class Redirect extends Controller {
 		print '<meta http-equiv="refresh" CONTENT="0;URL='.$url.'">';
 		print '</head>';
 		print '<body>';
-		print '<a href="'.$url.'">'.$url.'</a>';
+		#print '<a href="'.$url.'">'.$url.'</a>';
 		print '</body>';
 		print $this->setting->get('code_google_analytics');
 		print '</html>';
 	}
 	
-	function _remap($m) {
-		switch($m) {
-			case 'index':
-			header('location:'.base_url());
-			break;
-			
-			default:
-			$this->out($this->uri->uri_string());
-			break;
-		}
-	}
-	
-	function Redirect() {
-		parent::Controller();
+	function Mod_Top() {
+		
 	}
 }
+
+?>

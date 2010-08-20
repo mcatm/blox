@@ -66,8 +66,8 @@ $route['admin']				= "admin/top";
 $route['login/(:any)']		= "login/$1";
 $route['login']				= "login";
 
-$route['redirect/(:any)']		= "redirect/$1";
-$route['redirect']				= "redirect";
+#$route['redirect/(:any)']		= "redirect/$1";
+#$route['redirect']				= "redirect";
 
 #$route['download/(:any)']	= "download/$1";
 
