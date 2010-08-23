@@ -200,7 +200,7 @@ class BLX_Div {
 	function set($id = 0) {
 		$CI =& get_instance();
 		
-		$CI->load->library('form_validation');
+		$CI->load->library(array('form_validation', 'ext'));
 		
 		$CI->form_validation->set_error_delimiters($CI->setting->get('output_error_open'), $CI->setting->get('output_error_close'));//エラーメッセージの囲み
 		
@@ -218,6 +218,21 @@ class BLX_Div {
 			'label'	=> 'div_option',
 			'where'	=> '(div_type != "")'
 		));
+		
+		//ページ拡張を読込
+		$CI->ext->get(array('stack' => true, 'div' => 'div'));
+		if (isset($CI->data->out['ext'])) {
+			$ext = $CI->data->out['ext'];
+			if (!empty($ext) && is_array($ext)) {
+				foreach ($ext as $e) {
+					$this->validation_rule[] = array(
+						'field'		=> 'ext_'.$e['field'],
+						'rules'		=> $e['rule'],
+						'label'		=> $e['label']
+					);
+				}
+			}
+		}
 		
 		$CI->form_validation->set_rules($this->validation_rule);
 		
@@ -329,7 +344,27 @@ class BLX_Div {
 						'div_content'		=> compress_array($content)
 					));
 				}
+				
+				if (!empty($ext) && is_array($ext)) {//ページ拡張
+					foreach($ext as $e) {
+						$ext_value = set_value('ext_'.$e['field']);
+						if (isset($ext_value)) {
+							$set = array(
+								'a'		=> $id,
+								'status'	=> $e['field']
+							);
+							$ch = $CI->linx->get('div2ext', $set);
+							
+							if (!empty($ch)) $set['id'] = $ch[0]['id'];
+							$set['param'] = array('value' => $ext_value);
+							
+							$CI->linx->set('div2ext', $set);
+						}
+					}
+				}
 			}
+			
+			
 		}
 		return $this->msg;
 	}

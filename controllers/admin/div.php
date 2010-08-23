@@ -42,8 +42,9 @@ class Div extends Controller {
 	}
 	
 	function edit($id = 0) {
-		$this->load->library(array('div'));
+		$this->load->library(array('div', 'ext'));
 		if ($id > 0) $this->div->get(array('id' => $id));
+		#$this->ext->get(array('stack' => true, 'div' => 'div'));
 		
 		$msg = $this->div->set($id);
 		

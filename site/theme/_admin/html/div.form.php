@@ -55,8 +55,8 @@
 				<div class="postbody">
 					<?foreach($ext as $e){?><p>
 						<label><?=$e['label']?></label>
-						<?if ($e['type'] == 'textarea'){?><textarea name="ext_<?=$e['field']?>" class="input" rows="6"><?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?></textarea>
-						<?} else {?><input type="text" name="ext_<?=$e['field']?>" value="<?=set_value('ext_'.$e['field'], (isset($post[0][$e['field']])) ? $post[0][$e['field']] : '')?>" class="query input" />
+						<?if ($e['type'] == 'textarea'){?><textarea name="ext_<?=$e['field']?>" class="input elastic editor" rows="6"><?=set_value('ext_'.$e['field'], (isset($div[0][$e['field']])) ? $div[0][$e['field']] : '')?></textarea>
+						<?} else {?><input type="text" name="ext_<?=$e['field']?>" value="<?=set_value('ext_'.$e['field'], (isset($div[0][$e['field']])) ? $div[0][$e['field']] : '')?>" class="query input" />
 						<?}?>
 					</p><?}?>
 				</div>
@@ -115,6 +115,8 @@
 		if (open_advance === true) {
 			$('#advance_form').show();
 		}
+		
+		$('textarea.elastic').elastic();
 		
 		$('#btn_add_content').click(function() {
 			$.ajax({
