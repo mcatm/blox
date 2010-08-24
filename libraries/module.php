@@ -49,7 +49,10 @@ class Module {
 			$ctlpath = $ctl;
 			$classname = 'top';
 			$ctlflg = true;
+			$i = 0;
 		}
+		#print_r($uri_segment);
+		#print $uri_segment[$i+1];
 		#exit($ctlpath);
 		if ($ctlflg) {
 			require_once($ctlpath);
@@ -58,15 +61,12 @@ class Module {
 			#print $method;
 			switch ($mode) {
 				case 'admin';
-					
-					//$MD->controller = new M_Admin_Controller;
 					#$method = ($CI->uri->segment(4)) ? $CI->uri->segment(4) : "index";
 					//if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
 					#exit('admin');
 					$classname = 'Mod_'.$classname;
 					#exit($classname);
 					$MD->controller = new $classname;
-					
 				break;
 				
 				default:
@@ -76,6 +76,7 @@ class Module {
 					#$method = ($CI->uri->segment(2)) ? $CI->uri->segment(2) : "index";
 				break;
 			}
+			#exit($method);
 			if (!method_exists($MD->controller, $method)) show_404();//メソッドが存在しない場合、404
 			$MD->controller->$method();
 			exit;

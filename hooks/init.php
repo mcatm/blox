@@ -64,15 +64,6 @@ function init() {
 			}
 		}
 		
-	} elseif (defined('HOME_MODE') && HOME_MODE === true) {//HOME画面
-		define('SSL_MODE', true);//SSLモード
-		if (!$CI->session->userdata('login') || !$CI->auth->check_auth('home')) {
-			if ($CI->uri->segment(1) != 'login') {
-				$CI->data->out['redirect'] = self_url();
-				print($CI->load->view('login.php', $CI->data->out, true));
-				exit;
-			}
-		}
 	} elseif (defined('API_MODE') && API_MODE === true) {//API
 		if (!$CI->setting->get('open_api')) show_error('API access is not arrowed.', 403);
 		define('SSL_MODE', true);//SSLモード
