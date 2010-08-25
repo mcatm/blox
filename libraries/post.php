@@ -26,6 +26,7 @@ class BLX_Post {
 			'offset'		=> 0,
 			'order'			=> 'desc',
 			'pager'			=> true,
+			'get_parent'	=> false,
 			'qty'			=> $CI->setting->get('post_max_qty_per_page'),
 			'query'			=> "",
 			'schedule'		=> false,
@@ -159,7 +160,13 @@ class BLX_Post {
 					if (is_array($user_linx)) {
 						$user_where = array();
 						foreach($user_linx as $k2 => $v2) $user_where[] = $v2['b'];
-						$CI->data->out[$param['label']][$k]['author'] = $CI->user->get(array('id' => $user_where, 'stack' => false));
+						$CI->user->get(array('id' => $user_where, 'label' => 'tmp_author'));
+						if (isset($CI->data->out['tmp_author'])) {
+							$CI->data->out[$param['label']][$k]['author'] = $CI->data->out['tmp_author'];
+							unset($CI->data->out['tmp_author']);
+						} else {
+							$CI->data->out[$param['label']][$k]['author'] = $CI->user->get_anonymous();//if an author wasn't set.
+						}
 					} else {
 						$CI->data->out[$param['label']][$k]['author'] = $CI->user->get_anonymous();//if an author wasn't set.
 					}
@@ -201,6 +208,17 @@ class BLX_Post {
 						if (!empty($CI->data->out['tmp_comment'])) {
 							$CI->data->out[$param['label']][$k]['comment'] = $CI->data->out['tmp_comment'];
 							unset($CI->data->out['tmp_comment']);
+						}
+					}
+					
+					if ($param['get_parent'] && !empty($v['parent'])) {//get a parent
+						$this->get(array(
+							'id'	=> $v['parent'],
+							'label'	=> 'tmp_parent'
+						));
+						if (!empty($CI->data->out['tmp_parent'])) {
+							$CI->data->out[$param['label']][$k]['parent'] = $CI->data->out['tmp_parent'][0];
+							unset($CI->data->out['tmp_parent']);
 						}
 					}
 					

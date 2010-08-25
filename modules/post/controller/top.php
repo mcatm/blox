@@ -15,7 +15,7 @@ class Mod_Top {
 			
 			$CI->post->get(array(
 				'id'		=> $post_id,
-				'related'	=> true,
+				'related'	=> 6,
 				'comment'	=> true,
 				'neighbor'	=> true,
 				'pager'		=> false,

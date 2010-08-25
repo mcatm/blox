@@ -16,6 +16,7 @@ class Mod_Top {
 			'offset'		=> $offset,
 			'uri_segment'	=> 1,
 			#'type'			=> 0,
+			'get_parent'	=> true,
 			'pager'			=> true
 		));
 			

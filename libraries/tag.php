@@ -258,7 +258,13 @@ class BLX_Tag {
 					}
 				}
 				uasort($post, "sort_related");
-				$dat = $post;
+				#exit($param['qty']);
+				$i = 0;
+				foreach($post as $p) {
+					$dat[] = $p;
+					$i++;
+					if ($i == $param['qty']) break;
+				}
 				$CI->output->set_cache($path, compress_array($post), 120);
 			} else {
 				$dat = decompress_array($dat);
