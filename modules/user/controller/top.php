@@ -27,10 +27,12 @@ class Mod_Top {
 					'uri_segment'	=> 1,
 					#'type'			=> 0,
 					'get_parent'	=> true,
+					'base_url'		=> base_url().$CI->uri->segment(1).'/'.$account.'/',
 					'user'			=> $CI->data->out['user'][0]['id'],
+					'uri_segment'	=> 3,
 					'pager'			=> true
 				));
-					
+				
 				/*} else {
 					#print_r($this->data->out['div']);
 					$CI->data->out['div'][0]['content'][0]['param']['uri_segment'] = 1;
@@ -44,6 +46,7 @@ class Mod_Top {
 				$CI->mod->user->view(array(
 					'flg_title_clear'	=> false,
 					'title'		=> $title,
+					'base_url'		=> base_url().$CI->uri->segment(1).'/'.$account.'/',
 					'tpl'	=> 'top.php'
 				));
 			} else {

@@ -4,21 +4,25 @@ class Mod_Top {
 	
 	function index() {
 		$CI =& get_instance();
-		$CI->load->library('div');
+		$CI->load->library(array('post', 'div'));
 		
-		$CI->div->get(array('where' => 'div_alias = "'.$CI->setting->get_alias().'@top"'));
-		$offset = ($CI->uri->segment(1)) ? $CI->uri->segment(1) : 0;
+		#$CI->div->get(array('where' => 'div_alias = "'.$CI->setting->get_alias().'@top"'));
+		
 		#print_r($CI->data->out['div']);exit;
 		#if (empty($CI->data->out['div'])) {
-			
-		$CI->load->library('post');
+		
+		$offset = ($CI->uri->segment(1)) ? $CI->uri->segment(1) : 0;
+		
 		$CI->post->get(array(
 			'offset'		=> $offset,
 			'uri_segment'	=> 1,
-			#'type'			=> 0,
+			'type'			=> 0,
 			'get_parent'	=> true,
 			'pager'			=> true
 		));
+		
+		
+		#exit();
 			
 		/*} else {
 			#print_r($this->data->out['div']);

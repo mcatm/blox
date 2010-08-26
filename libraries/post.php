@@ -88,17 +88,19 @@ class BLX_Post {
 		// ---------------------- 条件定義ココまで
 		
 		$CI->db->stop_cache();
-		
+		#exit($CI->db->count_all_results(DB_TBL_POST, false));
 		$count = $CI->db->count_all_results(DB_TBL_POST, false);
+		#print($CI->db->last_query());
+		
 		
 		if ($param['qty'] == 0) $param['qty'] = $count;//qtyが0の場合は、全てを選択
-		
-		#if (defined("DEBUG_MODE")) print $CI->db->last_query();
 		
 		if (isset($param['count'])) {
 			$CI->db->flush_cache();
 			return $count;//カウントを返すだけ
 		}
+		#print_r($param);
+		#print $count.'<br />';
 		
 		if ($count > 0) {//if the posts exist
 			$CI->pagination->initialize(array(
@@ -160,7 +162,7 @@ class BLX_Post {
 					if (is_array($user_linx)) {
 						$user_where = array();
 						foreach($user_linx as $k2 => $v2) $user_where[] = $v2['b'];
-						$CI->user->get(array('id' => $user_where, 'label' => 'tmp_author'));
+						$CI->user->get(array('id' => $user_where, 'label' => 'tmp_author', 'pager' => false));
 						if (isset($CI->data->out['tmp_author'])) {
 							$CI->data->out[$param['label']][$k]['author'] = $CI->data->out['tmp_author'];
 							unset($CI->data->out['tmp_author']);
