@@ -1,8 +1,8 @@
 <?
 
-class Search extends Module {
+class Tag extends Module {
 	
-	function Search() {
+	function Tag() {
 		parent::Module();
 	}
 }

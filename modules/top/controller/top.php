@@ -33,9 +33,6 @@ class Mod_Top {
 		$CI->mod->top->view(array(
 			'tpl'	=> 'top.php'
 		));
-		
-		#$CI->load->view('top.php');
-		exit();
 	}
 	
 	function Mod_Top() {

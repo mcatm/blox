@@ -1,7 +1,7 @@
 <?
 
 $config = array(
-	'tpl'	=> 'list.php'
+	'tpl'	=> 'top.php'
 );
 
 ?>

@@ -25,8 +25,9 @@ class Mod_Top {
 		));
 		
 		$CI->mod->search->view(array(
-			'title'		=> $CI->lang->line('search_result_title').$query,
-			'tpl'		=> $CI->setting->get('mod_search_tpl')
+			'title'				=> $CI->lang->line('search_result_title').$query,
+			'flg_title_clear'	=> false,
+			'tpl'				=> $CI->setting->get('mod_search_tpl')
 		));
 	}
 	

@@ -33,20 +33,28 @@ class BLX_Tag {
 		$CI->db->start_cache();
 		
 		//条件定義
-		if ($param['where'] != "") {//where文が直接書き込まれている場合
-			$CI->db->where('('.$param['where'].')');
-		} else {
-			if ($param['id'] != 0) {
-				if (is_array($param['id'])) {//複数検索
-					foreach($param['id'] as $t) {
-						$CI->db->or_where('tag_id', $t);
-					}
-				} else {
-					$CI->db->where('tag_id', $param['id']);
+		if ($param['where'] != "") $CI->db->where('('.$param['where'].')');//where文が直接書き込まれている場合
+		if ($param['id'] != 0) {
+			if (is_array($param['id'])) {//複数検索
+				foreach($param['id'] as $t) {
+					$CI->db->or_where('tag_id', $t);
 				}
+			} else {
+				$CI->db->where('tag_id', $param['id']);
 			}
-			if ($param['query'] != "") $CI->db->like('tag_name', $param['query']);//検索キー
 		}
+		
+		if (isset($param['tag']) && !empty($param['tag'])) {
+			if (is_array($param['tag'])) {//複数検索
+				foreach($param['tag'] as $t) {
+					$CI->db->or_where('tag_name', $t);
+				}
+			} else {
+				$CI->db->where('tag_name', $param['tag']);
+			}
+		}
+		
+		if ($param['query'] != "") $CI->db->like('tag_name', $param['query']);//検索キー
 		
 		$CI->db->stop_cache();
 		$count = $CI->db->count_all_results(DB_TBL_TAG);
@@ -88,6 +96,123 @@ class BLX_Tag {
 			
 			foreach($CI->data->out[$param['label']] as $k => $v) {//追加データ付与
 				
+			}
+		}
+		$CI->db->flush_cache();
+	}
+	
+	function get_post($tagname, $user_param = array()) {
+		$CI =& get_instance();
+		$CI->load->library(array('pagination'));
+		
+		$param = array(//デフォルトの設定
+			'auth'			=> 0,
+			'base_url'		=> base_url(),
+			'comment'		=> false,
+			'ext'			=> true,
+			'file'			=> false,
+			'file_main'		=> true,
+			'file_main_arr'	=> array(),
+			'history'		=> false,
+			'id'			=> 0,
+			'id_type'		=> 'id',
+			'label'			=> 'post',
+			'neighbor'		=> false,
+			'num_links'		=> 4,
+			'offset'		=> 0,
+			'order'			=> 'desc',
+			'pager'			=> true,
+			'get_parent'	=> false,
+			'qty'			=> $CI->setting->get('post_max_qty_per_page'),
+			'query'			=> "",
+			'schedule'		=> false,
+			'sort'			=> 'createdate',
+			'stack'			=> true,
+			'tag'			=> true,
+			'uri_segment'	=> 2,
+			'user'			=> 0,
+			'where'			=> ""
+		);
+		$param = array_merge($param, $user_param);//ユーザーパラメータで書き換え
+		
+		//タグをゲット
+		$tag = $this->get(array(
+			'tag'	=> $tagname,
+			'stack'	=> false
+		));
+		
+		if (isset($tag)) {
+			
+			$CI->db->start_cache();
+			
+			$CI->db->select('*, post_id AS id, post_status AS status, post_createdate AS createdate, post_type AS type');
+			$CI->db->join(DB_TBL_LINX, 'post_id = linx_a');
+			#$CI->db->group_by('post_id');
+			$CI->db->where('linx_type', 'post2tag');
+			
+			foreach($tag as $t) {
+				$CI->db->where('linx_b', $t['id']);
+			}
+			
+			if (!isset($param['deleted'])) $CI->db->where('post_deleted', 0);//削除されているものを読み込まない
+			if (isset($param['type'])) $CI->db->where('post_type', $param['type']);//記事タイプ
+			if (isset($param['status'])) $CI->db->where('post_status', $param['status']);//状態
+			
+			if ($param['auth'] !== 'cron') {
+				$auth_where = '(post_status <= '.$param['auth'];
+				if (!empty($CI->data->out['me']['id']) && defined('ADMIN_MODE') && !isset($param['div'])) $auth_where .= ' OR linx_b = '.$CI->data->out['me']['id'];
+				$auth_where .= ')';
+				$CI->db->where($auth_where);
+			}
+			
+			if ($param['qty'] == 0) $param['qty'] = $count;//qtyが0の場合は、全てを選択
+			
+			$CI->db->stop_cache();
+			
+			$count = $CI->db->count_all_results(DB_TBL_POST, false);
+			
+			if (isset($param['count'])) {
+				$CI->db->flush_cache();
+				return $count;//カウントを返すだけ
+			}
+			
+			if ($count > 0) {//if the posts exist
+				$CI->pagination->initialize(array(
+					'base_url'		=> $param['base_url'],
+					'total_rows'	=> $count,
+					'uri_segment'	=> $param['uri_segment'],
+					'num_links'		=> $param['num_links'],
+					'per_page'		=> $param['qty']
+				));
+				
+				$CI->db->order_by('post_'.$param['sort'], $param['order']);
+				
+				if ($param['stack']) {
+					$CI->data->set($CI->db->get(DB_TBL_POST, $param['qty'], $param['offset']), $param);
+				} else {
+					$out = $CI->data->get($CI->db->get(DB_TBL_POST, $param['qty'], $param['offset']), $param);
+					$CI->db->flush_cache();
+					return $out;
+				}
+				$CI->db->flush_cache();
+				
+				//get a status of pages.
+				if ($param['pager']) {
+					$CI->data->set_array('page', array(
+						'total'			=> $CI->pagination->total_rows,
+						'current'		=> $CI->pagination->cur_page,
+						'qty'			=> $CI->pagination->per_page,
+						'pager'			=> $CI->pagination->create_links()
+					));
+				}
+				
+				if (isset($CI->data->out[$param['label']])) {
+					$post_id = array();
+					foreach($CI->data->out[$param['label']] as $p) $post_id[] = $p['id'];
+					$param['id'] = $post_id;
+					$param['pager'] = false;
+					$CI->post->get($param);
+				}
 			}
 		}
 		$CI->db->flush_cache();

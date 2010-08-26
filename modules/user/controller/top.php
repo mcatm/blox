@@ -9,18 +9,43 @@ class Mod_Top {
 		$offset = ($CI->uri->segment(3)) ? $CI->uri->segment(3) : 0;
 		
 		if ($CI->uri->segment(2) && $CI->uri->segment(2) != 'offset') {//ユーザー詳細
+			$CI =& get_instance();
+			
+			$account = $CI->uri->segment(2);
+			
 			$CI->user->get(array(
-				'account'	=> $CI->uri->segment(2)
+				'account'	=> $account
 			));
 			
 			if (isset($CI->data->out['user'])) {
+				
+				$offset = ($CI->uri->segment(3)) ? $CI->uri->segment(3) : 0;
+				$title = (!empty($CI->data->out['user'][0]['title'])) ? $CI->data->out['user'][0]['title'] : $CI->data->out['user'][0]['name'];
+				
 				$CI->post->get(array(
-					'user'		=> $CI->data->out['user'][0]['id'],
-					'pager'		=> true,
-					'base_url'	=> base_url().'/'.$CI->uri->segment(1).'/'.$CI->uri->segment(2).'/',
-					'offset'	=> $offset
+					'offset'		=> $offset,
+					'uri_segment'	=> 1,
+					#'type'			=> 0,
+					'get_parent'	=> true,
+					'user'			=> $CI->data->out['user'][0]['id'],
+					'pager'			=> true
 				));
-				print_r($CI->data->out['post']);
+					
+				/*} else {
+					#print_r($this->data->out['div']);
+					$CI->data->out['div'][0]['content'][0]['param']['uri_segment'] = 1;
+					$param = array(
+						'title_clear'		=> true
+					);
+				}*/
+				
+				#$param['segment']['offset'] = $offset;
+				#print_r($param);exit;
+				$CI->mod->user->view(array(
+					'flg_title_clear'	=> false,
+					'title'		=> $title,
+					'tpl'	=> 'top.php'
+				));
 			} else {
 				show_404();
 			}
