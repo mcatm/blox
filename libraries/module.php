@@ -49,7 +49,7 @@ class Module {
 			$ctlpath = $ctl;
 			$classname = 'top';
 			$ctlflg = true;
-			$i = 0;
+			#$i = 0;
 		}
 		#print_r($uri_segment);
 		#print $uri_segment[$i+1];
