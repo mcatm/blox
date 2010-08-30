@@ -46,23 +46,41 @@ class Auth {
 		$login = false;
 		$set = array();
 		
-		if ($CI->session->userdata('id') && $CI->session->userdata('time')) {//ログインチェック
-			$q = $CI->user->get(array('qty' => 1, 'id' => $CI->session->userdata('id'), 'label' => 'tmp', 'pager' => false));
-			if (count($q) > 0) {
-				$r = $q[0];
-				$hash = sha1($r['id'].$r['account'].$CI->session->userdata('time'));//ハッシュ生成
-				$login = ($r['hash'] = $hash) ? true : false;//DBと比較
-				$set = array(
-					'id'		=> $r['id'],
-					'account'	=> $r['account'],
-					'name'		=> $r['name']
-				);
-				if (isset($r['file_main'])) $set['file_main'] = $r['file_main'];
-				$set['auth'] = $this->_set_usertype($r['type']);//権限付与
+		if ($CI->setting->get('easylogin')) {//簡単ログイン（ログイン時間を見ない）
+			if ($CI->session->userdata('id')) {//ログインチェック
+				$q = $CI->user->get(array('qty' => 1, 'id' => $CI->session->userdata('id'), 'label' => 'tmp', 'pager' => false));
+				if (count($q) > 0) {
+					$r = $q[0];
+					$login = true;
+					$set = array(
+						'id'		=> $r['id'],
+						'account'	=> $r['account'],
+						'name'		=> $r['name']
+					);
+					if (isset($r['file_main'])) $set['file_main'] = $r['file_main'];
+					#$set['auth'] = $this->_set_usertype($r['type']);//権限付与
+				}
+			}
+		} else {
+			if ($CI->session->userdata('id') && $CI->session->userdata('time')) {//ログインチェック
+				$q = $CI->user->get(array('qty' => 1, 'id' => $CI->session->userdata('id'), 'label' => 'tmp', 'pager' => false));
+				if (count($q) > 0) {
+					$r = $q[0];
+					$hash = sha1($r['id'].$r['account'].$CI->session->userdata('time'));//ハッシュ生成
+					$login = ($r['hash'] = $hash) ? true : false;//DBと比較
+					$set = array(
+						'id'		=> $r['id'],
+						'account'	=> $r['account'],
+						'name'		=> $r['name']
+					);
+					if (isset($r['file_main'])) $set['file_main'] = $r['file_main'];
+					#$set['auth'] = $this->_set_usertype($r['type']);
+				}
 			}
 		}
 		
-		if (!isset($set['auth'])) $set['auth'] = $this->_set_usertype();//ログインしていない場合も権限付与
+		$set['auth'] = (isset($r)) ? $this->_set_usertype($r['type']) : $this->_set_usertype();//権限付与
+			
 		$CI->data->set_array('me', $set);//出力用データに変換（パスワードやログイン用ハッシュが外に出ないよう）
 		if ($login === true) {//ログイン状態
 			$CI->session->set_userdata(array('login' => true));

@@ -10,6 +10,6 @@ class Logout extends Controller {
 	
 	function Logout() {
 		parent::Controller();
-		define('ADMIN_MODE', true);//管理画面モード
+		#define('ADMIN_MODE', true);//管理画面モード
 	}
 }
