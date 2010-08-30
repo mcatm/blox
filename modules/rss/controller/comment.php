@@ -1,6 +1,6 @@
 <?
 
-class Mod_Top {
+class Mod_Comment {
 	
 	function index() {
 		$CI =& get_instance();
@@ -11,17 +11,18 @@ class Mod_Top {
 		$CI->post->get(array(
 			'offset'		=> $offset,
 			'uri_segment'	=> 1,
-			#'type'			=> 0,
+			'type'			=> 1,
 			'get_parent'	=> true,
+			'qty'			=> 15,
 			'pager'			=> true
 		));
 		
-		$CI->mod->top->view(array(
-			'tpl'	=> 'top.php'
-		));
+		$CI->load->feed('post.php');
 	}
 	
-	function Mod_Top() {
+	
+	
+	function Mod_Comment() {
 		
 	}
 }

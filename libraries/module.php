@@ -77,7 +77,7 @@ class Module {
 				break;
 			}
 			#exit($method);
-			if (!method_exists($MD->controller, $method)) show_404();//メソッドが存在しない場合、404
+			if (!method_exists($MD->controller, $method)) $method = 'index';//show_404();//メソッドが存在しない場合、404
 			$MD->controller->$method();
 			exit;
 		}

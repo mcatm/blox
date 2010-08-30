@@ -216,6 +216,7 @@ class BLX_Post {
 					if ($param['get_parent'] && !empty($v['parent'])) {//get a parent
 						$this->get(array(
 							'id'	=> $v['parent'],
+							'pager'	=> false,
 							'label'	=> 'tmp_parent'
 						));
 						if (!empty($CI->data->out['tmp_parent'])) {
