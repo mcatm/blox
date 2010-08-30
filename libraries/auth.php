@@ -58,7 +58,6 @@ class Auth {
 						'name'		=> $r['name']
 					);
 					if (isset($r['file_main'])) $set['file_main'] = $r['file_main'];
-					#$set['auth'] = $this->_set_usertype($r['type']);//権限付与
 				}
 			}
 		} else {
@@ -74,7 +73,6 @@ class Auth {
 						'name'		=> $r['name']
 					);
 					if (isset($r['file_main'])) $set['file_main'] = $r['file_main'];
-					#$set['auth'] = $this->_set_usertype($r['type']);
 				}
 			}
 		}

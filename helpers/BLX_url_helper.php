@@ -93,6 +93,8 @@ if ( ! function_exists( 'img_url' ) ) {
 			$q = $CI->db->get(DB_TBL_FILE);
 			$r = $q->result();
 			
+			if (!is_numeric($w)) $w = $CI->setting->get('img_size_'.$w);
+			
 			$filename = $img_id;
 			if ($w > 0) $filename .= "_".(int)$w;
 			if ($h > 0) $filename .= "x".$h;
