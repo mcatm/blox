@@ -21,12 +21,13 @@ class Set extends Controller {
 	
 	function comment($id = 0) {
 		$this->load->library('post');
-		
+		#exit($this->input->post('redirect'));
 		$msg = $this->post->set($id);
 				
 		switch ($msg['result']) {
 			case 'success':
-				print_r($msg);
+				if ($this->input->post('redirect')) header('location:'.$this->input->post('redirect'));
+				#print_r($msg);
 				#if ($param['redirect_success'] != "") header('location:'.$param['redirect_success']);
 			break;
 			
@@ -36,6 +37,8 @@ class Set extends Controller {
 				#if ($param['redirect_error'] != "") header('location:'.$param['redirect_error']);
 			break;
 		}
+		
+		
 		
 		/*print json_encode($this->msg);*/
 	}

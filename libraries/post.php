@@ -206,6 +206,7 @@ class BLX_Post {
 						$this->get(array(
 							'type'		=> 1,
 							'parent'	=> $v['id'],
+							'order'		=> 'asc',
 							'label'		=> 'tmp_comment'
 						));
 						if (!empty($CI->data->out['tmp_comment'])) {

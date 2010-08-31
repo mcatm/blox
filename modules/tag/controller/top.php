@@ -8,7 +8,8 @@ class Mod_Top {
 		
 		if ($CI->uri->segment(2) && $CI->uri->segment(2) != 'offset') {//タグ詳細
 			
-			$tag = explode('+', $CI->uri->segment(2));
+			$tagstr = urldecode($CI->uri->segment(2));
+			$tag = explode('+', $tagstr);
 			$offset = ($CI->uri->segment(3)) ? $CI->uri->segment(3) : 0;
 			
 			$CI->tag->get_post($tag, array(
@@ -18,7 +19,7 @@ class Mod_Top {
 			if (isset($CI->data->out['post'])) {
 				$CI->mod->tag->view(array(
 					'flg_title_clear'	=> false,
-					'title'		=> $CI->uri->segment(2),
+					'title'		=> $tagstr,
 					'tpl'	=> 'top.php'
 				));
 			} else {
