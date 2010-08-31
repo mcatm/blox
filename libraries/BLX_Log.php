@@ -202,7 +202,7 @@ class BLX_Log extends CI_Log {
 						$res['value']['count']['rate'] = (isset($res['value']['count']['rate'])) ? ($res['value']['count']['rate'] + $v2['count']['rate']) /2 : $v2['count']['rate'];
 						$res['value']['referer'] = (isset($res['value']['referer']) && isset($v2['referer'])) ? array_merge($res['value']['referer'], $v2['referer']) : $v2['referer'];
 						$res['value']['user_id'] = (isset($res['value']['user_id']) && isset($v2['user_id'])) ? array_merge($res['value']['user_id'], $v2['user_id']) : $v2['user_id'];
-						$res['value']['lase_session'] = $v2['last_session'];
+						$res['value']['last_session'] = $v2['last_session'];
 					break;
 					
 					case 'status_a':
