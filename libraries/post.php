@@ -129,6 +129,7 @@ class BLX_Post {
 					'total'			=> $CI->pagination->total_rows,
 					'current'		=> $CI->pagination->cur_page,
 					'qty'			=> $CI->pagination->per_page,
+					'offset'		=> $param['offset'],
 					'pager'			=> $CI->pagination->create_links()
 				));
 			}

@@ -31,7 +31,7 @@ class Blox {
 			foreach($this->trigger[$protocol] as $k=>$v) {
 				$target_path = (isset($v['path'])) ? '(^'.$v['path'].')' : "(.*)";
 				$param = (isset($v['param'])) ? $v['param'] : array();
-				if (preg_match($target_path, $path)) $this->$v['method']($param);
+				if (preg_match($target_path, $path) && isset($v['method']) && method_exists($this, $v['method'])) $this->$v['method']($param);
 			}
 		}
 	}
