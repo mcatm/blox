@@ -77,7 +77,10 @@ class BLX_Post {
 		
 		if (isset($param['number'])) $CI->db->where('post_number', $param['number']);
 		if (isset($param['type'])) $CI->db->where('post_type', $param['type']);//記事タイプ
-		if ($param['query'] != "") $CI->db->like('post_meta', $param['query']);//検索キー
+		if (!empty($param['query'])) {//検索キー
+			$CI->db->like('post_meta', $param['query']);
+			$CI->data->out['query'] = $param['query'];
+		}
 		
 		if ($param['auth'] !== 'cron') {
 			$auth_where = '(post_status <= '.$param['auth'];
@@ -91,7 +94,6 @@ class BLX_Post {
 		#exit($CI->db->count_all_results(DB_TBL_POST, false));
 		$count = $CI->db->count_all_results(DB_TBL_POST, false);
 		#print($CI->db->last_query());
-		
 		
 		if ($param['qty'] == 0) $param['qty'] = $count;//qtyが0の場合は、全てを選択
 		
@@ -111,7 +113,11 @@ class BLX_Post {
 				'per_page'		=> $param['qty']
 			));
 			
-			$CI->db->order_by('post_'.$param['sort'], $param['order']);
+			if ($param['order'] == 'rand' || $param['order'] == 'random') {
+				$CI->db->order_by('rand()');
+			} else {
+				$CI->db->order_by('post_'.$param['sort'], $param['order']);
+			}
 			
 			if ($param['stack']) {
 				$CI->data->set($CI->db->get(DB_TBL_POST, $param['qty'], $param['offset']), $param);

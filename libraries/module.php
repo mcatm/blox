@@ -98,9 +98,9 @@ class Module {
 		*/
 		
 		$param = array(
-			'keyword'	=> array(),//for SEO
-			'description'	=> "",//for SEO
-			'title'			=> '{@sitename}',
+			'keyword'			=> array(),//for SEO
+			'description'		=> "",//for SEO
+			'title'				=> '{@sitename}',
 			'flg_title_clear'	=> true
 		);
 		

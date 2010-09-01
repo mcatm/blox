@@ -2,9 +2,34 @@
 
 class Pipe extends Controller {
 	
+	function _view($method, $type = NULL) {
+		$param = array('where' => 'div_alias = "'.$this->setting->get_alias($method).'"');
+		if ($type !== NULL) $param['type'] = $type;
+		
+		$this->div->get($param);
+		
+		if (isset($this->data->out['div'])) {
+			#print_r($this->data->out['div']);exit;
+			
+			$type = (!empty($this->data->out['div'][0]['type'])) ? $this->data->out['div'][0]['type'] : 'page';
+			$tpl = (!empty($this->data->out['div'][0]['tpl'])) ? $this->data->out['div'][0]['tpl'] : $type.'.php';
+			
+			$this->load->library('module');
+			$this->module->view(array(
+				'description'	=> $this->data->out['div'][0]['description'],
+				'tpl'	=> $tpl
+			));
+			exit;
+		}
+		
+		return false;
+	}
+	
 	function _remap($method) {//switch as url segment
 		
 		if ($method == 'index') $method = 'top';
+		
+		$this->_view(trim($this->uri->uri_string(), '/'));# Page
 		
 		if ($mod_loaded = $this->setting->get('module_loaded')) {
 			$this->load->library('module');
@@ -16,6 +41,10 @@ class Pipe extends Controller {
 				exit;
 			}
 		}
+		
+		$this->_view($method, 'section');# Section
+		
+		exit($method);
 		
 		show_404();
 	}

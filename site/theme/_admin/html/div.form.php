@@ -29,8 +29,8 @@
 					<option value=""<?if(set_value('type') == "" || (isset($div[0]['type']) && $div[0]['type']=="")){?> selected="selected"<?}?>>---</option>
 					<option value="section"<?if(set_value('type') == "section" || (isset($div[0]['type']) && $div[0]['type']=="section")){?> selected="selected"<?}?>>section</option>
 					<option value="category"<?if(set_value('type') == "category" || (isset($div[0]['type']) && $div[0]['type']=="category")){?> selected="selected"<?}?>>category</option>
-					<option value="post"<?if(set_value('type') == "post" || (isset($div[0]['type']) && $div[0]['type']=="post")){?> selected="selected"<?}?>>post</option>
-					<option value="mail"<?if(set_value('type') == "mail" || (isset($div[0]['type']) && $div[0]['type']=="mail")){?> selected="selected"<?}?>>mail</option>
+					<?/*option value="post"<?if(set_value('type') == "post" || (isset($div[0]['type']) && $div[0]['type']=="post")){?> selected="selected"<?}?>>post</option>
+					<option value="mail"<?if(set_value('type') == "mail" || (isset($div[0]['type']) && $div[0]['type']=="mail")){?> selected="selected"<?}?>>mail</option*/?>
 					<option value="top"<?if(set_value('type') == "top" || (isset($div[0]['type']) && $div[0]['type']=="top")){?> selected="selected"<?}?>>top</option>
 				</select>
 				<p><label>theme : </label>

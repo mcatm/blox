@@ -11,6 +11,8 @@ if ( ! function_exists( 'format_text' ) ) {
 		
 		$str = strip_tags($str, $CI->setting->get('html_tag_not_escape'));//htmlタグをエスケープ
 		
+		if (isset($CI->data->out['query'])) $str = str_replace($CI->data->out['query'], '<em>'.$CI->data->out['query'].'</em>', $str);//検索キーを強調表示
+		
 		//タグ中の余計な要素を削除
 		preg_match_all('(\<.*?\>)', $str, $htmltag);
 		if (!empty($htmltag)) {
