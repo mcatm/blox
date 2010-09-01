@@ -29,8 +29,7 @@ class Pipe extends Controller {
 		
 		if ($method == 'index') $method = 'top';
 		
-		$this->_view(trim($this->uri->uri_string(), '/'));# Page
-		
+		# Module
 		if ($mod_loaded = $this->setting->get('module_loaded')) {
 			$this->load->library('module');
 			if (array_key_exists($method, $mod_loaded)) {
@@ -42,6 +41,7 @@ class Pipe extends Controller {
 			}
 		}
 		
+		$this->_view(trim($this->uri->uri_string(), '/'));# Page
 		$this->_view($method, 'section');# Section
 		
 		exit($method);

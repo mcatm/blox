@@ -12,7 +12,7 @@ class BLX_Div {
 		$param = array(//デフォルトの設定
 			'array'		=> 'content',
 			'base_url'	=> base_url(),
-			'ext'		=> true,
+			'ext'		=> false,
 			'id'		=> 0,
 			'label'		=> 'div',
 			'num_links'	=> 4,
@@ -94,6 +94,20 @@ class BLX_Div {
 					break;
 				}
 				$CI->data->out[$param['label']][$k]['url'] = trim(str_replace(array('@top/', $CI->setting->get_alias()), '', $tmp_url), '/').'/';
+				#print $param['ext'].'<br />';
+				if ($param['ext']) {//extra contents
+					$CI->load->helper('array');
+					$ext_linx = array();
+					$ext_linx = $CI->linx->get('div2ext', array('a' => $v['id']));
+					#exit($v['id']);
+					#print_r($ext_linx);exit;
+					if (!empty($ext_linx) && is_array($ext_linx)) {
+						foreach ($ext_linx as $ex) {
+							$ex_value = decompress_array($ex['param']);
+							if (!empty($ex_value) && is_array($ex_value)) $CI->data->out[$param['label']][$k][$ex['status']] = $ex_value['value'];
+						}
+					}
+				}
 				
 				if ($param['tag']) {//tags
 					$CI->load->library('tag');
@@ -122,18 +136,6 @@ class BLX_Div {
 						));
 						
 						#print_r($CI->data->out[$param['label']][$k]['related']);exit;
-					}
-				}
-				
-				if ($param['ext']) {//extra contents
-					$CI->load->helper('array');
-					$ext_link = array();
-					$ext_linx = $CI->linx->get('div2ext', array('a' => $v['id']));
-					if (!empty($ext_linx) && is_array($ext_linx)) {
-						foreach ($ext_linx as $ex) {
-							$ex_value = decompress_array($ex['param']);
-							if (!empty($ex_value) && is_array($ex_value)) $CI->data->out[$param['label']][$k][$ex['status']] = $ex_value['value'];
-						}
 					}
 				}
 			}
