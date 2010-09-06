@@ -13,7 +13,7 @@ class Mod extends Controller {
 				$this->mod->$mod_loaded[$method]['name'] = new $mod_loaded[$method]['name'];
 				$this->mod->$mod_loaded[$method]['name']->init($mod_loaded[$method]['name'], $mod_loaded[$method]['path']);
 				$this->mod->$mod_loaded[$method]['name']->controller($mod_loaded[$method]['name'], 'admin');
-				exit($method);
+				
 				exit;
 			}
 		}

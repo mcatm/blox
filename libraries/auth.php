@@ -78,11 +78,14 @@ class Auth {
 		}
 		
 		$set['auth'] = (isset($r)) ? $this->_set_usertype($r['type']) : $this->_set_usertype();//権限付与
-			
+		
 		$CI->data->set_array('me', $set);//出力用データに変換（パスワードやログイン用ハッシュが外に出ないよう）
+		#print_r($CI->data->out['me']);
 		if ($login === true) {//ログイン状態
+			#print $CI->session->userdata('id');
 			$CI->session->set_userdata(array('login' => true));
 		} else {//未ログイン
+			#print 'EX';
 			$this->_destroy_session();
 		}
 	}

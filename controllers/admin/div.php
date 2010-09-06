@@ -43,8 +43,11 @@ class Div extends Controller {
 	
 	function edit($id = 0) {
 		$this->load->library(array('div', 'ext'));
-		if ($id > 0) $this->div->get(array('id' => $id));
-		#$this->ext->get(array('stack' => true, 'div' => 'div'));
+		if ($id > 0) {
+			$this->div->get(array(
+				'id' => $id
+			));
+		}
 		
 		$msg = $this->div->set($id);
 		
@@ -52,14 +55,23 @@ class Div extends Controller {
 		
 		switch ($msg['result']) {
 			case 'success':
-				$this->div->get(array('id' => $msg['id'], 'qty' => 1));
+				$this->div->get(array(
+					'id' => $msg['id'],
+					'ext'	=> true,
+					'qty' => 1
+				));
 			break;
 			
 			case 'error':
 			default:
-				if ($id > 0) $this->div->get(array('id' => $id, 'qty' => 1));
+				if ($id > 0) $this->div->get(array(
+					'id' => $id,
+					'ext'	=> true,
+					'qty' => 1
+				));
 			break;
 		}
+		#print_r($this->data->out['div']);
 		$this->setting->set_title($this->lang->line('system_div_edit'));
 		$this->load->view('div.form.php');
 	}

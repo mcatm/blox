@@ -2,7 +2,7 @@
 <?$this->load->view('_inc/html.header.php')?>
 <body>
 	<div id="login">
-		<?if ($this->session->userdata('login') !== true) {?><form method="post" action="<?=base_url()?>admin/login/" class="round">
+		<?if (!$this->auth->check_auth()) {?><form method="post" action="<?=base_url()?>admin/login/" class="round">
 			<input type="hidden" name="redirect" value="<?=self_url()?>" />
 			<p><label>email : </label><input type="text" name="email" class="query" /></p>
 			<p><label>password : </label><input type="password" name="pwd" class="query" /></p>

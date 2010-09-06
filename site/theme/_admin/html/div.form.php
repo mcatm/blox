@@ -1,5 +1,4 @@
 <?if ( ! defined('BASEPATH')) exit('No direct script access allowed');?>
-
 <?$this->load->view('_inc/html.header.php')?>
 <body>
 	<?$this->load->view('_inc/head.php')?>
