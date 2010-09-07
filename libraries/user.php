@@ -53,6 +53,8 @@ class BLX_User {
 			$CI->db->where('user_password IS NULL');
 		}
 		
+		if (isset($param['has_action'])) $CI->db->where('(user_actiondate != user_createdate OR user_actiondate IS NOT NULL)');
+		
 		if (isset($param['reject_tmp_user'])) {//仮会員は含めない
 			$CI->db->where('(user_type != "" AND user_type IS NOT NULL)');
 		}

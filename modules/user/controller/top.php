@@ -47,7 +47,7 @@ class Mod_Top {
 					'flg_title_clear'	=> false,
 					'title'		=> $title,
 					'base_url'		=> base_url().$CI->uri->segment(1).'/'.$account.'/',
-					'tpl'	=> 'top.php'
+					'tpl'	=> $CI->setting->get('mod_user_tpl')
 				));
 			} else {
 				show_404();
@@ -59,9 +59,18 @@ class Mod_Top {
 				'sort'				=> 'actiondate',
 				'order'				=> 'desc',
 				'reject_tmp_user'	=> true,
+				'where'				=> "user_account NOT LIKE '%:%'",
+				'has_action'		=> true,
 				'pager'				=> true
 			));
-			print_r($CI->data->out['user']);
+			#print_r($CI->data->out['user']);exit;
+			
+			$CI->mod->user->view(array(
+				'flg_title_clear'	=> false,
+				'title'			=> 'User',
+				'base_url'		=> base_url().$CI->uri->segment(1).'/',
+				'tpl'			=> $CI->setting->get('mod_user_tpl_list')
+			));
 		}
 	}
 	

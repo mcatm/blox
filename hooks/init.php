@@ -42,19 +42,21 @@ function init() {
 		}
 	}
 	
+	$mod_loaded = $CI->setting->get('module_loaded');//Load Module Managers
+	if (!empty($mod_loaded)) {
+		foreach($mod_loaded as $mod) {
+			$CI->module->load_config($mod['name'], $mod['path']);
+			$CI->module->load_lang($mod['name'], $mod['path']);
+		}
+	}
+	
 	if (defined('ADMIN_MODE') && ADMIN_MODE === true) {//管理画面
 		define('SSL_MODE', true);//SSLモード
 		$CI->setting->set('theme', '_admin');
 		$CI->setting->set('site_name', 'blox admin');
 		$CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();
 		
-		$mod_loaded = $CI->setting->get('module_loaded');//Load Module Managers
-		if (!empty($mod_loaded)) {
-			foreach($mod_loaded as $mod) {
-				$CI->module->load_config($mod['name'], $mod['path']);
-				$CI->module->load_lang($mod['name'], $mod['path']);
-			}
-		}
+		
 		
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth()) {
 			if ($CI->uri->segment(2) != 'login') {
@@ -63,7 +65,6 @@ function init() {
 				exit;
 			}
 		}
-		
 	} elseif (defined('API_MODE') && API_MODE === true) {//API
 		if (!$CI->setting->get('open_api')) show_error('API access is not arrowed.', 403);
 		define('SSL_MODE', true);//SSLモード

@@ -1,7 +1,8 @@
 <?
 
 $config = array(
-	'tpl'	=> 'list.php'
+	'tpl_list'	=> 'user.list.php',
+	'tpl'		=> 'user.detail.php'
 );
 
 ?>

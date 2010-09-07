@@ -19,8 +19,8 @@ class Mod_Top {
 			if (isset($CI->data->out['post'])) {
 				$CI->mod->tag->view(array(
 					'flg_title_clear'	=> false,
-					'title'		=> $tagstr,
-					'tpl'	=> 'top.php'
+					'title'			=> $CI->lang->line('tag_result_title').$tagstr,
+					'tpl'			=> $CI->setting->get('mod_tag_tpl')
 				));
 			} else {
 				show_404();

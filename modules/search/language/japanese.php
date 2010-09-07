@@ -1,3 +1,3 @@
 <?
 
-$lang['search_result_title'] 			= '検索結果：';
+$lang['search_result_title'] 			= 'Search &rsaquo; ';
