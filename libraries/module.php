@@ -147,9 +147,9 @@ class Module {
 		
 		$config_path = $module_path.'config.php';
 		$cfg_prefix = 'mod_'.$name.'_';
+		
 		if (is_file($config_path)) {
 			require_once($config_path);
-			
 			if (!empty($config)) {
 				foreach ($config as $k => $v) {
 					$CI->setting->set($cfg_prefix.$k, $v);

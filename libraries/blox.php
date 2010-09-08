@@ -54,8 +54,8 @@ class Blox {
 			}
 		
 			$module_path = array(
-				APP_FOLDER.'/modules/%s/',
-				EX_FOLDER.'/modules/%s/'
+				EX_FOLDER.'/modules/%s/',
+				APP_FOLDER.'/modules/%s/'
 			);
 			
 			foreach ($load_module['name'] as $k=>$v) {
@@ -67,7 +67,8 @@ class Blox {
 							'alias'	=> $load_module['alias'][$k],
 							'path'	=> $p
 						);
-						continue;
+						#print $p.'<br />';
+						continue 2;
 					}
 				}
 			}
