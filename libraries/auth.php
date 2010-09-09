@@ -22,14 +22,16 @@ class Auth {
 		$CI =& get_instance();
 		$CI->load->library('session');
 		
-		$keytime = time();
+		$keytime = date('U');
 		$hash = sha1($user_id.$user_account.$keytime);//ログイン用のハッシュ作成
+		log_message('error', 'account: '.$user_account.' time: '.$keytime);
 		
 		$this->_destroy_session();
 		$CI->session->set_userdata(array(
 			'id'		=> $user_id,
 			'time'		=> $keytime
 		));//セッションにハッシュ書き込み
+		
 		$CI->db->where('user_id', $user_id);//DBにハッシュ書き込み
 		$CI->db->update(DB_TBL_USER, array('user_hash' => $hash));
 		return true;

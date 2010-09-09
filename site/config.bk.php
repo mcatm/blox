@@ -43,6 +43,9 @@ define('URL_ALIAS_HOME',	'home');//ホーム画面のエイリアス
 define('CHARSET',			'UTF-8');
 define('FLG_USE_CRON',		true);//クロンを利用するか
 
+define('COOKIE_PREFIX', 'blox_');//クッキー用
+define('SESSION_EXPIRE', 7200);//セッションの有効期限
+
 /*
 
 .htaccess
