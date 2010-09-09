@@ -5,10 +5,10 @@ class Login extends Controller {
 	function index() {//ログイン
 		if ($this->auth->login($this->input->post('email'), $this->input->post('pwd'))) {
 			$redirect = ($this->input->post('redirect')) ? $this->input->post('redirect') : base_url();
+			if (preg_match('('.base_url().'(login|logout))', $redirect)) $redirect = base_url();
 			header('location:'.$redirect);
 		} else {
 			$this->load->view('login');
-			#exit('ログイン失敗');
 		}
 	}
 	

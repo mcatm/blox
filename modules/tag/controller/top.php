@@ -25,16 +25,8 @@ class Mod_Top {
 			} else {
 				show_404();
 			}
-		} else {//ユーザー一覧
-			$CI->user->get(array(
-				'offset'			=> $offset,
-				'base_url'			=> base_url().'/'.$CI->uri->segment(1).'/',
-				'sort'				=> 'actiondate',
-				'order'				=> 'desc',
-				'reject_tmp_user'	=> true,
-				'pager'				=> true
-			));
-			print_r($CI->data->out['user']);
+		} else {//タグ一覧
+			header('location:'.base_url());
 		}
 	}
 	

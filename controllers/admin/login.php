@@ -7,7 +7,6 @@ class Login extends Controller {
 			$redirect = ($this->input->post('redirect')) ? $this->input->post('redirect') : base_url().'admin/';
 			if (preg_match('('.base_url().'admin/(login|logout))', $redirect)) $redirect = base_url().'admin/';
 			header('location:'.$redirect);
-			
 		} else {
 			$this->load->view('login.php');
 		}
