@@ -201,6 +201,7 @@ class BLX_Tag {
 					$CI->data->set_array('page', array(
 						'total'			=> $CI->pagination->total_rows,
 						'current'		=> $CI->pagination->cur_page,
+						'offset'		=> $param['offset'],
 						'qty'			=> $CI->pagination->per_page,
 						'pager'			=> $CI->pagination->create_links()
 					));
