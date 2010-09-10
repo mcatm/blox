@@ -1077,3 +1077,65 @@ td.tool a.btn:hover {
 #admin_debug {
 	display:none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ----------------------------------------------------------------
+
+	#pager
+
+---------------------------------------------------------------- */
+
+ul.pager {
+	text-align:center;
+}
+
+ul.pager li {
+	display: inline;
+	margin:0 5px 0 0;
+	padding:0;
+}
+
+ul.pager li strong {
+	display:-moz-inline-box; /* firefox2 対応 */
+	display:inline-block;
+	padding:6px;
+	line-height:1;
+	background-color:#EEEEEE;
+	border:1px #CCCCCC solid;
+}
+
+ul.pager li a {
+	display:-moz-inline-box; /* firefox2 対応 */
+	display:inline-block;
+	padding:6px;
+	line-height:1;
+	border:1px #CCCCCC solid;
+}
+
+ul.pager li a:link,
+ul.pager li a:visited {
+	border-color: #CCCCCC;
+	color: #0033FF;
+}
+
+ul.pager li a:hover,
+ul.pager li a:active {
+	border-color: #003399;
+	background-color: #003399;
+	color: #FFFFFF;
+}
+

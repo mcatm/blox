@@ -6,7 +6,7 @@ class Post extends Controller {
 		$this->load->library('post');
 		$this->load->helper('filter');
 		$where = array(
-			'qty'			=> 20,
+			'qty'			=> 2,
 			'offset'		=> $offset,
 			'uri_segment'	=> 4,
 			'base_url'		=> base_url().'admin/post/offset/',
