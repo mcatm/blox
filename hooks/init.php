@@ -56,8 +56,6 @@ function init() {
 		$CI->setting->set('site_name', 'blox admin');
 		$CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();
 		
-		
-		
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth()) {
 			if ($CI->uri->segment(2) != 'login') {
 				$CI->data->out['redirect'] = self_url();

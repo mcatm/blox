@@ -7,7 +7,7 @@
 -- サーバのバージョン: 5.0.67
 -- PHP のバージョン: 5.2.9
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
 -- データベース: `blox`
