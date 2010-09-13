@@ -52,8 +52,6 @@ if ( ! function_exists( 'extimg_url' ) ) {
 		$filename = md5($filename);
 		$filename .= '.'.$pt['extension'];
 		
-		exit($url.' - '.$filename);
-		
 		if (!is_file($cache_dir.$filename)) {//キャッシュが存在する場合
 			$CI->load->library('file');
 			$CI->load->helper('file');
