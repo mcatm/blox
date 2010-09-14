@@ -17,12 +17,12 @@ $hook['post_controller_constructor'] = array(
 	'filepath' => 'hooks'
 );
 
-/*$hook['post_controller'] = array(
+$hook['post_controller'] = array(
 	'class'    => '',
 	'function' => 'this',
 	'filename' => 'end.php',
 	'filepath' => 'hooks'
-);*/
+);
 
 /* End of file hooks.php */
 /* Location: ./system/application/config/hooks.php */

@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?=$setting['title']?></title>
+<title><?=$this->setting->get('title')?></title>
 
-<meta name="Description" content="<?=$setting['description']?>" />
-<meta name="Keywords" content="<?=$setting['keyword']?>" />
+<meta name="Description" content="<?=$this->setting->get('description')?>" />
+<meta name="Keywords" content="<?=$this->setting->get('keyword')?>" />
 
 <link rel="stylesheet" type="text/css" href="<?=theme_url()?>css/import.css" />
-<?if (isset($setting['favicon'])){?><link rel="shortcut icon" href="<?=$setting['favicon']?>" /><?}?>
+<?if ($this->setting->get('favicon')){?><link rel="shortcut icon" href="<?=$this->setting->get('favicon')?>" /><?}?>
 
 <script type="text/javascript" src="<?=ex_url()?>js/jquery.js"></script>
 <script type="text/javascript" src="<?=ex_url()?>js/jquery/editor.js"></script>

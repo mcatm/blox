@@ -3,6 +3,9 @@
 function init() {
 	if (defined('CRON')) return false;
 	$CI =& get_instance();
+	
+	if (defined('DEBUG_MODE') && DEBUG_MODE == true) $CI->benchmark->mark('code_start');
+	
 	$CI->setting->init();//設定読込
 	$CI->auth->init();//ログインデータ読込
 	$CI->blox->init();

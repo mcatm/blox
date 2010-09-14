@@ -2,12 +2,12 @@
 
 class Setting {
 	
+	var $set = array();
+	
 	function get($str) {//設定を取得
 		$CI =& get_instance();
-		if (!isset($CI->data->out['setting'][$str]) || empty($CI->data->out['setting'][$str])) {
-			$this->_get_user_setting($str, true);
-		}
-		return (isset($CI->data->out['setting'][$str])) ? $CI->data->out['setting'][$str] : false;
+		if (!isset($this->set[$str]) || empty($this->set[$str])) $this->_get_user_setting($str, true);
+		return (isset($this->set[$str])) ? $this->set[$str] : false;
 	}
 	
 	function get_status($num, $type = 'post') {
@@ -49,7 +49,7 @@ class Setting {
 	
 	function set($label, $value) {//設定を書き込む
 		$CI =& get_instance();
-		$CI->data->out['setting'][$label] = $value;
+		$this->set[$label] = $value;
 	}
 	
 	function store($label, $value) {//設定をDBに保存する
@@ -94,7 +94,6 @@ class Setting {
 	}
 	
 	function set_keyword($arr = array(), $tagrow = false) {//キーワードを設定
-		#print_r($arr);exit;
 		$CI =& get_instance();
 		$tag = array();
 		if (!empty($arr)) {
@@ -129,7 +128,7 @@ class Setting {
 	function _stack_setting($arr) {
 		$CI =& get_instance();
 		foreach($arr as $k => $v) {
-			$CI->data->out['setting'][$v['name']] = $v['value'];
+			$this->set[$v['name']] = $v['value'];
 		}
 	}
 	
@@ -182,7 +181,7 @@ class Setting {
 		);
 		
 		$CI =& get_instance();
-		foreach ($default_setting as $k => $v) $CI->data->out['setting'][$k] = $v;
+		foreach ($default_setting as $k => $v) $this->set[$k] = $v;
 		
 		$this->_get_user_setting(array_flip($default_setting), true);//ユーザー設定読み込み
 		

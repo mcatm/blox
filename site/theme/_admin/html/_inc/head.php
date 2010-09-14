@@ -3,7 +3,7 @@
 <a name="top" id="top"></a>
 <div id="head">
 	<div class="container clearfix">
-		<h1><a href="<?=base_url()?>admin/"><?=$setting['title']?></a></h1>
+		<h1><a href="<?=base_url()?>admin/"><?=$this->setting->get('title')?></a></h1>
 		<ul class="tool clearfix">
 			<li class="website"><a href="<?=base_url()?>" target="_blank">WEBSITE</a></li>
 			<li class="search" id="btn-tool-search"><a>SEARCH</a></li>

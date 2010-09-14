@@ -2,6 +2,8 @@
 
 function this() {
 	$CI =& get_instance();
-	
-	$CI->blox->action('e:'.substr($CI->uri->uri_string(), 1));
+	if (defined('DEBUG_MODE') && DEBUG_MODE == true) {
+		$CI->benchmark->mark('code_end');
+		echo $CI->benchmark->elapsed_time('code_start', 'code_end');
+	}
 }

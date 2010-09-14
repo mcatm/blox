@@ -44,8 +44,6 @@ class Pipe extends Controller {
 		$this->_view(trim($this->uri->uri_string(), '/'));# Page
 		$this->_view($method, 'section');# Section
 		
-		exit($method);
-		
 		show_404();
 	}
 	

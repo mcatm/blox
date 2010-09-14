@@ -98,7 +98,7 @@ class BLX_Image_lib extends CI_Image_lib {
 		if ($this->dynamic_output == TRUE) {
 			$this->image_display_gd($dst_img);
 		} else {//もしくは保存します
-			if ( ! $this->image_save_gd($dst_img)) {
+			if (!$this->image_save_gd($dst_img)) {
 				return FALSE;
 			}
 		}
