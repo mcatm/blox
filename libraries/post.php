@@ -93,7 +93,6 @@ class BLX_Post {
 		$CI->db->stop_cache();
 		#exit($CI->db->count_all_results(DB_TBL_POST, false));
 		$count = $CI->db->count_all_results(DB_TBL_POST, false);
-		#print($CI->db->last_query());
 		
 		if ($param['qty'] == 0) $param['qty'] = $count;//qtyが0の場合は、全てを選択
 		
@@ -183,22 +182,16 @@ class BLX_Post {
 					
 					if ($param['file_main']) {//main files
 						$CI->load->library('file');
-						$file_segment = explode('|', $CI->setting->get('file_segment'));
-						if (is_array($file_segment)) {
-							foreach($file_segment as $fs) {
-								$file_linx = $CI->linx->get('post2file', array('a' => $v['id'], 'status' => $fs));
-								if (is_array($file_linx)) {
-									$file_where = array();
-									$file_label = 'file_'.$fs;
-									foreach($file_linx as $k2 => $v2) $file_where[] = $v2['b'];
-									$CI->data->out[$param['label']][$k][$file_label] = $CI->file->get(array('id' => $file_where, 'stack' => false));
-									$param[$file_label.'arr'] = $CI->data->out[$param['label']][$k][$file_label];
-								}
+						$file_linx = $CI->linx->get('post2file', array('a' => $v['id']));
+						if (!empty($file_linx) && is_array($file_linx)) {
+							foreach ($file_linx as $fl) {
+								$file_label = (!empty($fl['status'])) ? 'file_'.$fl['status'] : 'file';
+								$CI->data->out[$param['label']][$k][$file_label] = $CI->file->get(array('id' => $fl['b'], 'stack' => false));
 							}
 						}
 					}
 					
-					if ($param['file']) {//files
+					/*if ($param['file']) {//files
 						$CI->load->library('file');
 						$file_linx = $CI->linx->get('post2file', array('a' => $v['id']));
 						if (is_array($file_linx)) {
@@ -206,7 +199,7 @@ class BLX_Post {
 							foreach($file_linx as $k2 => $v2) $file_where[] = $v2['b'];
 							$CI->data->out[$param['label']][$k]['file'] = $CI->file->get(array('id' => $file_where, 'stack' => false));
 						}
-					}
+					}*/
 					
 					if ($param['comment']) {//comment
 						$this->get(array(
