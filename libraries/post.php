@@ -141,33 +141,41 @@ class BLX_Post {
 			
 			if (isset($CI->data->out[$param['label']])) {
 				foreach($CI->data->out[$param['label']] as $k => $v) {//add extra datas
-					//text
-					$text = htmlspecialchars_decode($v['text']);
-					$separator = $CI->setting->get_formattag('page');
-					$CI->data->out[$param['label']][$k]['text'] = $text;
-					$CI->data->out[$param['label']][$k]['paragraph'] = explode($separator, $text);
 					
-					//page
-					if (isset($param['page'])) {
-						$p = ($param['page']) ? (int)$param['page'] - 1 : 0;
-						$CI->data->out[$param['label']][$k]['page'] = $p;
-						
-						if (count($CI->data->out[$param['label']][$k]['paragraph']) > 1) {
-							$CI->data->out[$param['label']][$k]['pager'] = array(
-								'current'	=> $p + 1,
-								'base_url'	=> trim(self_url(), '/').'/?p',
-								'total'		=> count($CI->data->out[$param['label']][$k]['paragraph'])
-							);
-							//print_r($CI->data->out[$param['label']][$k]['pager']);exit;
+					$linx = array();
+					$linx['all'] = $CI->data->set($CI->linx->get_related('post', $v['id']), array('label' => 'linx', 'stack' => false));
+					
+					if (!empty($linx['all'])) {
+						foreach ($linx['all'] as $l) {
+							switch ($l['type']) {
+								case 'post2user'://authors
+									$linx['user'][] = $l;
+								break;
+								
+								case 'post2tag'://tags
+									$linx['tag'][] = $l;
+								break;
+								
+								case 'post2file'://files
+									$linx['file'][] = $l;
+								break;
+								
+								case 'post2div'://div
+									$linx['div'][] = $l;
+								break;
+								
+								case 'post2ext'://ext
+									$linx['ext'][] = $l;
+								break;
+							}
 						}
 					}
-					
+							
 					//authors
-					$user_linx = $CI->linx->get('post2user', array('a' => $v['id']));
 					$user_where = array();
-					if (is_array($user_linx)) {
+					if (isset($linx['user']) && is_array($linx['user'])) {
 						$user_where = array();
-						foreach($user_linx as $k2 => $v2) $user_where[] = $v2['b'];
+						foreach($linx['user'] as $k2 => $v2) $user_where[] = $v2['b'];
 						$CI->user->get(array('id' => $user_where, 'label' => 'tmp_author', 'pager' => false));
 						if (isset($CI->data->out['tmp_author'])) {
 							$CI->data->out[$param['label']][$k]['author'] = $CI->data->out['tmp_author'];
@@ -180,58 +188,50 @@ class BLX_Post {
 					}
 					$CI->data->out[$param['label']][$k]['author_id'] = $user_where;
 					
-					if ($param['file_main']) {//main files
+					//main files
+					if ($param['file_main'] && isset($linx['file'])) {
 						$CI->load->library('file');
-						$file_linx = $CI->linx->get('post2file', array('a' => $v['id']));
-						if (!empty($file_linx) && is_array($file_linx)) {
-							foreach ($file_linx as $fl) {
+						if (!empty($linx['file']) && is_array($linx['file'])) {
+							foreach ($linx['file'] as $fl) {
 								$file_label = (!empty($fl['status'])) ? 'file_'.$fl['status'] : 'file';
 								$CI->data->out[$param['label']][$k][$file_label] = $CI->file->get(array('id' => $fl['b'], 'stack' => false));
 							}
 						}
 					}
 					
-					/*if ($param['file']) {//files
-						$CI->load->library('file');
-						$file_linx = $CI->linx->get('post2file', array('a' => $v['id']));
-						if (is_array($file_linx)) {
-							$file_where = array();
-							foreach($file_linx as $k2 => $v2) $file_where[] = $v2['b'];
-							$CI->data->out[$param['label']][$k]['file'] = $CI->file->get(array('id' => $file_where, 'stack' => false));
+					//tags
+					if ($param['tag'] && isset($linx['tag'])) {
+						$CI->load->library('tag');
+						if (is_array($linx['tag'])) {
+							$tag_where = array();
+							foreach($linx['tag'] as $k2 => $v2) $tag_where[] = $v2['b'];
+							$CI->data->out[$param['label']][$k]['tag'] = $CI->tag->get(array(
+								'id' => $tag_where,
+								'stack' => false,
+								'pager' => false
+							));
+							
+							$CI->data->out[$param['label']][$k]['tagstr'] = $CI->tag->_merge_tag($CI->data->out[$param['label']][$k]['tag']);
+						} else {
+							$CI->data->out[$param['label']][$k]['tag'] = array();
 						}
-					}*/
-					
-					if ($param['comment']) {//comment
-						$this->get(array(
-							'type'		=> 1,
-							'parent'	=> $v['id'],
-							'order'		=> 'asc',
-							'label'		=> 'tmp_comment'
-						));
-						if (!empty($CI->data->out['tmp_comment'])) {
-							$CI->data->out[$param['label']][$k]['comment'] = $CI->data->out['tmp_comment'];
-							unset($CI->data->out['tmp_comment']);
-						}
-					}
-					
-					if ($param['get_parent'] && !empty($v['parent'])) {//get a parent
-						$this->get(array(
-							'id'	=> $v['parent'],
-							'pager'	=> false,
-							'label'	=> 'tmp_parent'
-						));
-						if (!empty($CI->data->out['tmp_parent'])) {
-							$CI->data->out[$param['label']][$k]['parent'] = $CI->data->out['tmp_parent'][0];
-							unset($CI->data->out['tmp_parent']);
+						
+						if (isset($param['related']) && !empty($CI->data->out[$param['label']][$k]['tag'])) {//related entries
+							$CI->data->out[$param['label']][$k]['related'] = $CI->tag->_get_related($CI->data->out[$param['label']][$k]['tag'], array(
+								'label' => 'post',
+								'tagstr' => $CI->data->out[$param['label']][$k]['tagstr'],
+								'content' => htmlspecialchars($v['title']).'/'.htmlspecialchars($v['text']),
+								'qty'	=> $param['related'],
+								'id'	=> $v['id']
+							));
 						}
 					}
 					
 					//sections and categories
-					$CI->load->library('div');
 					$div_where = array();
-					$div_linx = $CI->linx->get('post2div', array('a' => $v['id']));
-					if (is_array($div_linx)) {
-						foreach($div_linx as $dk => $dv) {
+					if (isset($linx['div'])) {
+						$CI->load->library('div');
+						foreach($linx['div'] as $dk => $dv) {
 							$div_where[] = $dv['b'];
 						}
 						$div_value = $CI->div->get(array('id' => $div_where, 'stack' => false));
@@ -255,47 +255,41 @@ class BLX_Post {
 					}
 					$CI->data->out[$param['label']][$k]['div_id'] = $div_where;
 					
-					if ($param['tag']) {//tags
-						$CI->load->library('tag');
-						$tag_linx = $CI->linx->get('post2tag', array('a' => $v['id']));
-						if (is_array($tag_linx)) {
-							$tag_where = array();
-							foreach($tag_linx as $k2 => $v2) $tag_where[] = $v2['b'];
-							$CI->data->out[$param['label']][$k]['tag'] = $CI->tag->get(array(
-								'id' => $tag_where,
-								'stack' => false,
-								'pager' => false
-							));
-							
-							$CI->data->out[$param['label']][$k]['tagstr'] = $CI->tag->_merge_tag($CI->data->out[$param['label']][$k]['tag']);
-						} else {
-							$CI->data->out[$param['label']][$k]['tag'] = array();
-						}
-						
-						if (isset($param['related']) && !empty($CI->data->out[$param['label']][$k]['tag'])) {//related entries
-							$CI->data->out[$param['label']][$k]['related'] = $CI->tag->_get_related($CI->data->out[$param['label']][$k]['tag'], array(
-								'label' => 'post',
-								'tagstr' => $CI->data->out[$param['label']][$k]['tagstr'],
-								'content' => htmlspecialchars($v['title']).'/'.htmlspecialchars($v['text']),
-								'qty'	=> $param['related'],
-								'id'	=> $v['id']
-							));
-						}
-					}
-					
-					if ($param['ext']) {//extra contents
+					if ($param['ext'] && isset($linx['ext'])) {//extra contents
 						$CI->load->helper('array');
-						$ext_link = array();
-						$ext_linx = $CI->linx->get('post2ext', array('a' => $v['id']));
-						if (!empty($ext_linx) && is_array($ext_linx)) {
-							foreach ($ext_linx as $ex) {
+						if (!empty($linx['ext']) && is_array($linx['ext'])) {
+							foreach ($linx['ext'] as $ex) {
 								$ex_value = decompress_array($ex['param']);
 								if (!empty($ex_value) && is_array($ex_value)) $CI->data->out[$param['label']][$k][$ex['status']] = $ex_value['value'];
 							}
 						}
 					}
 					
-					if ($param['schedule']) {//schedule
+					
+					
+					
+					
+					
+					
+					/*if ($param['file']) {//files
+						$CI->load->library('file');
+						$file_linx = $CI->linx->get('post2file', array('a' => $v['id']));
+						if (is_array($file_linx)) {
+							$file_where = array();
+							foreach($file_linx as $k2 => $v2) $file_where[] = $v2['b'];
+							$CI->data->out[$param['label']][$k]['file'] = $CI->file->get(array('id' => $file_where, 'stack' => false));
+						}
+					}*/
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					/*if ($param['schedule']) {//schedule
 						$CI->load->helper('date');
 						$sc = array('start', 'end');
 						$sc_flg = true;
@@ -317,7 +311,7 @@ class BLX_Post {
 							}
 						}
 						$CI->data->out[$param['label']][$k]['schedule']['flg'] = $sc_flg;
-					}
+					}*/
 					
 					if ($param['neighbor']) {
 						$neighbor_set = array(
@@ -364,6 +358,27 @@ class BLX_Post {
 						$CI->log->get('history/post/'.$v['id'].'/', array('label' => 'history'));
 						if (isset($CI->data->out['history'])) $CI->data->out[$param['label']][$k]['history'] = $CI->data->out['history'];
 						unset($CI->data->out['history']);
+					}
+					
+					//text
+					$text = htmlspecialchars_decode($v['text']);
+					$separator = $CI->setting->get_formattag('page');
+					$CI->data->out[$param['label']][$k]['text'] = $text;
+					$CI->data->out[$param['label']][$k]['paragraph'] = explode($separator, $text);
+					
+					//page
+					if (isset($param['page'])) {
+						$p = ($param['page']) ? (int)$param['page'] - 1 : 0;
+						$CI->data->out[$param['label']][$k]['page'] = $p;
+						
+						if (count($CI->data->out[$param['label']][$k]['paragraph']) > 1) {
+							$CI->data->out[$param['label']][$k]['pager'] = array(
+								'current'	=> $p + 1,
+								'base_url'	=> trim(self_url(), '/').'/?p',
+								'total'		=> count($CI->data->out[$param['label']][$k]['paragraph'])
+							);
+							//print_r($CI->data->out[$param['label']][$k]['pager']);exit;
+						}
 					}
 				}
 			}

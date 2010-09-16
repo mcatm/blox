@@ -98,6 +98,16 @@ class Linx {
 		return true;
 	}
 	
+	function get_related($label, $id) {//関連項目を取得
+		$CI =& get_instance();
+		
+		$CI->db->where("(linx_type LIKE '".$label."2%' AND linx_a = ".$id.") OR (linx_type LIKE '%2".$label."' AND linx_b = ".$id.")");
+		$q = $CI->db->get(DB_TBL_LINX);
+		$result = $q;
+		
+		return (!empty($result)) ? $result : false;
+	}
+	
 	function unlink($label, $id) {//関連項目を全て削除
 		$CI =& get_instance();
 		

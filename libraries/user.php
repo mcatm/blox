@@ -117,11 +117,30 @@ class BLX_User {
 			}
 			
 			foreach($CI->data->out[$param['label']] as $k => $v) {//追加データ付与
-				$CI->db->where('usertype_id', $v['type']);
-				$tmp_usertype = $CI->data->get($CI->db->get(DB_TBL_USERTYPE, 1));
-				$CI->data->out[$param['label']][$k]['usertype'] = $tmp_usertype[0];
 				
-				if ($param['file_main']) {//メインファイル
+				$linx = array();
+				$CI->db->where('(linx_type = "user2file" OR linx_type = "user2extapp" OR linx_type = "user2ext") AND linx_a = '.$v['id']);
+				$linx['all'] = $CI->data->set($CI->db->get(DB_TBL_LINX), array('stack' => false));
+				
+				if (!empty($linx['all'])) {
+					foreach ($linx['all'] as $l) {
+						switch ($l['type']) {
+							case 'user2file'://files
+								$linx['file'][] = $l;
+							break;
+							
+							case 'user2extapp'://external app
+								$linx['extapp'][] = $l;
+							break;
+							
+							case 'user2ext'://ext
+								$linx['ext'][] = $l;
+							break;
+						}
+					}
+				}
+				
+				if ($param['file_main'] && isset($linx['file'])) {//メインファイル
 					$CI->load->library('file');
 					$file_linx = $CI->linx->get('user2file', array('a' => $v['id'], 'status' => 'main'));
 					if (is_array($file_linx)) {
@@ -132,13 +151,13 @@ class BLX_User {
 					}
 				}
 				
-				if (isset($param['extapp'])) {//外部アプリ
+				if (isset($param['extapp']) && isset($linx['extapp'])) {//外部アプリ
 					$CI->data->out[$param['label']][$k]['extapp'] = $CI->linx->get('user2extapp', array(
 						'a'	=> $v['id']
 					));
 				}
 				
-				if ($param['ext']) {//拡張
+				if ($param['ext'] && isset($linx['ext'])) {//拡張
 					$CI->load->helper('array');
 					$ext_link = array();
 					$ext_linx = $CI->linx->get('user2ext', array('a' => $v['id']));
@@ -150,7 +169,7 @@ class BLX_User {
 					}
 				}
 				
-				if ($param['file']) {//ファイル
+				if ($param['file'] && isset($linx['file'])) {//ファイル
 					$CI->load->library('file');
 					$file_linx = $CI->linx->get('user2file', array('a' => $v['id']));
 					if (is_array($file_linx)) {
@@ -159,6 +178,10 @@ class BLX_User {
 						$CI->data->out[$param['label']][$k]['file'] = $CI->file->get(array('id' => $file_where, 'stack' => false));
 					}
 				}
+				
+				$CI->db->where('usertype_id', $v['type']);
+				$tmp_usertype = $CI->data->get($CI->db->get(DB_TBL_USERTYPE, 1));
+				$CI->data->out[$param['label']][$k]['usertype'] = $tmp_usertype[0];
 			}
 		}
 		$CI->db->flush_cache();
