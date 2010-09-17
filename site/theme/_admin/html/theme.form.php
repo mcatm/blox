@@ -10,7 +10,7 @@
 				</div>
 				<div class="row">
 					<label>template : </label>
-					<textarea name="body" class="input elastic" id="edit_text" rows="6"><?=$tpl['body']?></textarea>
+					<textarea name="body" class="input elastic" id="edit_text" rows="6" style="max-height:800px"><?=$tpl['body']?></textarea>
 				</div>
 			</div>
 			<div class="postmeta">

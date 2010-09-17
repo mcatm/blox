@@ -101,6 +101,7 @@ class Module {
 			'keyword'			=> array(),//for SEO
 			'description'		=> "",//for SEO
 			'title'				=> '{@sitename}',
+			'rss'				=> '',
 			'flg_title_clear'	=> true
 		);
 		
@@ -126,6 +127,7 @@ class Module {
 		//META
 		$CI->setting->set_title($param['title'], $param['flg_title_clear']);
 		$CI->setting->set_keyword($param['keyword'], true);
+		$CI->setting->set_rss($param['rss']);
 		$CI->setting->set_description(str_replace("\n", '', $param['description']));
 		
 		if (isset($param['theme'])) $CI->setting->set('theme', $param['theme']);
