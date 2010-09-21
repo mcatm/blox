@@ -10,3 +10,4 @@ site/js/shadowbox/*
 site/blox/lib/*
 site/upload/*
 site/blox/extension/*
+libraries/+post.php
