@@ -37,7 +37,7 @@
 <div id="navi">
 	<div class="container clearfix">
 		<ul class="menu clearfix">
-			<?foreach($admin_menu as $menu_sec => $menu_val){?><?if(!isset($menu_val['auth']) || $me['auth']['type'] == 'admin' || isset($menu_val['auth']) && isset($me['auth'][$menu_val['auth']])){?><li class="section<?if($menu_val['alias'] == 'site' || $menu_val['alias'] == 'file'){?> setting<?}?>">
+			<?foreach($admin_menu as $menu_sec => $menu_val){?><?if(!isset($menu_val['auth']) || $me['auth']['type'] == 'admin' || isset($menu_val['auth']) && isset($me['auth'][$menu_val['auth']])){?><li class="section<?if($menu_val['alias'] == 'site' || $menu_val['alias'] == 'file'){?> setting <?=$menu_val['alias']?><?}?>">
 				<h2><a href="<?=base_url()?>admin/<?=$menu_val['alias']?>/"><?if ($this->lang->line($lang_prefix.'_label_'.$menu_sec)) {?><?=$this->lang->line($lang_prefix.'_label_'.$menu_sec)?><?} else {?><?=$menu_sec?><?}?></a></h2>
 				<?if(isset($menu_val['sub'])){?><div class="sub clearfix">
 					<ul>

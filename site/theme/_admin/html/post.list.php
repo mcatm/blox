@@ -38,11 +38,9 @@
 							</td>
 						</tr><?}?>
 					</table>
-					<div id="list_footer" class="clearfix">
+					<div id="list_footer" class="foot clearfix">
 						<div class="tool">
-							<a id="btn-select-all">select all</a> / 
-							<a id="btn-deselect-all">deselect all</a> / 
-							<a id="btn-delete">delete</a>
+							<a id="btn-select-all">select all</a><a id="btn-deselect-all">deselect all</a><a id="btn-delete">delete</a>
 						</div>
 						<div class="pager"><?=$page['pager']?></div>
 					</div>

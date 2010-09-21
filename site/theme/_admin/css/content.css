@@ -44,7 +44,9 @@
 
 #body .head {
 	margin:0 0 10px;
-	border:4px solid #90A868;
+	background:#EEE;
+	border-bottom:1px solid #BBB;
+	border-right:1px solid #BBB;
 }
 
 #body .list {
@@ -119,19 +121,19 @@
 }
 
 #body .head h2 a {
-	color:#90A868;
+	color:#666;
 }
 
 #body .add {
 	float:right;
 	padding:10px;
 	text-align:right;
-	color:#90A868;
+	color:#666;
 	width:650px;
 }
 
 #body .add a {
-	color:#90A868;
+	color:#666;
 }
 
 #body .tool {
@@ -140,7 +142,8 @@
 
 #body .tool .filter {
 	padding:5px 15px;
-	background:#EEE;
+	background:#DDD;
+	border-top:1px solid #FBFBFB;
 }
 
 /* ----------------------------------------------------------------
@@ -153,6 +156,7 @@
 	border-left:1px solid #DDD;
 	border-top:1px solid #DDD;
 	width:100%;
+	margin:0 0 15px 0;
 }
 
 #body .list tr {
@@ -173,6 +177,16 @@
 	color:#BBB ;
 }
 
+#body .list table a.file {
+	padding:0 0 0 20px;
+	background:url(../img/icon/file.png) no-repeat left center;
+}
+
+#body .list table a.folder {
+	padding:0 0 0 20px;
+	background:url(../img/icon/folder.png) no-repeat left center;
+}
+
 #body .list td.createdate {
 	background:url(../img/icon/time.gif) 5px 50% no-repeat;
 	padding:5px 5px 5px 28px;
@@ -185,6 +199,46 @@
 
 #body .list td h3 {
 	font-size:16px;
+}
+
+#body .list .foot {
+	
+}
+
+/* ----------------------------------------------------------------
+
+	#body > .list > .foot
+
+---------------------------------------------------------------- */
+
+#body .list .foot .tool {
+	width:300px;
+	float:left;
+}
+
+#body .list .foot .tool a {
+	display:inline-block;
+	width:14px;
+	height:14px;
+	margin:0 5px 0 0;
+	text-indent:-9999px;
+}
+
+#btn-select-all {
+	background:url(../img/btn/navi.tbl.foot.png) no-repeat 0 50%;
+}
+
+#btn-deselect-all {
+	background:url(../img/btn/navi.tbl.foot.png) no-repeat -14px 50%;
+}
+
+#btn-delete {
+	background:url(../img/btn/navi.tbl.foot.png) no-repeat -28px 50%;
+}
+
+#body .list .foot .pager {
+	width:400px;
+	float:right;
 }
 
 /* ----------------------------------------------------------------
@@ -823,10 +877,8 @@
 
 #navi ul.menu li.setting {
 	float:right !important;
-}
-
-#navi ul.menu li.section:hover {
-	color:#FFF;
+	width:22px !important;
+	padding:0 0 0 15px;
 }
 
 #navi ul.menu li.section h2 {
@@ -836,7 +888,24 @@
 }
 
 #navi ul.menu li.setting h2 {
-	text-align:right;
+	width:22px;
+	text-indent:-9999px !important;
+}
+
+#navi ul.menu li.setting h2 a {
+	display:block;
+	padding:5px 0 !important;
+}
+
+#navi ul.menu li.file h2 a {
+	background:url(../img/btn/navi.file.png) no-repeat 50% 50%;
+	width:22px !important;
+}
+
+#navi ul.menu li.site h2 a {
+	background:url(../img/btn/navi.site.png) no-repeat 50% 50%;
+	width:22px !important;
+	text-indent:-9999px !important;
 }
 
 #navi ul.menu li.section h2 a {
@@ -862,6 +931,16 @@
 }
 
 #navi ul.menu li.setting .sub {
+	margin:0;
+	width:128px;
+	margin-left:-100px;
+}
+
+#navi ul.menu li.file .sub {
+	
+}
+
+#navi ul.menu li.site .sub {
 	
 }
 
@@ -880,7 +959,6 @@
 
 #navi ul.menu li.setting .sub ul {
 	width:128px;
-	margin:0 -140px 0 0 !important;
 }
 
 #navi ul.menu .sub li {
@@ -892,6 +970,10 @@
 	color:#FFF;
 	padding:1px 10px 6px;
 	width:100%;
+}
+
+#navi ul.menu li.setting .sub a {
+	width:108px;
 }
 
 #navi ul.menu .sub li a:hover {

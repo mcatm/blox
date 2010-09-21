@@ -27,18 +27,16 @@
 						</tr>
 						<tr><td>
 							<?foreach($v['child'] as $ck => $cv){?>
-								<?if (isset($cv['child'])) {?><a href="<?=base_url()?>admin/theme/<?=$page['base_segment']?><?=$v['name']?>/<?=$cv['path']?>/"><?=$cv['name']?></a><br /><?} else {?><a href="<?=base_url()?>admin/theme/edit/<?=$page['base_segment']?><?=$v['name']?>/<?=$cv['name']?>"><?=$cv['name']?></a><br /><?}}?>
+								<?if (isset($cv['child'])) {?><a href="<?=base_url()?>admin/theme/<?=$page['base_segment']?><?=$v['name']?>/<?=$cv['path']?>/" class="folder"><?=$cv['name']?></a><br /><?} else {?><a href="<?=base_url()?>admin/theme/edit/<?=$page['base_segment']?><?=$v['name']?>/<?=$cv['name']?>" class="file"><?=$cv['name']?></a><br /><?}}?>
 						</td></tr>
 						<?}else{?><tr class="theme_id<?=$v['name']?>">
 							<td><h3><a href="<?=base_url()?>admin/theme/edit/<?=$page['base_segment']?><?=$v['name']?>"><?=$v['name']?></a></h3></td>
 						</tr><?}?>
 						<?}?>
 					</table>
-					<div id="list_footer" class="clearfix">
+					<div id="list_footer" class="foot clearfix">
 						<div class="tool">
-							<a id="btn-select-all">select all</a> / 
-							<a id="btn-deselect-all">deselect all</a> / 
-							<a id="btn-delete">delete</a>
+							<a id="btn-select-all">select all</a><a id="btn-deselect-all">deselect all</a><a id="btn-delete">delete</a>
 						</div>
 						<div class="pager"></div>
 					</div>
