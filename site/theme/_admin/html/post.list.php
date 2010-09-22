@@ -7,7 +7,10 @@
 			<div class="list">
 				<div class="head round">
 					<h2><a href="<?=base_url()?>admin/<?=$post_type?>/"><?=$this->lang->line('system_label_'.$post_type)?></a></h2>
-					<div class="add"><a href="<?=base_url()?>admin/<?=$post_type?>/new/">+ ADD</a> | <a id="trigger_tool_filter">+ FILTER</a></div>
+					<div class="navi">
+						<a href="<?=base_url()?>admin/<?=$post_type?>/new/" class="add">+ ADD</a>
+						<a id="trigger_tool_filter" class="filter">+ FILTER</a>
+					</div>
 					<div class="tool">
 						<div id="target_tool_filter" class="filter <?if(!isset($this->session->userdata['filter']['admin/'.$post_type]) || count($this->session->userdata['filter']['admin/'.$post_type]) == 0){?> hide<?}?>">
 							<div class="sort">

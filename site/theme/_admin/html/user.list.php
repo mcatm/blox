@@ -7,7 +7,10 @@
 			<div class="list">
 				<div class="head round">
 					<h2><a href="<?=base_url()?>admin/user/"><?=$this->lang->line('system_label_user')?></a></h2>
-					<div class="add"><a href="<?=base_url()?>admin/user/new/">+ ADD</a> | <a id="trigger_tool_filter">+ FILTER</a></div>
+					<div class="navi">
+						<a href="<?=base_url()?>admin/user/new/" class="add">+ ADD</a>
+						<a id="trigger_tool_filter" class="filter">+ FILTER</a>
+					</div>
 					<div class="tool">
 						<div id="target_tool_filter" class="filter<?if(!isset($this->session->userdata['filter']['admin/user']) || count($this->session->userdata['filter']['admin/user']) == 0){?> hide<?}?>">
 							<div class="sort">

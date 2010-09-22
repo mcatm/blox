@@ -56,7 +56,7 @@ function init() {
 	if (defined('ADMIN_MODE') && ADMIN_MODE === true) {//管理画面
 		define('SSL_MODE', true);//SSLモード
 		$CI->setting->set('theme', '_admin');
-		$CI->setting->set('site_name', 'blox admin');
+		$CI->setting->set('site_name', 'Admin - '.$CI->setting->get('site_name'));
 		$CI->data->out['admin_menu'] = $CI->setting->get_admin_menu();
 		
 		if (!$CI->session->userdata('login') || !$CI->auth->check_auth()) {

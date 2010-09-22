@@ -6,7 +6,10 @@
 		<div class="container">
 			<div class="head round">
 				<h2><a href="<?=base_url()?>admin/file/"><?=$this->lang->line('system_label_file')?></a></h2>
-				<div class="add"><a href="<?=base_url()?>admin/file/add/">+ ADD</a> | <a id="trigger_tool_filter">+ FILTER</a></div>
+				<div class="navi">
+						<a href="<?=base_url()?>admin/file/add/" class="add">+ ADD</a>
+						<a id="trigger_tool_filter" class="filter">+ FILTER</a>
+					</div>
 				<div class="tool">
 					<div id="target_tool_filter" class="filter <?if(!isset($this->session->userdata['filter']['admin/file']) || count($this->session->userdata['filter']['admin/file']) == 0){?> hide<?}?>">
 						<div class="sort">createdate: <a href="<?=base_url()?>admin/file/filter/sort/createdate/desc/">desc</a> | <a href="<?=base_url()?>admin/file/filter/sort/createdate/asc/">asc</a></div>

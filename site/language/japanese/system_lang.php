@@ -9,7 +9,7 @@ $lang['system_label_site']			= 'SITE';
 $lang['system_label_theme']			= 'テーマ';
 $lang['system_label_div']			= 'サイト構成';
 $lang['system_label_mail']			= 'メール';
-$lang['system_label_setting']		= '設定変更';
+$lang['system_label_setting']		= '環境設定';
 $lang['system_label_install']		= 'インストール';
 $lang['system_label_user']			= 'USER';
 $lang['system_label_user_list']		= '会員一覧';
@@ -78,6 +78,16 @@ $lang['system_email_title_receive']	= 'メールを受信しました';
 $lang['mail_content_address_0_postal']	= '郵便番号';
 $lang['mail_content_tel']	= '電話番号';
 $lang['system_mail_label_require']	= '必須項目';
+
+$lang['setting_site_name']	= "サイト名";
+$lang['setting_site_description']	= "サイトの概要";
+$lang['setting_module']	= "モジュール";
+$lang['setting_flg_set_author']	= "flg:著者を設定";
+$lang['setting_switch_useragent'] = "flg:ユーザーエージェントで分岐";
+$lang['setting_open_api'] = "flg:APIを解放";
+
+$lang['setting_twitter_consumer_key'] = "twitter:コンシューマ鍵";
+$lang['setting_twitter_consumer_secret'] = "twitter:コンシューマ秘密鍵";
 
 
 /* End of file calendar_lang.php */

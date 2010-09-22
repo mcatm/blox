@@ -1,8 +1,16 @@
 <?php
 
 class Site extends Controller {
-
 	
+	function index() {
+		#$this->data->set_array('env', $this->setting->set);
+		#$this->db
+		
+		$this->data->set($this->db->get(DB_TBL_SETTING), array('label' => 'env'));
+		#print_r($this->data->out['env']);
+		
+		$this->load->view('setting.list.php');
+	}
 	
 	function _remap($m) {
 		switch ($m) {

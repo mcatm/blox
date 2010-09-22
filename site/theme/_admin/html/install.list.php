@@ -6,12 +6,21 @@
 		<div class="container">
 			<div class="list">
 				<div class="head round">
-					<h2><a href="<?=base_url()?>admin/install/">INSTALL</a></h2>
-					<div class="add"></div>
-					<div class="tool"></div>
+					<h2>OAuth</h2>
+					<div class="clear"></div>
 				</div>
 				<div class="block">
-					<h3>OAuth</h3>
+					<div class="box">
+						<h4><a href="<?=base_url()?>admin/install/twitter/">Twitter</a></h4>
+					</div>
+				</div>
+			</div>
+			<div class="list">
+				<div class="head round">
+					<h2>OAuth</h2>
+					<div class="clear"></div>
+				</div>
+				<div class="block">
 					<div class="box">
 						<h4><a href="<?=base_url()?>admin/install/twitter/">Twitter</a></h4>
 					</div>

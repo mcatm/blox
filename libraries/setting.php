@@ -249,10 +249,6 @@ class Setting {
 					'alias'	=> 'div',
 					'auth'	=> 'add_section'
 				),
-				'setting'	=> array(
-					'alias'	=> 'setting',
-					'auth'	=> 'add_section'
-				),
 				'mail'	=> array(
 					'alias' => 'mail'
 				),

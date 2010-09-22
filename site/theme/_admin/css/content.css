@@ -124,16 +124,35 @@
 	color:#666;
 }
 
-#body .add {
+#body .head .navi {
 	float:right;
-	padding:10px;
-	text-align:right;
-	color:#666;
-	width:650px;
+	width:70px;
+	padding:10px 0;
 }
 
-#body .add a {
-	color:#666;
+#body .head .navi a {
+	text-indent:-9999px;
+	display:inline-block;
+	width:21px;
+	height:21px;
+	margin:0 0 0 5px;
+	background:url(../img/btn/tool.title.png) no-repeat;
+}
+
+#body .head .navi a.add {
+	background-position:0 0;
+}
+
+#body .head .navi a.filter {
+	background-position:0 -21px;
+}
+
+#body .head .navi a.add:hover {
+	background-position:0 -42px;
+}
+
+#body .head .navi a.filter:hover {
+	background-position:0 -63px;
 }
 
 #body .tool {
@@ -519,6 +538,26 @@
 #body .preview .side {
 	width:500px;
 	float:right;
+}
+
+/* ----------------------------------------------------------------
+
+	#body > .setting
+
+---------------------------------------------------------------- */
+
+#body .setting td {
+	padding:15px;
+}
+
+#body .setting label {
+	margin:0 0 5px;
+}
+
+#body .setting textarea.query {
+	width:600px;
+	font-size:14px;
+	padding:8px 10px 0 10px;
 }
 
 /* ----------------------------------------------------------------

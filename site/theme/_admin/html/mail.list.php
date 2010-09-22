@@ -7,7 +7,9 @@
 			<div class="list">
 				<div class="head round">
 					<h2><a href="<?=base_url()?>admin/mail/"><?=$this->lang->line('system_label_mail')?></a></h2>
-					<div class="add"><a id="trigger_tool_filter">+ FILTER</a></div>
+					<div class="navi">
+						<a id="trigger_tool_filter" class="filter">+ FILTER</a>
+					</div>
 					<div class="tool">
 						<div id="target_tool_filter" class="filter <?if(!isset($this->session->userdata['filter']['admin/mail']) || count($this->session->userdata['filter']['admin/mail']) == 0){?> hide<?}?>">
 							<div class="sort">

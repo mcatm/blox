@@ -71,6 +71,12 @@ class BLX_Language extends CI_Language {
 		log_message('debug', 'Language file loaded: language/'.$idiom.'/'.$langfile);
 		return TRUE;
 	}
+	
+	function line($line = '', $return_raw = false) {
+		if ($return_raw) $return_raw = $line;
+		$line = ($line == '' OR ! isset($this->language[$line])) ? $return_raw : $this->language[$line];
+		return $line;
+	}
 }
 // END Language Class
 
