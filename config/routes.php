@@ -40,46 +40,28 @@
 |
 */
 
-$route['default_controller'] = "pipe";
+$route['default_controller']	= "pipe";
 
-$route['(:num)'] = "pipe/top/$1";
+$route['(:num)']				= "pipe/top/$1";
 
-$route['request/(:any)']	= "request/$1";
-$route['request']			= "request";
+$route['request/(:any)']		= "request/$1";
+$route['request']				= "request";
 
-#$home = (defined('URL_ALIAS_HOME')) ? URL_ALIAS_HOME : 'home';
+$route['cron/(:any)']			= "cron/$1";
+$route['cron']					= "cron";
 
-#$route[$home.'/(:any)']		= "home/$1";
-#$route[$home]				= "home/top";
+$route['admin/(:any)']			= "admin/$1";
+$route['admin']					= "admin/top";
 
-$route['admin/(:any)']		= "admin/$1";
-$route['admin']				= "admin/top";
+$route['login/(:any)']			= "login/$1";
+$route['login']					= "login";
 
-#$route['api/(:any)']		= "api/$1";
-#$route['api']				= "api";
+$route['logout/(:any)']			= "logout/$1";
+$route['logout']				= "logout";
 
-#$route['feed/(:any)']		= "feed/$1";
-#$route['feed']				= "feed";
-#$route['rss/(:any)']		= "feed/$1";
-#$route['rss']				= "feed";
+$route['(:any)']				= 'pipe/$1';
 
-$route['login/(:any)']		= "login/$1";
-$route['login']				= "login";
-
-#$route['redirect/(:any)']		= "redirect/$1";
-#$route['redirect']				= "redirect";
-
-#$route['download/(:any)']	= "download/$1";
-
-$route['logout/(:any)']		= "logout/$1";
-$route['logout']			= "logout";
-
-#$route['cron/(:any)']		= "cron/$1";
-#$route['cron']				= "cron";
-
-$route['(:any)']	= 'pipe/$1';
-
-$route['scaffolding_trigger'] = "";
+$route['scaffolding_trigger']	= "";
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */
