@@ -341,6 +341,30 @@ class BLX_Post {
 						}
 					}
 					
+					if ($param['comment']) {//comment
+						$this->get(array(
+							'type'		=> 1,
+							'parent'	=> $v['id'],
+							'label'		=> 'tmp_comment'
+						));
+						if (!empty($CI->data->out['tmp_comment'])) {
+							$CI->data->out[$param['label']][$k]['comment'] = $CI->data->out['tmp_comment'];
+							unset($CI->data->out['tmp_comment']);
+						}
+					}
+					
+					if ($param['get_parent'] && !empty($v['parent'])) {//get a parent
+						$this->get(array(
+							'id'	=> $v['parent'],
+							'pager'	=> false,
+							'label'	=> 'tmp_parent'
+						));
+						if (!empty($CI->data->out['tmp_parent'])) {
+							$CI->data->out[$param['label']][$k]['parent'] = $CI->data->out['tmp_parent'][0];
+							unset($CI->data->out['tmp_parent']);
+						}
+					}
+					
 					$CI->data->out[$param['label']][$k]['url'] = $this->_make_permalink($label[0], $v['id'], $v['alias']);//permalink
 					
 					//multi urls

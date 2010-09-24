@@ -8,7 +8,10 @@ class BLX_Cron {
 		if (!empty($c)) {
 			foreach($c as $v) {
 				$f = 'cron_'.str_replace('.php', '', $v);
-				if (is_file(LIB_FOLDER.'/cron/'.$v)) $f();
+				if (is_file(LIB_FOLDER.'/cron/'.$v)) {
+					require_once(LIB_FOLDER.'/cron/'.$v);
+					$f();
+				}
 			}
 		}
 	}
