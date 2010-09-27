@@ -42,7 +42,8 @@ $config['index_page'] = INDEX_PAGE;
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= "REQUEST_URI";
+if (!defined('URI_PROTOCOL')) define ('URI_PROTOCOL', 'REQUEST_URI');
+$config['uri_protocol']	= URI_PROTOCOL;
 
 /*
 |--------------------------------------------------------------------------

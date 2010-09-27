@@ -27,7 +27,10 @@ if ( ! function_exists( 'self_url' ) ) {
 		$CI =& get_instance();
 		$delimiter = $CI->config->config['index_page'].'/';
 		if ($url == "") $url = $_SERVER['PHP_SELF'];
-		if ($_SERVER['QUERY_STRING'] != "") $url .= '?'.$_SERVER['QUERY_STRING'];
+		if ($_SERVER['QUERY_STRING'] != ""){
+			$url .= (!defined('URI_PROTOCOL') || URI_PROTOCOL != 'QUERY_STRING') ? '?' : '';
+			$url .= $_SERVER['QUERY_STRING'];
+		}
 		$url = base_url() . substr($url, strpos($url, $delimiter) + strlen($delimiter));
 		return $url;
 	}

@@ -62,14 +62,14 @@ class BLX_Input extends CI_Input {
 		
 		# need to refactor below lines. IT MUST BE CLEANED $_GET.
 		
-		/*if ($this->allow_get_array == FALSE)
+		if ($this->allow_get_array == FALSE)
 		{
 			$_GET = array();
 		}
 		else
 		{
 			$_GET = $this->_clean_input_data($_GET);
-		}*/
+		}
 
 		// Clean $_POST Data
 		$_POST = $this->_clean_input_data($_POST);
@@ -101,8 +101,6 @@ class BLX_Input extends CI_Input {
 			return $new_array;
 		}
 		
-		print_r($str);exit;
-
 		// We strip slashes if magic quotes is on to keep things consistent
 		if (get_magic_quotes_gpc())
 		{
@@ -122,19 +120,19 @@ class BLX_Input extends CI_Input {
 		}
 		
 		return $str;
-	}
+	}*/
 	
 	function _clean_input_keys($str)//さくら／Multiviews対策
 	{
 		#$str = str_replace('_php', '', $str);
 		#print $str.'<hr />';
-		if ( ! preg_match("/^[a-z0-9:_\/-]+$/i", $str))
+		/*if ( ! preg_match("/^[a-z0-9:_\/-]+$/i", $str))
 		{
 			exit('Disallowed Key Characters!');
-		}
+		}*/
 
 		return $str;
-	}*/
+	}
 	
 	/*function _sanitize_globals() {
 		$this->allow_get_array = TRUE;
