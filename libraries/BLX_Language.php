@@ -29,9 +29,7 @@ class BLX_Language extends CI_Language {
 	function load($langfile = '', $idiom = '', $return = FALSE) {
 		$langfile = str_replace(EXT, '', str_replace('_lang.', '', $langfile)).'_lang'.EXT;
 
-		if (in_array($langfile, $this->is_loaded, TRUE)) {
-			return;
-		}
+		if (in_array($langfile, $this->is_loaded, TRUE)) return;
 
 		if ($idiom == '') {
 			$CI =& get_instance();
@@ -40,8 +38,9 @@ class BLX_Language extends CI_Language {
 		}
 		
 		// Determine where the language file is and load it
-		if (file_exists($CI->config->item('mod_language_path'))) {
+		if ($CI->config->item('mod_language_path') != "" && file_exists($CI->config->item('mod_language_path'))) {
 			include($CI->config->item('mod_language_path'));
+			$CI->config->set_item('mod_language_path', '');
 		} else if (file_exists($CI->config->item('language_path').'/'.$idiom.'/'.$langfile)) {
 			include($CI->config->item('language_path').'/'.$idiom.'/'.$langfile);
 		} else if (file_exists(APPPATH.'language/'.$idiom.'/'.$langfile)) {
