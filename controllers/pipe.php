@@ -28,7 +28,7 @@ class Pipe extends Controller {
 	function _remap($method) {//switch as url segment
 		
 		if ($method == 'index') $method = 'top';
-		
+
 		# Module
 		if ($mod_loaded = $this->setting->get('module_loaded')) {
 			$this->load->library('module');
@@ -40,10 +40,10 @@ class Pipe extends Controller {
 				exit;
 			}
 		}
-		
+
 		$this->_view(trim($this->uri->uri_string(), '/'));# Page
 		$this->_view($method, 'section');# Section
-		
+
 		show_404();
 	}
 	
