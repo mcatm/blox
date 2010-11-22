@@ -2,7 +2,7 @@
 
 $config = array(
 	'flg_use_db'	=> false,
-	'path_csv'		=> EX_FOLDER.'/upload/mailmag/maillist.csv',
+	'path_csv'		=> SITE_FOLDER.'/upload/mailmag/maillist.csv',
 	'master_email'	=> 'fineartplace@artfolio.co.jp',
 	'master_name'	=> 'Fine Art PLACE',
 	'charset'		=> 'iso-2022-jp',

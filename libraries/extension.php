@@ -49,7 +49,7 @@ class Extension {
 			}
 		}
 		
-		if (is_file(EX_FOLDER.'/language/'.$CI->config->item('language').'/'.$ext.'_lang.php')) $CI->lang->load($ext);//拡張言語ファイル読込
+		if (is_file(SITE_FOLDER.'/language/'.$CI->config->item('language').'/'.$ext.'_lang.php')) $CI->lang->load($ext);//拡張言語ファイル読込
 	}
 	
 	function Extension() {

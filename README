@@ -1,2 +1,12 @@
 # Blox is a contents management system written by codeigniter, a PHP framework and mysql.
 
+
+
+.htaccess
+
+php_value upload_max_filesize 20M
+php_value post_max_size 20M
+
+RewriteEngine on
+RewriteCond $1 !^(index\.php|ex|robots\.txt)
+RewriteRule ^(.*)$ /--------/index.php/$1 [L]

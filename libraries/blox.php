@@ -54,7 +54,7 @@ class Blox {
 			}
 		
 			$module_path = array(
-				EX_FOLDER.'/modules/%s/',
+				SITE_FOLDER.'/modules/%s/',
 				APP_FOLDER.'/modules/%s/'
 			);
 			
