@@ -155,9 +155,8 @@ load_class('Controller', FALSE);
 // the path to controllers i need to change is below.
 // default line was commented out.
 
-//$blx_controller_path = APPPATH.'controllers/';
-$blx_controller_path = SITE_FOLDER.'/controller/';
-$blx_controller_path .= $RTR->fetch_directory().$RTR->fetch_class().EXT;
+$blx_controller_path = APPPATH.'controllers/'.$RTR->fetch_directory().$RTR->fetch_class().EXT;
+#$blx_controller_path = SITE_FOLDER.'/controller/'.$RTR->fetch_directory().$RTR->fetch_class().EXT;
 
 if ( ! file_exists($blx_controller_path))
 {
