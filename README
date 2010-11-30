@@ -2,6 +2,8 @@
 
 
 
+
+
 .htaccess
 
 php_value upload_max_filesize 20M
@@ -10,3 +12,28 @@ php_value post_max_size 20M
 RewriteEngine on
 RewriteCond $1 !^(index\.php|ex|robots\.txt)
 RewriteRule ^(.*)$ /--------/index.php/$1 [L]
+
+
+
+
+
+HACK POINT!
+/core/codeigniter/Codeigniter.php
+please remind it when the codeigniter is updated.
+
+// --------- blox - HACK!!!! -----------------------------------
+// the path to controllers i need to change is below.
+// default line was commented out.
+
+//$blx_controller_path = APPPATH.'controllers/';
+$blx_controller_path = SITE_FOLDER.'/controller/';
+$blx_controller_path .= $RTR->fetch_directory().$RTR->fetch_class().EXT;
+
+if ( ! file_exists($blx_controller_path))
+{
+	show_error('Unable to load your default controller.  Please make sure the controller specified in your Routes.php file is valid.');
+}
+
+include($blx_controller_path);
+
+// --------- blox - HACK!!!! -----------------------------------

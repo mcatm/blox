@@ -150,12 +150,23 @@ load_class('Controller', FALSE);
 // Load the local application controller
 // Note: The Router class automatically validates the controller path.  If this include fails it 
 // means that the default controller in the Routes.php file is not resolving to something valid.
-if ( ! file_exists(APPPATH.'controllers/'.$RTR->fetch_directory().$RTR->fetch_class().EXT))
+
+// --------- blox - HACK!!!! -----------------------------------
+// the path to controllers i need to change is below.
+// default line was commented out.
+
+//$blx_controller_path = APPPATH.'controllers/';
+$blx_controller_path = SITE_FOLDER.'/controller/';
+$blx_controller_path .= $RTR->fetch_directory().$RTR->fetch_class().EXT;
+
+if ( ! file_exists($blx_controller_path))
 {
 	show_error('Unable to load your default controller.  Please make sure the controller specified in your Routes.php file is valid.');
 }
 
-include(APPPATH.'controllers/'.$RTR->fetch_directory().$RTR->fetch_class().EXT);
+include($blx_controller_path);
+
+// --------- blox - HACK!!!! -----------------------------------
 
 // Set a mark point for benchmarking
 $BM->mark('loading_time_base_classes_end');
