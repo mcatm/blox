@@ -11,10 +11,10 @@
 */
 
 $hook['post_controller_constructor'] = array(
-	'class'    => '',
+	'class'    => 'Core',
 	'function' => 'init',
-	'filename' => 'init.php',
-	'filepath' => 'hooks'
+	'filename' => 'core.php',
+	'filepath' => 'models'
 );
 
 $hook['post_controller'] = array(

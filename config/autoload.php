@@ -42,7 +42,7 @@
 if (defined('CRON')) {
 	$autoload['libraries'] = array('data', 'setting', 'linx', 'database');
 } else {
-	$autoload['libraries'] = array('database', 'setting', 'data', 'div', 'auth', 'log', 'linx', 'blox', 'user_agent');
+	$autoload['libraries'] = array(/*'database', 'setting', 'data', 'div', 'auth', 'log', 'linx', 'blox', 'user_agent'*/);
 }
 
 
@@ -55,7 +55,7 @@ if (defined('CRON')) {
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'format');
+$autoload['helper'] = array(/*'url', 'format'*/);
 
 
 /*
@@ -83,7 +83,7 @@ $autoload['plugin'] = array();
 |
 */
 
-$autoload['config'] = array('blox');
+$autoload['config'] = array(/*'blox'*/);
 
 
 /*
@@ -112,7 +112,7 @@ $autoload['language'] = array('system');
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('core');
 
 
 
