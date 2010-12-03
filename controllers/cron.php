@@ -8,6 +8,6 @@ class Cron extends Controller {
 	
 	function Cron() {
 		parent::Controller();
-		#if (!defined('CRON')) header('location:'.base_url());
+		#if (!defined('IS_CRON')) header('location:'.base_url());
 	}
 }

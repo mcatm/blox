@@ -3,7 +3,8 @@
 class Mod_Top {
 	
 	function index() {
-		$CI =& get_instance();
+		exit('HELLO');
+		/*$CI =& get_instance();
 		$CI->load->library(array('post', 'div'));
 		
 		$offset = ($CI->uri->segment(1)) ? $CI->uri->segment(1) : 0;
@@ -18,7 +19,7 @@ class Mod_Top {
 		
 		$CI->mod->top->view(array(
 			'tpl'	=> 'top.php'
-		));
+		));*/
 	}
 	
 	function Mod_Top() {

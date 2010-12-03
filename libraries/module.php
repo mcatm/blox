@@ -7,8 +7,32 @@ class Module {
 	
 	function controller($mod, $mode = '') {
 		$CI =& get_instance();
+		
+		print_r($CI->uri->segment_array());
+		#$class  = $CI->fetch_class();
+		#$method = $CI->fetch_method();
+		
+		#print $method;
+		exit('UUUU');
+		
+		// Is there a "remap" function?
+		if (method_exists($CI, '_remap')) {
+			$CI->_remap($method);
+		} else {
+			// is_callable() returns TRUE on some versions of PHP 5 for private and protected
+			// methods, so we'll use this workaround for consistent behavior
+			if ( ! in_array(strtolower($method), array_map('strtolower', get_class_methods($CI)))) {
+				show_404("{$class}/{$method}");
+			}
+
+			// Call the requested method.
+			// Any URI segments present (besides the class/function) will be passed to the method for convenience
+			call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+		}
+		
+		/*
 		$MD =& $CI->mod->$mod;
-		$mod_loaded = $CI->setting->get('module_loaded');
+		$mod_loaded = $CI->setting->get('mod_loaded');
 		
 		define('MOD_CONTROLLER', $mod);
 		
@@ -82,7 +106,7 @@ class Module {
 			exit;
 		}
 		
-		show_404();
+		show_404();*/
 	}
 	
 	function view($user_param = array()) {

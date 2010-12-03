@@ -39,10 +39,10 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-if (defined('CRON')) {
-	$autoload['libraries'] = array('data', 'setting', 'linx', 'database');
+if (defined('IS_CRON')) {
+	$autoload['libraries'] = array(/*'data', 'setting', 'linx', 'database'*/);
 } else {
-	$autoload['libraries'] = array(/*'database', 'setting', 'data', 'div', 'auth', 'log', 'linx', 'blox', 'user_agent'*/);
+	$autoload['libraries'] = array('database', 'setting', 'auth', 'data'/*, 'div', 'log', 'linx', 'blox', 'user_agent'*/);
 }
 
 
@@ -55,7 +55,7 @@ if (defined('CRON')) {
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array(/*'url', 'format'*/);
+$autoload['helper'] = array('url', 'directory'/*, 'format'*/);
 
 
 /*
@@ -113,8 +113,6 @@ $autoload['language'] = array('system');
 */
 
 $autoload['model'] = array('core');
-
-
 
 /* End of file autoload.php */
 /* Location: ./system/application/config/autoload.php */

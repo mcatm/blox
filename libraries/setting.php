@@ -133,28 +133,27 @@ class Setting {
 	}
 	
 	function init() {
-		$tmp_home = (defined('URL_ALIAS_HOME')) ? URL_ALIAS_HOME : 'home';
-		$default_setting = array(//default settings
+		#$tmp_home = (defined('URL_ALIAS_HOME')) ? URL_ALIAS_HOME : 'home';
+		$default_env = array(//default settings
 			'site_name'					=> 'blox',//サイト名
 			'site_description'			=> '',//要約
 			'site_keyword'				=> '',//キーワード
 			'site_rss'					=> base_url().'rss/',//RSS
 			'site_favicon'				=> ex_url().'favicon.ico',//favicon
 			'theme'						=> 'default',//a default theme
-			#'module'					=> 'top,post,download,user,search,bookmarklet:b,music',//modules to load
 			'module'					=> 'top,post,download',//modules to load
 			'module_shortcut'			=> 'section',//module needs no alias
 			'usertype_type'				=> 'admin,contributor,anonymous',//the kind of usertype
 			'authtype'					=> 'post,user,category,section,home,comment,usertype,theme,setting,page,file,install',//authority types
 			'url_alias_post'			=> 'post',
-			'url_alias_bookmarklet'		=> 'bookmarklet',//ブックマークレットのエイリアス
-			'url_segment_identifier_id'	=> '',//ID識別子：この次のセグメントがIDとなる
-			'url_segment_identifier_page'	=> 'page',//PAGE識別子
-			'url_segment_identifier_offset'	=> 'offset',//OFFSET識別子
-			'url_segment_identifier_stop'	=> '',//METHODを区別する識別子
+			#'url_alias_bookmarklet'		=> 'bookmarklet',//ブックマークレットのエイリアス
+			#'url_segment_identifier_id'	=> '',//ID識別子：この次のセグメントがIDとなる
+			#'url_segment_identifier_page'	=> 'page',//PAGE識別子
+			#'url_segment_identifier_offset'	=> 'offset',//OFFSET識別子
+			#'url_segment_identifier_stop'	=> '',//METHODを区別する識別子
 			'file_segment'				=> 'main|sub',//ファイルの分類
 			'img_notfound'				=> 'default.jpg',
-			'author_segment'			=> 'main',//記事に対する著者の役割
+			#'author_segment'			=> 'main',//記事に対する著者の役割
 			'post_max_qty_per_page'		=> 20,//一ページに表示する記事の数
 			'post_max_tag_per_page'		=> 100,//一ページに表示するタグの数
 			'img_size_main'				=> 500,//メイン画像のサイズ
@@ -167,7 +166,7 @@ class Setting {
 			'crypt_salt'				=> 'bx',//暗号化の際に使用する二文字のsalt
 			'global_encoding'			=> CHARSET,//マルチバイトエンコード
 			'code_google_analytics'		=> '',//google Analytics用
-			//'email_admin'				=> '',管理者E-Mailアドレス
+			#'email_admin'				=> '',管理者E-Mailアドレス
 			'html_tag_not_escape'		=> '<a><br><blockquote>',//エスケープしないhtmlタグ
 			'html_tag_not_escape_attr'	=> 'href,target,class',//aタグの中でエスケープしない要素
 			'doc_help'					=> 'http://blox.pelepop.com/',//ドキュメント
@@ -179,11 +178,10 @@ class Setting {
 			'history_log_level'			=> 3,//編集履歴の深さ
 			'flg_maintenance'			=> 'false'//メンテナンスモード
 		);
-		
 		$CI =& get_instance();
-		foreach ($default_setting as $k => $v) $this->set[$k] = $v;
+		foreach ($default_env as $k => $v) $this->set[$k] = $v;
 		
-		$this->_get_user_setting(array_flip($default_setting), true);//ユーザー設定読み込み
+		$this->_get_user_setting(array_flip($default_env), true);//ユーザー設定読み込み
 		
 		$this->set_title();
 		$this->set_keyword();
@@ -193,7 +191,7 @@ class Setting {
 		
 		if (defined('SITE_PREFIX') && SITE_PREFIX != "") $this->set('site_prefix', SITE_PREFIX);
 		
-		$CI->div->get(array('type' => 'section', 'label' => 'section', 'pager' => false));
+		#$CI->div->get(array('type' => 'section', 'label' => 'section', 'pager' => false));
 	}
 	
 	var $admin_menu = array(

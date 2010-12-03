@@ -48,7 +48,7 @@
 	require_once(CRON_PATH.'site/config.php');
 	
 	define('CRON_CI_INDEX', CRON_PATH.INDEX_PAGE);   // Your CodeIgniter main index.php file
-    define('CRON', TRUE);   // Test for this in your controllers if you only want them accessible via cron
+    define('IS_CRON', TRUE);   // Test for this in your controllers if you only want them accessible via cron
 
 # Parse the command line
     $script = array_shift($argv);
