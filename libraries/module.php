@@ -8,41 +8,17 @@ class Module {
 	function controller($mod, $mode = '') {
 		$CI =& get_instance();
 		
-		print_r($CI->uri->segment_array());
-		#$class  = $CI->fetch_class();
-		#$method = $CI->fetch_method();
+		$uri_segment = $CI->uri->segment_array();
 		
-		#print $method;
-		exit('UUUU');
-		
-		// Is there a "remap" function?
-		if (method_exists($CI, '_remap')) {
-			$CI->_remap($method);
-		} else {
-			// is_callable() returns TRUE on some versions of PHP 5 for private and protected
-			// methods, so we'll use this workaround for consistent behavior
-			if ( ! in_array(strtolower($method), array_map('strtolower', get_class_methods($CI)))) {
-				show_404("{$class}/{$method}");
-			}
-
-			// Call the requested method.
-			// Any URI segments present (besides the class/function) will be passed to the method for convenience
-			call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
-		}
-		
-		/*
 		$MD =& $CI->mod->$mod;
 		$mod_loaded = $CI->setting->get('mod_loaded');
-		
 		define('MOD_CONTROLLER', $mod);
 		
-		$uri_segment[] = ($mode == "") ? 'top' : '_'.$mode;
-		for ($i=1;$CI->uri->segment($i);$i++) {
-			if (is_numeric($CI->uri->segment($i))) break;
-			if ($mode != "" && ($CI->uri->segment($i) == 'mod' || $CI->uri->segment($i) == $mod)) continue;
-			if ($i != 1) $uri_segment[] = $CI->uri->segment($i);
-		}
-		#print_r($uri_segment);
+		if (empty($uri_segment)) $uri_segment[] = 'top';
+		
+		print_r($uri_segment);
+		
+		//make instance of certain controller by using the uri segments.
 		$ctl = $this->module_path.'controller/';
 		foreach ($uri_segment as $i => $u) {
 			$classname = $u;
@@ -73,40 +49,60 @@ class Module {
 			$ctlpath = $ctl;
 			$classname = 'top';
 			$ctlflg = true;
-			#$i = 0;
 		}
-		#print_r($uri_segment);
-		#print $uri_segment[$i+1];
-		#exit($ctlpath);
+		
 		if ($ctlflg) {
 			require_once($ctlpath);
 			
 			$method = (isset($uri_segment[$i+1])) ? $uri_segment[$i+1] : 'index';
-			#print $method;
-			switch ($mode) {
-				case 'admin';
-					#$method = ($CI->uri->segment(4)) ? $CI->uri->segment(4) : "index";
-					//if (!empty($this->admin_menu)) $CI->data->out['admin_menu'] = $this->admin_menu;
-					#exit('admin');
-					$classname = 'Mod_'.$classname;
-					#exit($classname);
-					$MD->controller = new $classname;
-				break;
-				
-				default:
-					$classname = 'Mod_'.$classname;
-					#exit($classname);
-					$MD->controller = new $classname;
-					#$method = ($CI->uri->segment(2)) ? $CI->uri->segment(2) : "index";
-				break;
-			}
-			#exit($method);
+			
+			$classname = 'Mod_'.$classname;
+			$MD->controller = new $classname;
+			#exit($classname);
+			if (!method_exists($MD->controller, '_remap')) exit('remap!');//$MD->controller->_remap($method);
 			if (!method_exists($MD->controller, $method)) $method = 'index';//show_404();//メソッドが存在しない場合、404
+			
 			$MD->controller->$method();
+			
 			exit;
 		}
 		
-		show_404();*/
+		show_404();
+		
+		/*
+		$uri_segment[] = ($mode == "") ? 'top' : '_'.$mode;
+		for ($i=1;$CI->uri->segment($i);$i++) {
+			if (is_numeric($CI->uri->segment($i))) break;
+			if ($mode != "" && ($CI->uri->segment($i) == 'mod' || $CI->uri->segment($i) == $mod)) continue;
+			if ($i != 1) $uri_segment[] = $CI->uri->segment($i);
+		}
+		*/
+		
+		
+		
+		
+		
+		
+		
+		/*
+		// Is there a "remap" function?
+		if (method_exists($CI, '_remap')) {
+			$CI->_remap($method);
+			exit('UUUU');
+		} else {
+			// is_callable() returns TRUE on some versions of PHP 5 for private and protected
+			// methods, so we'll use this workaround for consistent behavior
+			if ( ! in_array(strtolower($method), array_map('strtolower', get_class_methods($CI)))) {
+				show_404("{$class}/{$method}");
+			}
+
+			// Call the requested method.
+			// Any URI segments present (besides the class/function) will be passed to the method for convenience
+			call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+		}
+		*/
+		
+		
 	}
 	
 	function view($user_param = array()) {
