@@ -11,11 +11,12 @@ class BLX_Loader extends CI_Loader {
 		
 		$theme_folder = THEME_FOLDER.'/';
 		
-		if (!defined('ALREADY_BLOX_ACTIONED')) {//一回だけ、プラグイン動作
+		/*if (!defined('ALREADY_BLOX_ACTIONED')) {//一回だけ、プラグイン動作
 			$CI->blox->action('e:'.substr($CI->uri->uri_string(), 1));
 			define('ALREADY_BLOX_ACTIONED', true);
-		}
+		}*/
 		
+		$CI->load->library('data');
 		if (count($vars) == 0) $vars = $CI->data->out;//Output自動呼び出し
 		
 		if (!defined('EXTENSION_CONTROLLER') || is_file($theme_folder.$CI->setting->get('theme').'/html/'.$view)) {
@@ -66,6 +67,8 @@ class BLX_Loader extends CI_Loader {
 			'_ci_return'	=> $return
 		));
 	}
+	
+	// --------------------------------------------------------------------
 	
 	/**
 	 * Loader

@@ -16,7 +16,7 @@ class Module {
 		
 		if (empty($uri_segment)) $uri_segment[] = 'top';
 		
-		print_r($uri_segment);
+		#print_r($uri_segment);
 		
 		//make instance of certain controller by using the uri segments.
 		$ctl = $this->module_path.'controller/';
@@ -52,18 +52,28 @@ class Module {
 		}
 		
 		if ($ctlflg) {
-			require_once($ctlpath);
+			include($ctlpath);
 			
 			$method = (isset($uri_segment[$i+1])) ? $uri_segment[$i+1] : 'index';
 			
 			$classname = 'Mod_'.$classname;
-			$MD->controller = new $classname;
-			#exit($classname);
-			if (!method_exists($MD->controller, '_remap')) exit('remap!');//$MD->controller->_remap($method);
-			if (!method_exists($MD->controller, $method)) $method = 'index';//show_404();//メソッドが存在しない場合、404
 			
-			$MD->controller->$method();
+			#print $CI->setting->get('theme');
 			
+			$BX = new $classname;//redefine the instance of controller
+			
+			foreach ($CI as $k => $m) {
+				#print_r($k);
+				$BX->$k = $CI->$k;
+				#print'<br />';
+			}
+			
+			$CI = $BX;
+			
+			if (method_exists($CI, '_remap')) $CI->_remap($method);
+			
+			call_user_func_array(array(&$CI, $method), array_slice($CI->uri->rsegments, 2));
+						
 			exit;
 		}
 		

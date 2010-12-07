@@ -42,7 +42,7 @@
 if (defined('IS_CRON')) {
 	$autoload['libraries'] = array(/*'data', 'setting', 'linx', 'database'*/);
 } else {
-	$autoload['libraries'] = array('database', 'setting', 'auth', 'data'/*, 'div', 'log', 'linx', 'blox', 'user_agent'*/);
+	$autoload['libraries'] = array('database', 'setting', 'auth', 'data', 'linx'/*, 'div', 'log', 'blox', 'user_agent'*/);
 }
 
 
@@ -55,7 +55,7 @@ if (defined('IS_CRON')) {
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'directory'/*, 'format'*/);
+$autoload['helper'] = array('url', 'directory', 'format');
 
 
 /*

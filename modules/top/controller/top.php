@@ -1,9 +1,14 @@
 <?
 
-class Mod_Top {
+class Mod_Top extends Controller {
 	
 	function index() {
-		exit('HELLO');
+		#print_r($this->uri->rsegments);
+		$this->load->library('post');
+		$this->post->get(array('qty' => 1));
+		$this->load->view('top');
+		
+		#exit('HELLO');
 		/*$CI =& get_instance();
 		$CI->load->library(array('post', 'div'));
 		
@@ -22,8 +27,12 @@ class Mod_Top {
 		));*/
 	}
 	
-	function Mod_Top() {
+	function _remap() {
 		
+	}
+	
+	function __construct() {
+		parent::Controller();
 	}
 }
 

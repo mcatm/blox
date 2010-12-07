@@ -13,7 +13,7 @@
 					<p><?=$v['alias']?></p>
 				</li><?} elseif ($v['type'] == 1) {?><li>
 					<?=$v['author'][0]['name']?> : 
-					<?=format_text($v['text'])?>
+					<?=$v['text']?>aaa
 				</li><?}}?>
 			</ul>
 			<p class="pager"><?=$page['pager']?></p>
