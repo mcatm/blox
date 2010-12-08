@@ -33,10 +33,12 @@ class Pipe extends Controller {
 		if ($mod_loaded = $this->setting->get('mod_loaded')) {
 			$this->load->library('module');
 			if (array_key_exists($method, $mod_loaded)) {
-				require_once($mod_loaded[$method]['path'].'core.php');
-				$this->mod->$mod_loaded[$method]['name'] = new $mod_loaded[$method]['name'];
-				$this->mod->$mod_loaded[$method]['name']->init($mod_loaded[$method]['name'], $mod_loaded[$method]['path']);
-				$this->mod->$mod_loaded[$method]['name']->controller($mod_loaded[$method]['name']);
+				#require_once($mod_loaded[$method]['path'].'core.php');
+				#$this->mod->$mod_loaded[$method]['name'] = new $mod_loaded[$method]['name'];
+				#$this->mod->$mod_loaded[$method]['name']->init($mod_loaded[$method]['name'], $mod_loaded[$method]['path']);
+				#$this->mod->$mod_loaded[$method]['name']->controller($mod_loaded[$method]['name']);
+				$this->module->init($mod_loaded[$method]['name'], $mod_loaded[$method]['path']);
+				$this->module->controller($mod_loaded[$method]['name']);
 				exit;
 			}
 		}

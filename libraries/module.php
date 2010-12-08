@@ -8,111 +8,49 @@ class Module {
 	function controller($mod, $mode = '') {
 		$CI =& get_instance();
 		
-		$uri_segment = $CI->uri->segment_array();
-		
-		$MD =& $CI->mod->$mod;
-		$mod_loaded = $CI->setting->get('mod_loaded');
-		define('MOD_CONTROLLER', $mod);
-		
-		if (empty($uri_segment)) $uri_segment[] = 'top';
+		$uri_segment = $CI->uri->rsegment_array();
+		$ctlpath = $this->module_path.'controller/index.php';
 		
 		#print_r($uri_segment);
 		
-		//make instance of certain controller by using the uri segments.
+		$mod_loaded = $CI->setting->get('mod_loaded');
+		
+		$class	= ($uri_segment[2] != 'index') ? $uri_segment[2]:'top';
+		$method	= (isset($uri_segment[3]) && !is_numeric($uri_segment[3])) ? $uri_segment[3]:'index';
+		define('MOD_CONTROLLER', $class);
+		
 		$ctl = $this->module_path.'controller/';
-		foreach ($uri_segment as $i => $u) {
-			$classname = $u;
-			$ctlflg = false;
-			
-			if (is_file($ctl.$classname.'.php') && $classname != 'top') {
-				$ctl .= $classname.'.php';
-				$ctlflg = true;
-			}
-			
-			if (!$ctlflg) {
-				$ctl .= ($u != 'top') ? $classname.'/' : '';
-				if (is_file($ctl.'top.php')) {
-					if ((count($uri_segment) == 1 && $i == 0) || $i > 0) {
-						$classname = 'top';
-						$ctl .= 'top.php';
-						$ctlflg = true;
-					}
+		
+		foreach($uri_segment as $i => $u) {
+			if ($i > 2) {
+				if (is_file($ctl.$class.'.php')) {
+					$ctlpath = $ctl.$class.'.php';
+					continue 2;
 				}
+				if (is_dir($ctl.$class)) $ctl .= $class.'/';
 			}
-			$ctlpath = $ctl;
-			#print $ctlpath.'<br />';
-			if ($ctlflg) break;
 		}
 		
-		//コントローラーが無くてtop.phpだけ存在する場合、最終的にtop.phpにアクセス
-		if (!$ctlflg && is_file($ctl = $this->module_path.'controller/top.php')) {
-			$ctlpath = $ctl;
-			$classname = 'top';
-			$ctlflg = true;
-		}
+		#print '<br />'.$class.' - '.$method.' - '.$ctlpath.'<br />';#exit;
 		
-		if ($ctlflg) {
+		if (is_file($ctlpath)) {
 			include($ctlpath);
 			
 			$method = (isset($uri_segment[$i+1])) ? $uri_segment[$i+1] : 'index';
 			
-			$classname = 'Mod_'.$classname;
+			$class = 'Mod_'.$class;
 			
-			#print $CI->setting->get('theme');
-			
-			$BX = new $classname;//redefine the instance of controller
-			
-			foreach ($CI as $k => $m) {
-				#print_r($k);
-				$BX->$k = $CI->$k;
-				#print'<br />';
-			}
-			
+			$BX = new $class;//redefine the instance of controller
+			foreach ($CI as $k => $m) $BX->$k = $CI->$k;
 			$CI = $BX;
 			
 			if (method_exists($CI, '_remap')) $CI->_remap($method);
-			
 			call_user_func_array(array(&$CI, $method), array_slice($CI->uri->rsegments, 2));
 						
 			exit;
 		}
 		
 		show_404();
-		
-		/*
-		$uri_segment[] = ($mode == "") ? 'top' : '_'.$mode;
-		for ($i=1;$CI->uri->segment($i);$i++) {
-			if (is_numeric($CI->uri->segment($i))) break;
-			if ($mode != "" && ($CI->uri->segment($i) == 'mod' || $CI->uri->segment($i) == $mod)) continue;
-			if ($i != 1) $uri_segment[] = $CI->uri->segment($i);
-		}
-		*/
-		
-		
-		
-		
-		
-		
-		
-		/*
-		// Is there a "remap" function?
-		if (method_exists($CI, '_remap')) {
-			$CI->_remap($method);
-			exit('UUUU');
-		} else {
-			// is_callable() returns TRUE on some versions of PHP 5 for private and protected
-			// methods, so we'll use this workaround for consistent behavior
-			if ( ! in_array(strtolower($method), array_map('strtolower', get_class_methods($CI)))) {
-				show_404("{$class}/{$method}");
-			}
-
-			// Call the requested method.
-			// Any URI segments present (besides the class/function) will be passed to the method for convenience
-			call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
-		}
-		*/
-		
-		
 	}
 	
 	function view($user_param = array()) {
@@ -167,7 +105,6 @@ class Module {
 	function init($name, $module_path) {
 		$CI =& get_instance();
 		$this->module_path = $module_path;
-		
 		$this->load_config($name, $module_path);//load a config file.
 		
 		//load a language file

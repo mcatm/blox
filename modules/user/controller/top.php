@@ -65,7 +65,7 @@ class Mod_Top {
 			));
 			#print_r($CI->data->out['user']);exit;
 			
-			$CI->mod->user->view(array(
+			$CI->module->view(array(
 				'flg_title_clear'	=> false,
 				'title'			=> 'User',
 				'base_url'		=> base_url().$CI->uri->segment(1).'/',
