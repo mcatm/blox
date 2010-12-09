@@ -11,8 +11,6 @@ class Module {
 		$uri_segment = $CI->uri->rsegment_array();
 		$ctlpath = $this->module_path.'controller/index.php';
 		
-		#print_r($uri_segment);
-		
 		$mod_loaded = $CI->setting->get('mod_loaded');
 		
 		$class	= ($uri_segment[2] != 'index') ? $uri_segment[2]:'top';
@@ -31,8 +29,6 @@ class Module {
 			}
 		}
 		
-		#print '<br />'.$class.' - '.$method.' - '.$ctlpath.'<br />';#exit;
-		
 		if (is_file($ctlpath)) {
 			include($ctlpath);
 			
@@ -46,15 +42,69 @@ class Module {
 			
 			if (method_exists($CI, '_remap')) $CI->_remap($method);
 			call_user_func_array(array(&$CI, $method), array_slice($CI->uri->rsegments, 2));
-						
-			exit;
 		}
-		
-		show_404();
 	}
 	
-	function view($user_param = array()) {
+	function _page($uri = "") {
 		$CI =& get_instance();
+		$u = get_uri_string();
+		if (empty($uri)) $uri = $u['uri'];
+		if (!empty($uri)) {
+			$CI->blox->get(array(
+				'qty'	=> 'all',
+				'where'	=> array(
+					'blox_alias'	=> $uri,
+					'blox_type'		=> 'page'
+				)
+			));
+			
+			if (isset($CI->output->dat['blox'])) $this->view();
+		}
+	}
+	
+	function _archive($alias = "") {
+		$CI =& get_instance();
+		$u = get_uri_string($CI->uri->uri_string());
+		if (empty($alias)) $alias = $u['uri'];
+		if (!empty($alias)) {
+			$CI->blox->get(array(
+				'qty'	=> 1,
+				'where'	=> array(
+					'blox_alias'	=> $alias,
+					'blox_type'		=> 'archive'
+				)
+			));
+			
+			if (isset($CI->output->dat['blox'])) $this->view();
+		}
+	}
+	
+	function view() {
+		$CI =& get_instance();
+		$FM =& $CI->output->dat['blox'][0];
+		define('MOD_CONTROLLER', true);
+		
+		// ------ set template file.
+		if (!empty($FM['tpl'])) {
+			$tpl = $FM['tpl'];
+		} else {
+			$tpl = (!empty($FM['category'])) ? $FM['category'].'.' : "";
+			$tpl .= $FM['type'];
+		}
+		$tpl .= '.php';
+		
+		// ------ set theme
+		if (!empty($FM['theme'])) $CI->setting->set('theme', $FM['theme']);
+		
+		// ------ set title
+		$CI->setting->set_title($FM['name']);
+		#$CI->setting->set_keyword($param['keyword'], true);
+		#$CI->setting->set_rss($param['rss']);
+		$CI->setting->set_description(format_description($FM['body']));
+		
+		$CI->load->view($tpl);
+		
+		
 		
 		/*
 		
@@ -65,7 +115,7 @@ class Module {
 		
 		*/
 		
-		$param = array(
+		/*$param = array(
 			'keyword'			=> array(),//for SEO
 			'description'		=> "",//for SEO
 			'title'				=> '{@sitename}',
@@ -92,14 +142,12 @@ class Module {
 			}
 		}
 		
-		//META
-		$CI->setting->set_title($param['title'], $param['flg_title_clear']);
-		$CI->setting->set_keyword($param['keyword'], true);
-		$CI->setting->set_rss($param['rss']);
-		$CI->setting->set_description(str_replace("\n", '', $param['description']));
+		
 		
 		if (isset($param['theme'])) $CI->setting->set('theme', $param['theme']);
-		$CI->load->view($param['tpl']);
+		$CI->load->view($param['tpl']);*/
+		
+		exit();
 	}
 	
 	function init($name, $module_path) {
@@ -138,7 +186,7 @@ class Module {
 		}
 	}
 	
-	function Module() {
+	function __construct() {
 		
 	}
 }

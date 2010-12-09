@@ -81,7 +81,7 @@ class Auth {
 		
 		$set['auth'] = (isset($r)) ? $this->_set_usertype($r['type']) : $this->_set_usertype();//権限付与
 		
-		$CI->data->set_array('me', $set);//出力用データに変換（パスワードやログイン用ハッシュが外に出ないよう）
+		$CI->output->dat['me'] = $set;//出力用データに変換（パスワードやログイン用ハッシュが外に出ないよう）
 		#print_r($CI->data->out['me']);
 		if ($login === true) {//ログイン状態
 			#print $CI->session->userdata('id');
@@ -157,7 +157,7 @@ class Auth {
 		} else {//基本権限
 			$CI->db->where('usertype_type', 'anonymous');
 		}
-		$q = $CI->data->get($CI->db->get(DB_TBL_USERTYPE));
+		$q = $CI->output->set($CI->db->get(DB_TBL_USERTYPE), array('stack' => false));
 		if (count($q) > 0) {
 			$r = $q[0];
 			$auth = array(

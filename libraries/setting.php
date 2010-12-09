@@ -65,13 +65,10 @@ class Setting {
 	
 	function set_title($str = "", $clear = false) {//タイトルを設定
 		$CI =& get_instance();
-		$str = str_replace('{@sitename}', $this->get('site_name'), $str);//{@site_name} - 置換用タグ
-		if ($str != "") {
-			$title = $str .$this->get('title_delimiter'). $this->get('site_name');
-		} else {
-			$title = $this->get('site_name');
-		}
-		$title = ($clear) ? $str : $title;
+		$format = $this->get('title_format');//タイトルフォーマット
+		$site_name = $this->get('site_name');
+		$title = ($clear) ? $str : str_replace(array('{@sitename}', '{@title}'), array($site_name, $str), $format);
+		if (empty($title)) $title = $site_name;
 		$this->set('title', $title);
 	}
 	
@@ -117,7 +114,7 @@ class Setting {
 				$CI->db->or_where('setting_name', $v);
 			}
 		}
-		$r = $CI->data->set($CI->db->get(DB_TBL_SETTING), array('stack' => false));
+		$r = $CI->output->set($CI->db->get(DB_TBL_SETTING), array('stack' => false));
 		if ($stack === true) {//設定を溜め込む
 			if (is_array($r)) $this->_stack_setting($r);
 		} else {//設定をそのまま返す
@@ -146,21 +143,15 @@ class Setting {
 			'usertype_type'				=> 'admin,contributor,anonymous',//the kind of usertype
 			'authtype'					=> 'post,user,category,section,home,comment,usertype,theme,setting,page,file,install',//authority types
 			'url_alias_post'			=> 'post',
-			#'url_alias_bookmarklet'		=> 'bookmarklet',//ブックマークレットのエイリアス
-			#'url_segment_identifier_id'	=> '',//ID識別子：この次のセグメントがIDとなる
-			#'url_segment_identifier_page'	=> 'page',//PAGE識別子
-			#'url_segment_identifier_offset'	=> 'offset',//OFFSET識別子
-			#'url_segment_identifier_stop'	=> '',//METHODを区別する識別子
 			'file_segment'				=> 'main|sub',//ファイルの分類
 			'img_notfound'				=> 'default.jpg',
-			#'author_segment'			=> 'main',//記事に対する著者の役割
 			'post_max_qty_per_page'		=> 20,//一ページに表示する記事の数
 			'post_max_tag_per_page'		=> 100,//一ページに表示するタグの数
 			'img_size_main'				=> 500,//メイン画像のサイズ
 			'img_size_mid'				=> 120,//中サイズの画像
 			'img_size_thumbnail'		=> 48,//サムネイルのサイズ
 			'flg_get_related'			=> 1,//関連記事を取得する
-			'title_delimiter'			=> ' / ',//タイトルを分割するデリミタ
+			'title_format'				=> '{@title} [{@sitename}]',//タイトルのフォーマット
 			'url_delimiter'				=> '-',//URLを分割するデリミタ
 			'tag_delimiter'				=> ',',//タグを分割するデリミタ
 			'crypt_salt'				=> 'bx',//暗号化の際に使用する二文字のsalt

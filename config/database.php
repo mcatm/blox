@@ -50,6 +50,28 @@ $db['default']['cachedir'] = DB_CACHE_DIR;
 $db['default']['char_set'] = DB_CHAR_SET;
 $db['default']['dbcollat'] = DB_COLLAT;
 
+/* -------------------------------------------------------
+
+	blox configration file > database > table
+
+------------------------------------------------------- */
+
+define('DB_TBL_BLOX',			DB_PREFIX.'blox');				//ブロックス
+
+define('DB_TBL_POST',			DB_PREFIX.'post');				//記事
+define('DB_TBL_USER',			DB_PREFIX.'user');				//ユーザー
+define('DB_TBL_USERTYPE',		DB_PREFIX.'usertype');			//usertype : auth
+define('DB_TBL_DIV',			DB_PREFIX.'div');				//サイト区分
+define('DB_TBL_TAG',			DB_PREFIX.'tag');				//タグ
+define('DB_TBL_FILE',			DB_PREFIX.'file');				//ファイル
+
+define('DB_TBL_LINX',			DB_PREFIX.'linx');				//リンク
+define('DB_TBL_EXT',			DB_PREFIX.'ext');				//記事拡張
+
+define('DB_TBL_SETTING',		DB_PREFIX.'setting');			//設定
+define('DB_TBL_LOG',			DB_PREFIX.'log');				//ログ
+define('DB_TBL_SESSION',		DB_PREFIX.'session');			//セッション管理
+
 
 /* End of file database.php */
 /* Location: ./system/application/config/database.php */

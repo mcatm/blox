@@ -3,13 +3,13 @@
 <body>
 	<div class="wrapper">
 		<?$this->load->view('_inc/head.php')?>
-		<?if(isset($post)){?><div id="main">
+		<?if(isset($blox)){?><div id="main">
 			<ul>
-				<?foreach($post as $k => $v){?>
-				<?if($v['type'] == 0){?><li>
-					<h3><a href="<?=$v['url']?>"><?=$v['title']?></a></h3>
+				<?foreach($blox as $k => $v){?>
+				<?if($v['type'] == 'page'){?><li>
+					<h3><a href="<?=$v['url']?>"><?=$v['name']?></a></h3>
 					<p class="data"><?=$v['createdate']?></p>
-					<p><?=$v['text']?></p>
+					<p><?=$v['body']?></p>
 					<p><?=$v['alias']?></p>
 				</li><?} elseif ($v['type'] == 1) {?><li>
 					<?=$v['author'][0]['name']?> : 

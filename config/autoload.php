@@ -42,7 +42,7 @@
 if (defined('IS_CRON')) {
 	$autoload['libraries'] = array(/*'data', 'setting', 'linx', 'database'*/);
 } else {
-	$autoload['libraries'] = array('database', 'setting', 'auth', 'data', 'linx'/*, 'div', 'log', 'blox', 'user_agent'*/);
+	$autoload['libraries'] = array('database', 'setting', 'auth', 'linx'/*, 'div', 'log', 'user_agent'*/);
 }
 
 
@@ -83,7 +83,7 @@ $autoload['plugin'] = array();
 |
 */
 
-$autoload['config'] = array(/*'blox'*/);
+$autoload['config'] = array();
 
 
 /*
@@ -112,7 +112,7 @@ $autoload['language'] = array('system');
 |
 */
 
-$autoload['model'] = array('core');
+$autoload['model'] = array('core', 'blox');
 
 /* End of file autoload.php */
 /* Location: ./system/application/config/autoload.php */

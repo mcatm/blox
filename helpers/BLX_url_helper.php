@@ -138,6 +138,34 @@ if ( ! function_exists( 'nopic' ) ) {
 	}
 }
 
+if ( ! function_exists( 'get_uri_string' )) {
+	function get_uri_string($url = "", $explode_param = true) {
+		if ($url == "") {
+			$CI =& get_instance();
+			$url = $CI->uri->uri_string();
+		}
+		$u = explode('?', $url);
+		if (!isset($u[1])) $u[1] = "";
+		return array(
+			'uri'	=> trim($u[0], '/'),
+			'param'	=> ($explode_param == true) ? explode_param($u[1]) : $u[1]
+		);
+	}
+}
+
+if ( ! function_exists( 'explode_param' )) {
+	function explode_param($str = "", $delimiter = "=") { 
+		$arr = array();
+		if (!empty($str)) {
+			foreach(explode('&', $str) as $p) {
+				$tmp_arr = explode($delimiter, $p);
+				$arr[$tmp_arr[0]] = (isset($tmp_arr[1])) ? $tmp_arr[1] : true;
+			}
+		}
+		return $arr;
+	}
+}
+
 if ( ! function_exists( 'format_alias' ) ) {
 	function format_alias($str) {
 		$CI =& get_instance();

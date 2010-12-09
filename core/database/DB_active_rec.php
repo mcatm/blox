@@ -1072,7 +1072,6 @@ class CI_DB_active_record extends CI_DB_driver {
 			$this->from($table);
 		}
 		
-		#print($this->_compile_select($this->_count_string . $this->_protect_identifiers('numrows')).'<br />');
 		$sql = $this->_compile_select($this->_count_string . $this->_protect_identifiers('numrows'));
 		
 		$query = $this->query($sql);

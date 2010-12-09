@@ -3,10 +3,10 @@
 <body>
 	<?$this->load->view('_inc/head.php')?>
 	
-	<?if($post){?><ul>
-		<?foreach($post as $k => $v){?><li>
-			<h3><a href="<?=$v['url']?>"><?=$v['title']?></a></h3>
-			<p><?=$v['text']?></p>
+	<?if($blox){?><ul>
+		<?foreach($blox as $k => $v){?><li>
+			<h3><a href="<?=$v['url']?>"><?=$v['name']?></a></h3>
+			<p><?=$v['body']?></p>
 			<p><?=$v['alias']?></p>
 		</li><?}?>
 	</ul>

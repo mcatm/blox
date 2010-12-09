@@ -61,6 +61,7 @@ class BLX_Post {
 		
 		if (isset($param['div'])) $CI->db->where('linx_b', $param['div']);//セクション指定
 		
+		if (isset($param['alias'])) $CI->db->where('post_alias', $param['alias']);
 		if (isset($param['parent'])) $CI->db->where('post_parent', $param['parent']);//親記事
 		if (isset($param['status'])) $CI->db->where('post_status', $param['status']);//状態
 		

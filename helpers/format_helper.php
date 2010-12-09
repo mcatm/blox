@@ -42,12 +42,12 @@ if ( ! function_exists( 'format_text' ) ) {
 		);
 		
 		//外部プラグイン読込
-		$p = directory_map(LIB_FOLDER.'/plugin');
+		$p = directory_map(PLUGIN_FOLDER);
 		if (!empty($p)) {
 			foreach($p as $v) {
 				if (preg_match('(^format_pi_(.*)\.php)', $v)) {
 					$f = str_replace('.php', '', $v);
-					if (is_file(LIB_FOLDER.'/plugin/'.$v)) $str = $f($str, $param);
+					if (is_file(PLUGIN_FOLDER.'/'.$v)) $str = $f($str, $param);
 				}
 			}
 		}

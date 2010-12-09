@@ -40,9 +40,9 @@
 |
 */
 
-$route['default_controller']	= "pipe";
+$route['default_controller']	= "BLX_pipe";
 
-$route['(:num)']				= "pipe/top/$1";
+$route['(:num)']				= "BLX_pipe/top/$1";
 
 $route['request/(:any)']		= "request/$1";
 $route['request']				= "request";
@@ -59,7 +59,7 @@ $route['login']					= "login";
 $route['logout/(:any)']			= "logout/$1";
 $route['logout']				= "logout";
 
-$route['(:any)']				= 'pipe/$1';
+$route['(:any)']				= "BLX_pipe/$1";
 
 $route['scaffolding_trigger']	= "";
 
