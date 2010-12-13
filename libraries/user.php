@@ -407,9 +407,10 @@ class BLX_User {
 		
 		$this->get(array('id' => $id));//エントリを取得
 		$auth = ($CI->auth->check_auth('user')) ? true : false;//権限設定
+		
 		$this->validation_rule = array(
 			array(
-				'field'   => 'pwd',
+				'field'	=> 'pwd',
 				'label'   => 'lang:system_user_label_password',
 				'rules'   => 'alpha_numeric|min_length[5]|required|xss_clean'
 			),
@@ -441,6 +442,7 @@ class BLX_User {
 					'msg'		=> $CI->lang->line('system_user_error')
 				);
 			} else {
+				
 				$arr = array(
 					'user_password'			=> $this->make_password(set_value('pwd')),
 					'user_modifydate'	=> $now

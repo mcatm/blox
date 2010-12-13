@@ -72,6 +72,8 @@ $lang['system_user_label_title'] = 'title';
 $lang['system_user_label_password'] = 'password';
 $lang['system_user_label_password_confirm'] = '確認用パスワード';
 
+$lang['system_user_error_auth'] = "ユーザー情報を編集する権限がありません";
+
 $lang['system_email_title_send'] = 'メールを送信しました';
 $lang['system_email_title_receive']	= 'メールを受信しました';
 

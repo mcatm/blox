@@ -31,14 +31,14 @@
 				
 				<div class="row">
 					<label>password : </label>
-					<input type="password" name="password" value="<?=set_value('password')?>" class="query" />
-					<?=form_error('password')?>
+					<input type="password" name="pwd" value="<?=set_value('pwd')?>" class="query" />
+					<?=form_error('pwd')?>
 				</div>
 				
 				<div class="row">
 					<label>password(confirm) : </label>
-					<input type="password" name="password_confirm" value="" class="query" />
-					<?=form_error('password_confirm')?>
+					<input type="password" name="pwd_confirm" value="" class="query" />
+					<?=form_error('pwd_confirm')?>
 				</div>
 				<?}?>
 				
